@@ -1,11 +1,11 @@
 package net.ntworld.hexagon.foundation
 
 interface ArgumentBuilder {
-    fun reset(): ArgumentBuilder
+    fun reset()
 
-    fun setUniqueId(value: String): ArgumentBuilder
+    fun setUniqueId(value: String)
 
-    fun setContextEnvironment(type: String, id: String): ArgumentBuilder
+    fun setContextEnvironment(type: String, id: String)
 
-    fun setContextDatetime(value: String): ArgumentBuilder
+    fun setContextDatetime(value: String)
 }
