@@ -1,5 +1,5 @@
 package net.ntworld.hexagon.foundation
 
-interface ArgumentFactory<A : Argument> {
+interface ArgumentFactory<out A : Argument> {
     fun make(): A
 }

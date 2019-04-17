@@ -8,5 +8,5 @@ interface CreateTodoArgument : Argument {
 }
 
 interface CreateTodoArgumentBuilder: ArgumentBuilder {
-    fun setTask(task: String)
+    fun setTask(value: String)
 }

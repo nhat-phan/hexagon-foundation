@@ -26,25 +26,7 @@ fun <A : Argument, B : ArgumentBuilder, R> portOf(
 fun <A : Argument, B : ArgumentBuilder, R> portOf(
     factory: ArgumentFactory<A>,
     builder: B,
-    handler: (argument: A) -> Handler<A, R>
+    handlerFn: (argument: A) -> Handler<A, R>
 ): Port<A, B, R> {
-    return PortImpl(builder, factory, handler)
-}
-
-fun <A : Argument, B : ArgumentBuilder, R> portOf(
-    factory: ArgumentFactory<A>,
-    builder: B,
-    handler: Handler<A, R>,
-    enhanceFn: (handler: Handler<A, R>) -> Handler<A, R>
-): Port<A, B, R> {
-    return PortImpl(builder, factory, handler, enhanceFn)
-}
-
-fun <A : Argument, B : ArgumentBuilder, R> portOf(
-    factory: ArgumentFactory<A>,
-    builder: B,
-    handler: Handler<A, R>,
-    enhanceFn: (handler: Handler<A, R>, argument: A) -> Handler<A, R>
-): Port<A, B, R> {
-    return PortImpl(builder, factory, handler, enhanceFn)
+    return PortImpl(builder, factory, handlerFn)
 }

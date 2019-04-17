@@ -1,37 +1,28 @@
 package sample.todo.hexagon.useCase.createTodo
 
-import net.ntworld.hexagon.foundation.ArgumentFactory
+import net.ntworld.hexagon.foundation.ArgumentBuilderBase
+import net.ntworld.hexagon.foundation.ArgumentContext
 import sample.todo.CreateTodoArgument
 import sample.todo.CreateTodoArgumentBuilder
 
-class CreateTodoArgumentBuilder : CreateTodoArgumentBuilder, ArgumentFactory<CreateTodoArgument> {
-    internal val uniqueId: String = ""
-    internal val contextEnvType: String = ""
-    internal val contextEnvId: String = ""
-    internal val contextDatetime: String = ""
-    internal val task: String = ""
+internal class CreateTodoArgumentBuilder :
+    ArgumentBuilderBase<CreateTodoArgument>(),
+    CreateTodoArgumentBuilder {
+    private var task: String = ""
 
-    override fun reset() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun setTask(value: String) {
+        this.task = value
     }
 
-    override fun setUniqueId(value: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun build(uniqueId: String, context: ArgumentContext): CreateTodoArgument {
+        return CreateTodoArgument(uniqueId, context, this.task)
     }
 
-    override fun setContextEnvironment(type: String, id: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun validate(): Boolean {
+        return true
     }
 
-    override fun setContextDatetime(value: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun setTask(task: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun make(): CreateTodoArgument {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun resetBuilder() {
+        this.task = ""
     }
 }

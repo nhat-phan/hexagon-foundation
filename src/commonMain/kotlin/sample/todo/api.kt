@@ -3,12 +3,12 @@ package sample.todo
 import net.ntworld.hexagon.foundation.ArgumentBuilder
 import net.ntworld.hexagon.foundation.ArgumentDirector
 import net.ntworld.hexagon.foundation.Port
-import sample.todo.hexagon.useCase.createTodo.makeCreateTodoPort
+import sample.todo.hexagon.useCase.createTodo.CreateTodoPort
 
 class TodoApi(private val spi: TodoServiceProvider) {
 
     fun createTodoPort(): Port<CreateTodoArgument, CreateTodoArgumentBuilder, Todo> {
-        return makeCreateTodoPort()
+        return CreateTodoPort(this.spi)
     }
 
 }
