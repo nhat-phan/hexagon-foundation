@@ -1,0 +1,125 @@
+package net.ntworld.hexagon.foundation.test
+
+import net.ntworld.hexagon.foundation.MessageBag
+import net.ntworld.hexagon.foundation.MessageBagImpl
+import kotlin.test.*
+
+class MessageBagImplTests {
+    fun makeMessageBag(): MessageBag {
+        return MessageBagImpl()
+    }
+
+    @Test
+    fun testClear() {
+        val bag = this.makeMessageBag()
+        bag.add("a", "1")
+        bag.add("b", "2")
+        bag.add("c", "3")
+        assertEquals(3, bag.keys().size)
+        assertSame(bag, bag.clear())
+        assertEquals(0, bag.keys().size)
+    }
+
+    @Test
+    fun testKeys() {
+        val bag = this.makeMessageBag()
+        bag.add("a", "1")
+        bag.add("b", "2")
+        bag.add("c", "3")
+        assertEquals(setOf("a", "b", "c"), bag.keys())
+    }
+
+    @Test
+    fun testHas() {
+        val bag = this.makeMessageBag()
+        bag.add("a", "1")
+        bag.add("b", "2")
+        assertTrue(bag.has("a"));
+        assertTrue(bag.has("b"));
+        assertFalse(bag.has("c"));
+        assertFalse(bag.has("not-found"));
+    }
+
+    @Test
+    fun testGet() {
+        val bag = this.makeMessageBag()
+        assertEquals(setOf(), bag.get("test"))
+        bag.add("test", "any")
+        assertEquals(setOf("any"), bag.get("test"))
+    }
+
+    @Test
+    fun testAdd() {
+        val bag = this.makeMessageBag()
+        assertEquals(0, bag.get("test").size)
+        assertEquals(0, bag.keys().size)
+
+        assertSame(bag, bag.add("test", "required"))
+        assertEquals(1, bag.get("test").size)
+        assertEquals(1, bag.keys().size)
+
+        bag.add("test", "not-empty")
+        assertEquals(2, bag.get("test").size)
+        assertEquals(1, bag.keys().size)
+
+        bag.add("new-key", "required")
+        assertEquals(1, bag.get("new-key").size)
+        assertEquals(2, bag.keys().size)
+
+        bag.add("new-key", "required")
+        assertEquals(1, bag.get("new-key").size)
+        assertEquals(2, bag.keys().size)
+
+        assertEquals(setOf("required", "not-empty"), bag.get("test"))
+        assertEquals(setOf("required"), bag.get("new-key"))
+    }
+
+    @Test
+    fun testRemove() {
+        val bag = this.makeMessageBag()
+        assertEquals(0, bag.get("a").size)
+        assertEquals(0, bag.keys().size)
+
+        assertSame(bag, bag.remove("test", "required"))
+
+        bag.add("test", "required").add("test", "not-empty")
+        assertEquals(2, bag.get("test").size)
+        assertEquals(1, bag.keys().size)
+        assertEquals(setOf("required", "not-empty"), bag.get("test"))
+
+        bag.remove("test", "not-empty")
+        assertEquals(1, bag.get("test").size)
+        assertEquals(1, bag.keys().size)
+        assertEquals(setOf("required"), bag.get("test"))
+
+        bag.remove("test", "required")
+        assertEquals(setOf(), bag.get("test"))
+        assertEquals(0, bag.get("test").size)
+        assertEquals(0, bag.keys().size)
+
+        bag.add("a", "required")
+        assertEquals(1, bag.get("a").size)
+        assertEquals(1, bag.keys().size)
+
+        bag.remove("a", "empty")
+        assertEquals(1, bag.get("a").size)
+        assertEquals(1, bag.keys().size)
+
+        bag.remove("a", "required")
+        assertEquals(0, bag.get("a").size)
+        assertEquals(0, bag.keys().size)
+    }
+
+    @Test
+    fun testToMap() {
+        val bag = this.makeMessageBag()
+        bag.add("a", "a1")
+        bag.add("a", "a2")
+        bag.add("b", "b1")
+        assertNotSame(bag.toMap(), bag.toMap())
+        assertEquals(
+            mapOf("a" to setOf("a1", "a2"), "b" to setOf("b1")),
+            bag.toMap()
+        )
+    }
+}

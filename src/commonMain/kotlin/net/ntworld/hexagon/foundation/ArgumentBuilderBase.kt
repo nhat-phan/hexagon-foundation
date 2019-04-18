@@ -5,6 +5,7 @@ abstract class ArgumentBuilderBase<out A : Argument> : ArgumentBuilder, Argument
     private var contextEnvType: String = ""
     private var contextEnvId: String = ""
     private var contextDatetime: String = ""
+    protected val errors: MessageBag = MessageBagImpl()
 
     abstract fun build(uniqueId: String, context: ArgumentContext): A
 
@@ -17,6 +18,8 @@ abstract class ArgumentBuilderBase<out A : Argument> : ArgumentBuilder, Argument
         this.contextEnvType = ""
         this.contextEnvId = ""
         this.contextDatetime = ""
+
+        this.errors.clear()
         this.resetBuilder()
     }
 
@@ -33,8 +36,24 @@ abstract class ArgumentBuilderBase<out A : Argument> : ArgumentBuilder, Argument
         this.contextDatetime = value
     }
 
-    fun validateArgumentData(): Boolean {
-        return true
+    private fun validateArgumentData(): Boolean {
+        if (this.uniqueId.isBlank()) {
+            this.errors.add("uniqueId", "required")
+        }
+
+        if (this.contextEnvType.isBlank()) {
+            this.errors.add("contextEnvironmentType", "required")
+        }
+
+        if (this.contextEnvId.isBlank()) {
+            this.errors.add("contextEnvironmentId", "required")
+        }
+
+        if (this.contextDatetime.isBlank()) {
+            this.errors.add("contextDatetime", "required")
+        }
+
+        return this.errors.keys().isEmpty()
     }
 
     override fun make(): A {
