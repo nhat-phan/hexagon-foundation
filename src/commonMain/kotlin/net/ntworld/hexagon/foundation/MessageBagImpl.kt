@@ -49,4 +49,12 @@ internal class MessageBagImpl : MessageBag {
     override fun toMap(): Map<String, Collection<String>> {
         return this.messages.toMap()
     }
+
+    override fun isEmpty(): Boolean {
+        return this.messages.isEmpty()
+    }
+
+    override fun isNotEmpty(): Boolean {
+        return this.messages.isNotEmpty()
+    }
 }

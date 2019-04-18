@@ -14,4 +14,8 @@ interface MessageBag {
     fun remove(key: String, message: String): MessageBag
 
     fun toMap(): Map<String, Collection<String>>
+
+    fun isEmpty(): Boolean
+
+    fun isNotEmpty(): Boolean
 }

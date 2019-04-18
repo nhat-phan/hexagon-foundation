@@ -1,5 +1,7 @@
 package net.ntworld.hexagon.foundation
 
+import net.ntworld.hexagon.foundation.exception.ValidationException
+
 abstract class ArgumentBuilderBase<out A : Argument> : ArgumentBuilder, ArgumentFactory<A> {
     private var uniqueId: String = ""
     private var contextEnvType: String = ""
@@ -53,7 +55,7 @@ abstract class ArgumentBuilderBase<out A : Argument> : ArgumentBuilder, Argument
             this.errors.add("contextDatetime", "required")
         }
 
-        return this.errors.keys().isEmpty()
+        return this.errors.isEmpty()
     }
 
     override fun make(): A {
@@ -63,6 +65,6 @@ abstract class ArgumentBuilderBase<out A : Argument> : ArgumentBuilder, Argument
                 argumentContextOf(this.contextEnvType, this.contextEnvId, this.contextDatetime)
             )
         }
-        throw Exception("")
+        throw ValidationException(this.errors)
     }
 }

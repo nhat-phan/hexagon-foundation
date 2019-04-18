@@ -78,36 +78,36 @@ class MessageBagImplTests {
     fun testRemove() {
         val bag = this.makeMessageBag()
         assertEquals(0, bag.get("a").size)
-        assertEquals(0, bag.keys().size)
+        assertTrue(bag.isEmpty())
 
         assertSame(bag, bag.remove("test", "required"))
 
         bag.add("test", "required").add("test", "not-empty")
         assertEquals(2, bag.get("test").size)
-        assertEquals(1, bag.keys().size)
+        assertTrue(bag.isNotEmpty())
         assertEquals(setOf("required", "not-empty"), bag.get("test"))
 
         bag.remove("test", "not-empty")
         assertEquals(1, bag.get("test").size)
-        assertEquals(1, bag.keys().size)
+        assertTrue(bag.isNotEmpty())
         assertEquals(setOf("required"), bag.get("test"))
 
         bag.remove("test", "required")
         assertEquals(setOf(), bag.get("test"))
         assertEquals(0, bag.get("test").size)
-        assertEquals(0, bag.keys().size)
+        assertTrue(bag.isEmpty())
 
         bag.add("a", "required")
         assertEquals(1, bag.get("a").size)
-        assertEquals(1, bag.keys().size)
+        assertTrue(bag.isNotEmpty())
 
         bag.remove("a", "empty")
         assertEquals(1, bag.get("a").size)
-        assertEquals(1, bag.keys().size)
+        assertTrue(bag.isNotEmpty())
 
         bag.remove("a", "required")
         assertEquals(0, bag.get("a").size)
-        assertEquals(0, bag.keys().size)
+        assertTrue(bag.isEmpty())
     }
 
     @Test
@@ -121,5 +121,35 @@ class MessageBagImplTests {
             mapOf("a" to setOf("a1", "a2"), "b" to setOf("b1")),
             bag.toMap()
         )
+    }
+
+    @Test
+    fun testIsEmpty() {
+        val bag = this.makeMessageBag()
+        assertTrue(bag.isEmpty())
+
+        bag.add("a", "test")
+        assertFalse(bag.isEmpty())
+
+        bag.remove("a", "another key")
+        assertFalse(bag.isEmpty())
+
+        bag.remove("a", "test")
+        assertTrue(bag.isEmpty())
+    }
+
+    @Test
+    fun testIsNotEmpty() {
+        val bag = this.makeMessageBag()
+        assertFalse(bag.isNotEmpty())
+
+        bag.add("a", "test")
+        assertTrue(bag.isNotEmpty())
+
+        bag.remove("a", "another key")
+        assertTrue(bag.isNotEmpty())
+
+        bag.remove("a", "test")
+        assertFalse(bag.isNotEmpty())
     }
 }

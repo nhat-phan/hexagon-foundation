@@ -19,7 +19,10 @@ internal class CreateTodoArgumentBuilder :
     }
 
     override fun validate(): Boolean {
-        return true
+        if (this.task.isBlank()) {
+            this.errors.add("task", "required")
+        }
+        return this.errors.isEmpty()
     }
 
     override fun resetBuilder() {
