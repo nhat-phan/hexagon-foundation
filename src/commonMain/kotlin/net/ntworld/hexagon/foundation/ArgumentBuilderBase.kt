@@ -62,7 +62,7 @@ abstract class ArgumentBuilderBase<out A : Argument> : ArgumentBuilder, Argument
         if (this.validateArgumentData() && this.validate()) {
             return this.build(
                 this.uniqueId,
-                argumentContextOf(this.contextEnvType, this.contextEnvId, this.contextDatetime)
+                makeArgumentContext(this.contextEnvType, this.contextEnvId, this.contextDatetime)
             )
         }
         throw ValidationException(this.errors)
