@@ -1,9 +1,9 @@
 package sample.todo
 
-import net.ntworld.hexagon.foundation.Argument
 import net.ntworld.hexagon.foundation.ArgumentBuilder
+import net.ntworld.hexagon.foundation.MultiTenancyArgument
 
-interface CreateTodoArgument : Argument {
+interface CreateTodoArgument : MultiTenancyArgument{
     val task: String
 }
 

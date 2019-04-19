@@ -5,6 +5,8 @@ interface ArgumentBuilder {
 
     fun setUniqueId(value: String)
 
+    fun setTenantId(value: String)
+
     fun setContextEnvironment(type: String, id: String)
 
     fun setContextDatetime(value: String)

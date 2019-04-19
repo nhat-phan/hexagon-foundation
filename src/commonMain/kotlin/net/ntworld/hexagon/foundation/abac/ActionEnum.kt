@@ -4,12 +4,7 @@ enum class ActionEnum(override val type: String) : Action {
     CREATE("CREATE"),
     READ("READ"),
     UPDATE("UPDATE"),
-    DELETE("DELETE"),
-    VIEW("VIEW"),
-    PROPOSE("PROPOSE"),
-    EDIT("EDIT"),
-    REQUEST("REQUEST"),
-    APPROVE("APPROVE"),
+    DELETE("DELETE")
 }
 
 fun actionCreate(): ActionEnum {
@@ -26,24 +21,4 @@ fun actionDelete(): ActionEnum {
 
 fun actionRead(): ActionEnum {
     return ActionEnum.READ
-}
-
-fun actionView(): ActionEnum {
-    return ActionEnum.VIEW
-}
-
-fun actionPropose(): ActionEnum {
-    return ActionEnum.PROPOSE
-}
-
-fun actionEdit(): ActionEnum {
-    return ActionEnum.EDIT
-}
-
-fun actionRequest(): ActionEnum {
-    return ActionEnum.REQUEST
-}
-
-fun actionApprove(): ActionEnum {
-    return ActionEnum.APPROVE
 }

@@ -1,8 +1,8 @@
 package net.ntworld.hexagon.foundation
 
 internal class DefaultArgumentBuilderImpl : ArgumentBuilderBase<Argument>() {
-    override fun build(uniqueId: String, context: ArgumentContext): Argument {
-        return makeArgument(uniqueId, context)
+    override fun build(uniqueId: String, tenantId: String?, context: ArgumentContext): Argument {
+        return makeArgument(uniqueId, tenantId, context)
     }
 
     override fun validate(): Boolean {

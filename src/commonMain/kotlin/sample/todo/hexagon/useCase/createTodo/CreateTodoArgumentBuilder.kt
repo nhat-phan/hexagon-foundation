@@ -1,12 +1,12 @@
 package sample.todo.hexagon.useCase.createTodo
 
-import net.ntworld.hexagon.foundation.ArgumentBuilderBase
 import net.ntworld.hexagon.foundation.ArgumentContext
+import net.ntworld.hexagon.foundation.MultiTenancyArgumentBuilderBase
 import sample.todo.CreateTodoArgument
 import sample.todo.CreateTodoArgumentBuilder
 
 internal class CreateTodoArgumentBuilder :
-    ArgumentBuilderBase<CreateTodoArgument>(),
+    MultiTenancyArgumentBuilderBase<CreateTodoArgument>(),
     CreateTodoArgumentBuilder {
     private var task: String = ""
 
@@ -14,8 +14,8 @@ internal class CreateTodoArgumentBuilder :
         this.task = value
     }
 
-    override fun build(uniqueId: String, context: ArgumentContext): CreateTodoArgument {
-        return CreateTodoArgument(uniqueId, context, this.task)
+    override fun build(uniqueId: String, tenantId: String, context: ArgumentContext): CreateTodoArgument {
+        return CreateTodoArgument(uniqueId, tenantId, context, this.task)
     }
 
     override fun validate(): Boolean {

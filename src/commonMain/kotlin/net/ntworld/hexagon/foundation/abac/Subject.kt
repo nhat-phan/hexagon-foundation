@@ -1,10 +1,10 @@
 package net.ntworld.hexagon.foundation.abac
 
 interface Subject {
-    val hasMultiTenancy: Boolean
-        get() = null !== multiTenancyId
+    val multiTenancy: Boolean
+        get() = null !== tenantId
 
-    val multiTenancyId: String?
+    val tenantId: String?
 
     val hasUser: Boolean
         get() = null !== userId

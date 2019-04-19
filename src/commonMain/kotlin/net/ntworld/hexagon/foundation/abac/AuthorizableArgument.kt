@@ -17,6 +17,9 @@ interface AuthorizableArgument : Argument {
     val authorizationResource: Collection<Resource>
         get() = this.authorizationData.resources
 
+    override val tenantId: String?
+        get() = this.authorizationSubject.tenantId
+
     override val context: Context
         get() = this.authorizationData.context
 }
