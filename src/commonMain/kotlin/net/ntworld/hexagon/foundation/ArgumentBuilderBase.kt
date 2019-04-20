@@ -1,42 +1,34 @@
 package net.ntworld.hexagon.foundation
 
-abstract class ArgumentBuilderBase: ArgumentBuilder {
-    internal var uniqueId: String = ""
-    internal var tenantId: String? = null
-    internal var contextEnvType: String = ""
-    internal var contextEnvId: String = ""
-    internal var contextDatetime: String = ""
+abstract class ArgumentBuilderBase : ArgumentBuilder {
+    private val data: MutableMap<String, Any> = mutableMapOf()
 
-    protected abstract fun resetBuilder()
+    protected fun set(key: String, value: String) {
+        this.data[key] = value
+    }
 
     override fun reset() {
-        this.uniqueId = ""
-        this.tenantId = null
-        this.contextEnvType = ""
-        this.contextEnvId = ""
-        this.contextDatetime = ""
-
-        this.resetBuilder()
+        this.data.clear()
     }
 
     override fun setUniqueId(value: String) {
-        this.uniqueId = value
+        data["uniqueId"] = value
     }
 
     override fun setTenantId(value: String) {
-        this.tenantId = value
+        data["tenantId"] = value
     }
 
     override fun setContextEnvironment(type: String, id: String) {
-        this.contextEnvType = type
-        this.contextEnvId = id
+        data["contextEnvironmentType"] = type
+        data["contextEnvironmentId"] = id
     }
 
     override fun setContextDatetime(value: String) {
-        this.contextDatetime = value
+        data["contextDatetime"] = value
     }
 
-//    override fun getBuilderData(): ArgumentBuilderData {
-//
-//    }
+    fun getBuilderData(): ArgumentBuilderData {
+        return argumentBuilderDataOf(this.data.toMap())
+    }
 }

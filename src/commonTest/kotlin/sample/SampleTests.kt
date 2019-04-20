@@ -2,33 +2,18 @@ package sample
 
 import kotlin.test.Test
 
-interface ITodo {
-    val name: String
-}
-
-interface ITodoBuilder {
-    fun setName(value: String)
-}
-
-interface ITodoValidator<T> {
-    fun validate(builder: T)
-}
-
-interface ITodoFactory<T, A> {
-    fun make(builder: T): A
-}
-
-class Port {
-    fun makeArgument() {
-
-    }
-}
-
 class SampleTests {
     @Test
     fun testMe() {
-
-
+        val map = mapOf(
+            "a" to 1,
+            "b" to "string",
+            "c" to 'A'
+        )
+        println(map.get("a") is Int)
+        println(map.get("b") is String)
+        println(map.get("c") is String)
+        println(map.get("d") is String)
     }
 
     fun rotate() {

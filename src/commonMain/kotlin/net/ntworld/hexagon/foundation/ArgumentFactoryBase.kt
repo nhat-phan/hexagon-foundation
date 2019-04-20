@@ -2,42 +2,47 @@ package net.ntworld.hexagon.foundation
 
 import net.ntworld.hexagon.foundation.exception.ValidationException
 
-abstract class ArgumentFactoryBase<B: ArgumentBuilderBase, A: Argument>: ArgumentFactory<B, A> {
+abstract class ArgumentFactoryBase<A : Argument> : ArgumentFactory<ArgumentBuilderBase, A> {
     protected val errors: MessageBag = MessageBagImpl()
 
-    abstract fun build(uniqueId: String, tenantId: String?, context: ArgumentContext, builder: B): A
+    abstract fun build(uniqueId: String, tenantId: String?, context: ArgumentContext, data: ArgumentBuilderData): A
 
-    abstract fun validate(builder: B): Boolean
+    abstract fun validate(data: ArgumentBuilderData): Boolean
 
-    protected open fun validateArgumentData(builder: B): Boolean {
+    protected open fun validateArgumentData(data: ArgumentBuilderData): Boolean {
         this.errors.clear()
 
-        if (builder.uniqueId.isBlank()) {
+        if (data.uniqueId.isNullOrBlank()) {
             this.errors.add("uniqueId", "required")
         }
 
-        if (builder.contextEnvType.isBlank()) {
+        if (data.contextEnvironmentType.isNullOrBlank()) {
             this.errors.add("contextEnvironmentType", "required")
         }
 
-        if (builder.contextEnvId.isBlank()) {
+        if (data.contextEnvironmentId.isNullOrBlank()) {
             this.errors.add("contextEnvironmentId", "required")
         }
 
-        if (builder.contextDatetime.isBlank()) {
+        if (data.contextDatetime.isNullOrBlank()) {
             this.errors.add("contextDatetime", "required")
         }
 
         return this.errors.isEmpty()
     }
 
-    override fun make(builder: B): A {
-        if (this.validateArgumentData(builder) && this.validate(builder)) {
+    override fun make(builder: ArgumentBuilderBase): A {
+        val data = builder.getBuilderData()
+        if (this.validateArgumentData(data) && this.validate(data)) {
             return this.build(
-                builder.uniqueId,
-                builder.tenantId,
-                makeArgumentContext(builder.contextEnvType, builder.contextEnvId, builder.contextDatetime),
-                builder
+                data.uniqueId as String,
+                data.tenantId,
+                makeArgumentContext(
+                    data.contextEnvironmentType as String,
+                    data.contextEnvironmentId as String,
+                    data.contextDatetime as String
+                ),
+                data
             )
         }
         throw ValidationException(this.errors)
