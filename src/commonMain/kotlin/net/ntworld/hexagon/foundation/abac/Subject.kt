@@ -14,3 +14,13 @@ interface Subject {
     val isGuest: Boolean
         get() = null === userId
 }
+
+interface User: Subject {
+    override val userId: String
+}
+
+interface MultiTenancyUser: Subject {
+    override val userId: String
+
+    override val tenantId: String
+}

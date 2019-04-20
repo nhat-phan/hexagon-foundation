@@ -1,20 +1,13 @@
 package net.ntworld.hexagon.foundation
 
-import net.ntworld.hexagon.foundation.exception.ValidationException
+abstract class ArgumentBuilderBase: ArgumentBuilder {
+    internal var uniqueId: String = ""
+    internal var tenantId: String? = null
+    internal var contextEnvType: String = ""
+    internal var contextEnvId: String = ""
+    internal var contextDatetime: String = ""
 
-abstract class ArgumentBuilderBase<out A : Argument> : ArgumentBuilder, ArgumentFactory<A> {
-    private var uniqueId: String = ""
-    private var tenantId: String? = null
-    private var contextEnvType: String = ""
-    private var contextEnvId: String = ""
-    private var contextDatetime: String = ""
-    protected val errors: MessageBag = MessageBagImpl()
-
-    abstract fun build(uniqueId: String, tenantId: String?, context: ArgumentContext): A
-
-    abstract fun validate(): Boolean
-
-    abstract fun resetBuilder()
+    protected abstract fun resetBuilder()
 
     override fun reset() {
         this.uniqueId = ""
@@ -23,7 +16,6 @@ abstract class ArgumentBuilderBase<out A : Argument> : ArgumentBuilder, Argument
         this.contextEnvId = ""
         this.contextDatetime = ""
 
-        this.errors.clear()
         this.resetBuilder()
     }
 
@@ -44,34 +36,7 @@ abstract class ArgumentBuilderBase<out A : Argument> : ArgumentBuilder, Argument
         this.contextDatetime = value
     }
 
-    protected open fun validateArgumentData(): Boolean {
-        if (this.uniqueId.isBlank()) {
-            this.errors.add("uniqueId", "required")
-        }
-
-        if (this.contextEnvType.isBlank()) {
-            this.errors.add("contextEnvironmentType", "required")
-        }
-
-        if (this.contextEnvId.isBlank()) {
-            this.errors.add("contextEnvironmentId", "required")
-        }
-
-        if (this.contextDatetime.isBlank()) {
-            this.errors.add("contextDatetime", "required")
-        }
-
-        return this.errors.isEmpty()
-    }
-
-    override fun make(): A {
-        if (this.validateArgumentData() && this.validate()) {
-            return this.build(
-                this.uniqueId,
-                this.tenantId,
-                makeArgumentContext(this.contextEnvType, this.contextEnvId, this.contextDatetime)
-            )
-        }
-        throw ValidationException(this.errors)
-    }
+//    override fun getBuilderData(): ArgumentBuilderData {
+//
+//    }
 }

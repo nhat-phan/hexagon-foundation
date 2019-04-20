@@ -13,7 +13,8 @@ class Log<in A : Argument, out R>(handler: Handler<A, R>) : HandlerDecorator<A, 
 internal val CreateTodoPort =
     fun(spi: ITodoServiceProvider): Port<ICreateTodoArgument, ICreateTodoArgumentBuilder, Todo> {
         val builder = CreateTodoArgumentBuilder()
+        val factory = CreateTodoArgumentFactory()
         val handler = Log(CreateTodoHandler())
 
-        return portOf(builder, handler)
+        return portOf(builder, factory, handler)
     }

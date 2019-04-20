@@ -6,22 +6,28 @@ interface ITodo {
     val name: String
 }
 
-data class Todo(override val name: String): ITodo
-
-interface Port<in T> {
-    fun with(args: T)
+interface ITodoBuilder {
+    fun setName(value: String)
 }
 
-class TodoPort: Port<ITodo> {
-    override fun with(args: ITodo) {
-        TODO("not implemented")
+interface ITodoValidator<T> {
+    fun validate(builder: T)
+}
+
+interface ITodoFactory<T, A> {
+    fun make(builder: T): A
+}
+
+class Port {
+    fun makeArgument() {
+
     }
 }
 
 class SampleTests {
     @Test
     fun testMe() {
-        val port: Port<ITodo> = TodoPort()
+
 
     }
 

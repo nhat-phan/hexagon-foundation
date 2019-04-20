@@ -2,7 +2,7 @@ package net.ntworld.hexagon.foundation
 
 internal class PortImpl<in A : Argument, out B : ArgumentBuilder, out R>(
     private val builder: B,
-    private val factory: ArgumentFactory<A>
+    private val factory: ArgumentFactory<B, A>
 ) : Port<A, B, R> {
     private var argument: A? = null
     private var handler: Handler<A, R>? = null
@@ -10,7 +10,7 @@ internal class PortImpl<in A : Argument, out B : ArgumentBuilder, out R>(
 
     constructor(
         builder: B,
-        factory: ArgumentFactory<A>,
+        factory: ArgumentFactory<B, A>,
         handler: Handler<A, R>
     ) : this(builder, factory) {
         this.handler = handler
@@ -18,7 +18,7 @@ internal class PortImpl<in A : Argument, out B : ArgumentBuilder, out R>(
 
     constructor(
         builder: B,
-        factory: ArgumentFactory<A>,
+        factory: ArgumentFactory<B, A>,
         handlerFactoryFn: (argument: A) -> Handler<A, R>
     ) : this(builder, factory) {
         this.handlerFactory = handlerFactoryFn
@@ -32,7 +32,7 @@ internal class PortImpl<in A : Argument, out B : ArgumentBuilder, out R>(
     }
 
     override fun execute(): R {
-        return this.handle(this.argument ?: this.factory.make())
+        return this.handle(this.argument ?: this.factory.make(this.builder))
     }
 
     override fun use(vararg directors: ArgumentDirector<B>): Port<A, B, R> {
