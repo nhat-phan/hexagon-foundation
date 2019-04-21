@@ -1,31 +1,49 @@
 package net.ntworld.hexagon.foundation
 
-abstract class ArgumentBuilderBase : ArgumentBuilder {
+open class ArgumentBuilderBase : ArgumentBuilder {
     private val data: MutableMap<String, Any> = mutableMapOf()
 
-    protected fun set(key: String, value: String) {
+    protected fun set(key: String, value: Any) {
         this.data[key] = value
+    }
+
+    protected fun <T> get(key: String): T {
+        return this.data[key] as T
+    }
+
+    protected fun <T> get(key: String, defaultValue: T): T {
+        val value = this.data[key]
+        if (null === value) {
+            return defaultValue
+        }
+        return value as T
+    }
+
+    protected fun remove(key: String) {
+        this.data.remove(key)
     }
 
     override fun reset() {
         this.data.clear()
     }
 
-    override fun setUniqueId(value: String) {
-        data["uniqueId"] = value
+    override fun setUniqueId(value: String): ArgumentBuilder {
+        data[BuilderKey.UNIQUE_ID.key] = value
+
+        return this
     }
 
-    override fun setTenantId(value: String) {
-        data["tenantId"] = value
+    override fun setContextEnvironment(type: String, id: String): ArgumentBuilder {
+        data[BuilderKey.CONTEXT_ENVIRONMENT_TYPE.key] = type
+        data[BuilderKey.CONTEXT_ENVIRONMENT_ID.key] = id
+
+        return this
     }
 
-    override fun setContextEnvironment(type: String, id: String) {
-        data["contextEnvironmentType"] = type
-        data["contextEnvironmentId"] = id
-    }
+    override fun setContextDatetime(value: String): ArgumentBuilder {
+        data[BuilderKey.CONTEXT_DATETIME.key] = value
 
-    override fun setContextDatetime(value: String) {
-        data["contextDatetime"] = value
+        return this
     }
 
     fun getBuilderData(): ArgumentBuilderData {

@@ -15,9 +15,9 @@ open class ArgumentBuilderDataBase(private val data: Map<String, Any>) : Argumen
         return value as T
     }
 
-    override fun ifNot(key: String, value: Boolean, handler: (value: Any?) -> Unit): Boolean {
+    override fun ifNot(key: String, value: Boolean, lambda: (value: Any?) -> Unit): Boolean {
         if (!value) {
-            handler(this.data[key])
+            lambda(this.data[key])
             return true
         }
         return false

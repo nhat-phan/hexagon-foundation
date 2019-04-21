@@ -1,6 +1,7 @@
 package net.ntworld.hexagon.foundation.abac
 
 import net.ntworld.hexagon.foundation.ArgumentBuilder
+import net.ntworld.hexagon.foundation.abac.internal.ActionEnum
 
 interface AuthorizableArgumentBuilder : ArgumentBuilder {
     fun copyFrom(argument: AuthorizableArgument): AuthorizableArgumentBuilder
@@ -13,21 +14,27 @@ interface AuthorizableArgumentBuilder : ArgumentBuilder {
 
     fun setAuthorizationResource(value: Collection<Resource>): AuthorizableArgumentBuilder
 
+    fun setTenantId(value: String): AuthorizableArgumentBuilder
+
+    fun setUserId(value: String): AuthorizableArgumentBuilder
+
+    fun setContextIpAddress(value: String): AuthorizableArgumentBuilder
+
+    fun setContextLocation(value: String): AuthorizableArgumentBuilder
+
     fun clearAuthorizationAction(): AuthorizableArgumentBuilder
 
     fun clearAuthorizationResource(): AuthorizableArgumentBuilder
 
-    fun withAction(action: String): AuthorizableArgumentBuilder
+    fun withAction(type: String): AuthorizableArgumentBuilder
 
-    fun withAction(action: ActionEnum): AuthorizableArgumentBuilder = this.withAction(action.type)
+    fun withCreateAction(): AuthorizableArgumentBuilder = this.withAction(ActionEnum.CREATE.type)
 
-    fun withCreateAction(): AuthorizableArgumentBuilder = this.withAction(ActionEnum.CREATE)
+    fun withUpdateAction(): AuthorizableArgumentBuilder = this.withAction(ActionEnum.UPDATE.type)
 
-    fun withUpdateAction(): AuthorizableArgumentBuilder = this.withAction(ActionEnum.UPDATE)
+    fun withReadAction(): AuthorizableArgumentBuilder = this.withAction(ActionEnum.READ.type)
 
-    fun withReadAction(): AuthorizableArgumentBuilder = this.withAction(ActionEnum.READ)
-
-    fun withDeleteAction(): AuthorizableArgumentBuilder = this.withAction(ActionEnum.DELETE)
+    fun withDeleteAction(): AuthorizableArgumentBuilder = this.withAction(ActionEnum.DELETE.type)
 
     fun withResource(value: Resource): AuthorizableArgumentBuilder
 }

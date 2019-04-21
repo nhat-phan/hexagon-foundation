@@ -4,19 +4,16 @@ typealias TrueLambda = (value: Any?) -> Unit
 
 interface ArgumentBuilderData : Map<String, Any> {
     val uniqueId: String?
-        get() = this.get("uniqueId") as String?
-
-    val tenantId: String?
-        get() = this.get("tenantId") as String?
+        get() = this.get(BuilderKey.UNIQUE_ID.key) as String?
 
     val contextEnvironmentType: String?
-        get() = this.get("contextEnvironmentType") as String?
+        get() = this.get(BuilderKey.CONTEXT_ENVIRONMENT_TYPE.key) as String?
 
     val contextEnvironmentId: String?
-        get() = this.get("contextEnvironmentId") as String?
+        get() = this.get(BuilderKey.CONTEXT_ENVIRONMENT_ID.key) as String?
 
     val contextDatetime: String?
-        get() = this.get("contextDatetime") as String?
+        get() = this.get(BuilderKey.CONTEXT_DATETIME.key) as String?
 
     fun <T> getValue(key: String): T
 

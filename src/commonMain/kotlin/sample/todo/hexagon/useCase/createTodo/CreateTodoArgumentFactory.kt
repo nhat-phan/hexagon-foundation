@@ -2,17 +2,16 @@ package sample.todo.hexagon.useCase.createTodo
 
 import net.ntworld.hexagon.foundation.ArgumentBuilderData
 import net.ntworld.hexagon.foundation.ArgumentContext
-import net.ntworld.hexagon.foundation.MultiTenancyArgumentFactoryBase
+import net.ntworld.hexagon.foundation.ArgumentFactoryBase
 
-internal class CreateTodoArgumentFactory : MultiTenancyArgumentFactoryBase<CreateTodoArgument>() {
+internal class CreateTodoArgumentFactory : ArgumentFactoryBase<CreateTodoArgument>() {
     override fun build(
         uniqueId: String,
-        tenantId: String,
         context: ArgumentContext,
         data: ArgumentBuilderData
     ): CreateTodoArgument {
         return CreateTodoArgument(
-            uniqueId, tenantId, context, data.getValue("task")
+            uniqueId, context, data.getValue("task")
         )
     }
 
