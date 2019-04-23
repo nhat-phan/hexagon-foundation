@@ -4,8 +4,8 @@ plugins {
 repositories {
     mavenCentral()
 }
-group 'net.ntworld.hexagon.foundation'
-version '0.1.1'
+group 'com.github.nhat-phan.hexagon-foundation'
+version '0.1.2'
 
 apply plugin: 'maven-publish'
 
