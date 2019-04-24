@@ -4,12 +4,12 @@ import net.ntworld.hexagon.foundation.ArgumentBuilderData
 import net.ntworld.hexagon.foundation.BuilderKey
 import net.ntworld.hexagon.foundation.MessageBag
 
-internal object MultiTenancyValidator {
+internal object MultiTenancyUserValidator {
     fun validate(data: ArgumentBuilderData, errors: MessageBag): Boolean {
-        AuthorizableArgumentValidator.validate(data, errors)
+        MultiTenancyValidator.validate(data, errors)
 
-        data.isNotStringOrBlank(BuilderKey.TENANT_ID.key) {
-            errors.add(BuilderKey.TENANT_ID.key, "required")
+        data.isNotStringOrBlank(BuilderKey.USER_ID.key) {
+            errors.add(BuilderKey.USER_ID.key, "required")
         }
 
         return errors.isEmpty()

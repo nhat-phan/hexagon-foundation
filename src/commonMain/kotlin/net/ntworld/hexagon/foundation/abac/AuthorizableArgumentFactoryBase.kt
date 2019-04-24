@@ -2,7 +2,7 @@ package net.ntworld.hexagon.foundation.abac
 
 import net.ntworld.hexagon.foundation.*
 import net.ntworld.hexagon.foundation.exception.ValidationException
-import net.ntworld.hexagon.foundation.validator.ArgumentValidator
+import net.ntworld.hexagon.foundation.validator.AuthorizableArgumentValidator
 
 abstract class AuthorizableArgumentFactoryBase<out A : AuthorizableArgument> :
     ArgumentFactory<AuthorizableArgumentBuilderBase, A> {
@@ -16,14 +16,14 @@ abstract class AuthorizableArgumentFactoryBase<out A : AuthorizableArgument> :
         val data = builder.getBuilderData()
 
         this.errors.clear()
-        if (ArgumentValidator.validate(data, errors) && this.validate(data)) {
+        if (AuthorizableArgumentValidator.validate(data, errors) && this.validate(data)) {
             return this.build(
                 data.uniqueId as String,
                 makeAuthorizationData(
                     this.makeSubject(data),
                     this.makeContext(data),
-                    data[BuilderKey.AUTHORIZATION_ACTION.key] as Action?,
-                    data[BuilderKey.AUTHORIZATION_RESOURCES.key] as Collection<Resource>?
+                    data.getValue(BuilderKey.AUTHORIZATION_ACTION.key),
+                    data.getValue(BuilderKey.AUTHORIZATION_RESOURCES.key)
                 ),
                 data
             )
