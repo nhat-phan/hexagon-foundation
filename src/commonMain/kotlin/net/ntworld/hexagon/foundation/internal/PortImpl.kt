@@ -1,4 +1,6 @@
-package net.ntworld.hexagon.foundation
+package net.ntworld.hexagon.foundation.internal
+
+import net.ntworld.hexagon.foundation.*
 
 internal class PortImpl<in A : Argument, out B : ArgumentBuilder, out R>(
     private val builder: B,
@@ -9,17 +11,17 @@ internal class PortImpl<in A : Argument, out B : ArgumentBuilder, out R>(
     private var handlerFactory: ((argument: A) -> Handler<A, R>)? = null
 
     constructor(
-        builder: B,
-        factory: ArgumentFactory<B, A>,
-        handler: Handler<A, R>
+            builder: B,
+            factory: ArgumentFactory<B, A>,
+            handler: Handler<A, R>
     ) : this(builder, factory) {
         this.handler = handler
     }
 
     constructor(
-        builder: B,
-        factory: ArgumentFactory<B, A>,
-        handlerFactoryFn: (argument: A) -> Handler<A, R>
+            builder: B,
+            factory: ArgumentFactory<B, A>,
+            handlerFactoryFn: (argument: A) -> Handler<A, R>
     ) : this(builder, factory) {
         this.handlerFactory = handlerFactoryFn
     }

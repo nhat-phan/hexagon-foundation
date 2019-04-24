@@ -46,7 +46,7 @@ open class ArgumentBuilderBase : ArgumentBuilder {
         return this
     }
 
-    fun getBuilderData(): ArgumentBuilderData {
+    open fun getBuilderData(): ArgumentBuilderData {
         return argumentBuilderDataOf(this.data.toMap())
     }
 }

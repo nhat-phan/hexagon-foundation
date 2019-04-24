@@ -2,7 +2,6 @@ package net.ntworld.hexagon.foundation
 
 
 open class ArgumentBuilderDataBase(private val data: Map<String, Any>) : ArgumentBuilderData, Map<String, Any> by data {
-
     override fun <T> getValue(key: String): T {
         return this.data[key] as T
     }
@@ -40,8 +39,4 @@ open class ArgumentBuilderDataBase(private val data: Map<String, Any>) : Argumen
         val value = this.data[key]
         return value is Int && value > 0
     }
-}
-
-fun argumentBuilderDataOf(data: Map<String, Any>): ArgumentBuilderData {
-    return ArgumentBuilderDataBase(data)
 }

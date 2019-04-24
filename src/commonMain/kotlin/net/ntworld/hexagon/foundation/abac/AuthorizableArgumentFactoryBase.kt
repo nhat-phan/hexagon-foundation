@@ -2,6 +2,7 @@ package net.ntworld.hexagon.foundation.abac
 
 import net.ntworld.hexagon.foundation.*
 import net.ntworld.hexagon.foundation.exception.ValidationException
+import net.ntworld.hexagon.foundation.internal.MessageBagImpl
 import net.ntworld.hexagon.foundation.validator.AuthorizableArgumentValidator
 
 abstract class AuthorizableArgumentFactoryBase<out A : AuthorizableArgument> :

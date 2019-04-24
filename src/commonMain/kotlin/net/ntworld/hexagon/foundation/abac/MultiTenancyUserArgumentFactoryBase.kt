@@ -4,7 +4,7 @@ import net.ntworld.hexagon.foundation.ArgumentFactory
 import net.ntworld.hexagon.foundation.MessageBag
 import net.ntworld.hexagon.foundation.ArgumentBuilderData
 import net.ntworld.hexagon.foundation.BuilderKey
-import net.ntworld.hexagon.foundation.MessageBagImpl
+import net.ntworld.hexagon.foundation.internal.MessageBagImpl
 import net.ntworld.hexagon.foundation.exception.ValidationException
 import net.ntworld.hexagon.foundation.validator.MultiTenancyUserValidator
 

@@ -1,6 +1,7 @@
 package net.ntworld.hexagon.foundation
 
 import net.ntworld.hexagon.foundation.exception.ValidationException
+import net.ntworld.hexagon.foundation.internal.MessageBagImpl
 import net.ntworld.hexagon.foundation.validator.ArgumentValidator
 
 abstract class ArgumentFactoryBase<A : Argument> : ArgumentFactory<ArgumentBuilderBase, A> {
