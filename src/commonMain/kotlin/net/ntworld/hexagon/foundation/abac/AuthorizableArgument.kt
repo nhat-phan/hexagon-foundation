@@ -5,6 +5,12 @@ import net.ntworld.hexagon.foundation.Argument
 interface AuthorizableArgument : Argument {
     val authorizationData: AuthorizationData<Subject>
 
+    val isGuest: Boolean
+        get() = this.authorizationSubject.isGuest
+
+    val hasUser: Boolean
+        get() = this.authorizationSubject.hasUser
+
     val multiTenancy: Boolean
         get() = null !== tenantId
 

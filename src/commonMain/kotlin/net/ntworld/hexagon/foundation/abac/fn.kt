@@ -1,12 +1,13 @@
 package net.ntworld.hexagon.foundation.abac
 
+import net.ntworld.hexagon.foundation.Handler
 import net.ntworld.hexagon.foundation.abac.internal.*
 
 fun <T : Subject> makeAuthorizationData(
-    subject: T,
-    context: Context,
-    action: Action?,
-    resources: Collection<Resource>?
+        subject: T,
+        context: Context,
+        action: Action?,
+        resources: Collection<Resource>?
 ): AuthorizationData<T> {
     return AuthorizationDataImpl<T>(subject, context, action, resources)
 }
@@ -32,11 +33,11 @@ fun actionRead(): Action {
 }
 
 fun makeAuthorizationContext(
-    environmentType: String,
-    environmentId: String,
-    datetime: String,
-    ipAddress: String,
-    location: String?
+        environmentType: String,
+        environmentId: String,
+        datetime: String,
+        ipAddress: String,
+        location: String?
 ): Context {
     return ContextImpl(environmentType, environmentId, datetime, ipAddress, location)
 }
@@ -46,11 +47,11 @@ fun makeResource(type: String): Resource {
 }
 
 fun makeResource(
-    type: String,
-    id: String,
-    attributes: Map<String, Any>,
-    relationships: Map<String, Any>? = null,
-    meta: Map<String, Any>? = null
+        type: String,
+        id: String,
+        attributes: Map<String, Any>,
+        relationships: Map<String, Any>? = null,
+        meta: Map<String, Any>? = null
 ): Resource {
     return ResourceDataImpl(type, id, attributes, relationships, meta)
 }
@@ -73,4 +74,8 @@ fun userOf(tenantId: String, userId: String): MultiTenancyUser {
 
 fun makeAuthorizationSubject(tenantId: String?, userId: String?): Subject {
     return SubjectImpl(tenantId, userId);
+}
+
+fun <R> authorize(handler: Handler<AuthorizableArgument, R>, authorizer: Authorizer): Handler<AuthorizableArgument, R> {
+    return AuthorizationDecorator(handler, authorizer)
 }
