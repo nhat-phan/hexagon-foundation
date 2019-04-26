@@ -12,17 +12,17 @@ internal class PortAsyncImpl<in A : Argument, out B : ArgumentBuilder, out R>(
     private var handlerFactory: ((argument: A) -> HandlerAsync<A, R>)? = null
 
     constructor(
-            builder: B,
-            factory: ArgumentFactory<B, A>,
-            handler: HandlerAsync<A, R>
+        builder: B,
+        factory: ArgumentFactory<B, A>,
+        handler: HandlerAsync<A, R>
     ) : this(builder, factory) {
         this.handler = handler
     }
 
     constructor(
-            builder: B,
-            factory: ArgumentFactory<B, A>,
-            handlerFactoryFn: (argument: A) -> HandlerAsync<A, R>
+        builder: B,
+        factory: ArgumentFactory<B, A>,
+        handlerFactoryFn: (argument: A) -> HandlerAsync<A, R>
     ) : this(builder, factory) {
         this.handlerFactory = handlerFactoryFn
     }
@@ -34,7 +34,7 @@ internal class PortAsyncImpl<in A : Argument, out B : ArgumentBuilder, out R>(
         return this
     }
 
-    override fun executeAsync(): Deferred<R> {
+    override suspend fun executeAsync(): Deferred<R> {
         return this.handleAsync(this.argument ?: this.factory.make(this.builder))
     }
 
@@ -62,7 +62,7 @@ internal class PortAsyncImpl<in A : Argument, out B : ArgumentBuilder, out R>(
         return this.handler ?: this.handlerFactory!!(argument)
     }
 
-    private fun handleAsync(argument: A): Deferred<R> {
+    private suspend fun handleAsync(argument: A): Deferred<R> {
         return this.makeHandler(argument).handleAsync(argument)
     }
 }

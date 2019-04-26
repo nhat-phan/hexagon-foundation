@@ -3,6 +3,7 @@ package net.ntworld.hexagon.foundation
 
 open class ArgumentBuilderDataBase(private val data: Map<String, Any>) : ArgumentBuilderData, Map<String, Any> by data {
     override fun <T> getValue(key: String): T {
+        @Suppress("UNCHECKED_CAST")
         return this.data[key] as T
     }
 
@@ -11,6 +12,7 @@ open class ArgumentBuilderDataBase(private val data: Map<String, Any>) : Argumen
         if (null === value) {
             return defaultValue
         }
+        @Suppress("UNCHECKED_CAST")
         return value as T
     }
 

@@ -8,6 +8,7 @@ open class ArgumentBuilderBase : ArgumentBuilder {
     }
 
     protected fun <T> get(key: String): T {
+        @Suppress("UNCHECKED_CAST")
         return this.data[key] as T
     }
 
@@ -16,6 +17,7 @@ open class ArgumentBuilderBase : ArgumentBuilder {
         if (null === value) {
             return defaultValue
         }
+        @Suppress("UNCHECKED_CAST")
         return value as T
     }
 

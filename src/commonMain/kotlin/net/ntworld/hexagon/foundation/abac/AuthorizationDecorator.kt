@@ -5,15 +5,17 @@ import net.ntworld.hexagon.foundation.HandlerDecorator
 import net.ntworld.hexagon.foundation.exception.AccessDenyException
 
 class AuthorizationDecorator<out R>(
-        private val wrappee: Handler<AuthorizableArgument, R>,
-        private val authorizer: Authorizer
+    private val wrappee: Handler<AuthorizableArgument, R>,
+    private val authorizer: Authorizer
 ) : HandlerDecorator<AuthorizableArgument, R>(wrappee) {
 
     override fun handle(args: AuthorizableArgument): R {
-        if (this.authorizer.authorize(args)) {
-            return this.wrappee.handle(args)
+        val hasAccess: Boolean = authorizer.authorize(args.authorizationData)
+        if (!hasAccess) {
+            throw AccessDenyException(args)
         }
-        throw AccessDenyException(args)
+
+        return wrappee.handle(args)
     }
 
 }

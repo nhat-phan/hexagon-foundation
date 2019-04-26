@@ -11,5 +11,5 @@ interface PortAsync<in A : Argument, out B : ArgumentBuilder, out R> {
 
     fun with(argument: A): PortAsync<A, B, R>
 
-    fun executeAsync(): Deferred<R>
+    suspend fun executeAsync(): Deferred<R>
 }
