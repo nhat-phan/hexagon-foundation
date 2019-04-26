@@ -6,15 +6,11 @@ import sample.todo.TodoServiceProvider as ITodoServiceProvider
 import sample.todo.CreateTodoArgument as ICreateTodoArgument
 import sample.todo.CreateTodoArgumentBuilder as ICreateTodoArgumentBuilder
 
-class Log<in A : Argument, out R>(handler: Handler<A, R>) : HandlerDecorator<A, R>(handler) {
-
-}
-
 internal val CreateTodoPort =
-    fun(spi: ITodoServiceProvider): Port<ICreateTodoArgument, ICreateTodoArgumentBuilder, Todo> {
+    fun(spi: ITodoServiceProvider): PortAsync<ICreateTodoArgument, ICreateTodoArgumentBuilder, Todo> {
         val builder = CreateTodoArgumentBuilder()
         val factory = CreateTodoArgumentFactory()
-        val handler = Log(CreateTodoHandler())
+        val handler = CreateTodoHandler(spi.todoRepository)
 
         return portOf(builder, factory, handler)
     }
