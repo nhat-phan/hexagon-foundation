@@ -6,7 +6,5 @@ internal data class ContextImpl(
     override val environmentType: String,
     override val environmentId: String,
     override val datetime: String,
-    override val ipAddress: String,
-    override val location: String?
+    override val ipAddress: String
 ) : Context
-

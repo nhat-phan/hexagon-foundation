@@ -6,4 +6,6 @@ interface ArgumentContext {
     val environmentId: String
 
     val datetime: String
+
+    val ipAddress: String
 }

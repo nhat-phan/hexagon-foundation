@@ -1,18 +1,8 @@
 package net.ntworld.hexagon.foundation
 
+import net.ntworld.hexagon.foundation.internal.*
+
 interface ArgumentBuilderData : Map<String, Any> {
-    val uniqueId: String?
-        get() = this.get(BuilderKey.UNIQUE_ID.key) as String?
-
-    val contextEnvironmentType: String?
-        get() = this.get(BuilderKey.CONTEXT_ENVIRONMENT_TYPE.key) as String?
-
-    val contextEnvironmentId: String?
-        get() = this.get(BuilderKey.CONTEXT_ENVIRONMENT_ID.key) as String?
-
-    val contextDatetime: String?
-        get() = this.get(BuilderKey.CONTEXT_DATETIME.key) as String?
-
     fun <T> getValue(key: String): T
 
     fun <T> getValue(key: String, defaultValue: T): T

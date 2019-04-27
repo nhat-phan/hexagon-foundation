@@ -5,7 +5,7 @@ import sample.todo.hexagon.useCase.createTodo.CreateTodoPort
 
 class TodoApi(private val spi: TodoServiceProvider) {
 
-    fun createTodoPort(): PortAsync<CreateTodoArgument, CreateTodoArgumentBuilder, Todo> {
+    fun createTodoPort(): PortAsync<CreateTodoArgumentBuilder, Todo> {
         return CreateTodoPort(this.spi)
     }
 

@@ -1,21 +1,21 @@
 package sample.todo.hexagon.useCase.createTodo
 
-import net.ntworld.hexagon.foundation.ArgumentBuilderData
-import net.ntworld.hexagon.foundation.ArgumentContext
-import net.ntworld.hexagon.foundation.ArgumentFactoryBase
+import net.ntworld.hexagon.foundation.MessageBag
+import net.ntworld.hexagon.foundation.UserArgumentFactoryBase
+import net.ntworld.hexagon.foundation.UserArgumentData
 
-internal class CreateTodoArgumentFactory : ArgumentFactoryBase<CreateTodoArgument>() {
-    override fun build(
-        uniqueId: String,
-        context: ArgumentContext,
-        data: ArgumentBuilderData
-    ): CreateTodoArgument {
+internal class CreateTodoArgumentFactory : UserArgumentFactoryBase<CreateTodoArgument>() {
+    override fun make(data: UserArgumentData): CreateTodoArgument {
         return CreateTodoArgument(
-            uniqueId, context, data.getValue("task")
+            uniqueId = data.uniqueId,
+            currentUserId = data.currentUserId,
+            currentTenantId = data.currentTenantId,
+            context = data.context,
+            task = data.getValue("task")
         )
     }
 
-    override fun validate(data: ArgumentBuilderData): Boolean {
+    override fun validate(data: UserArgumentData, errors: MessageBag): Boolean {
         data.isNotStringOrBlank("task") {
             errors.add("task", "required")
         }

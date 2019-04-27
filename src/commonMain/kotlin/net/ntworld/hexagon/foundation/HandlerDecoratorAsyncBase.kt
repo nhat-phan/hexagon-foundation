@@ -2,12 +2,12 @@ package net.ntworld.hexagon.foundation
 
 import kotlinx.coroutines.Deferred
 
-open class HandlerDecoratorAsync<in A : Argument, out R>(
-    private val wrappee: HandlerAsync<A, R>
+open class HandlerDecoratorAsyncBase<in A : Argument, out R>(
+    private val handler: HandlerAsync<A, R>
 ) : HandlerAsync<A, R> {
 
     override suspend fun handleAsync(args: A): Deferred<R> {
-        return this.wrappee.handleAsync(args)
+        return this.handler.handleAsync(args)
     }
 
 }

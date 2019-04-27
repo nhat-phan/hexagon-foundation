@@ -18,8 +18,10 @@ import kotlin.test.assertTrue
 class SharedDirector : ArgumentDirector<ArgumentBuilder> {
     override fun constructArgument(builder: ArgumentBuilder) {
         builder.setUniqueId("test")
+        builder.setCurrentUserId("test")
         builder.setContextEnvironment("test", "test")
         builder.setContextDatetime("now")
+        builder.setContextIpAddress("now")
     }
 }
 

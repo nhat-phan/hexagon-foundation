@@ -1,13 +1,13 @@
 package net.ntworld.hexagon.foundation.test
 
-import net.ntworld.hexagon.foundation.argumentBuilderDataOf
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.test.assertFalse
+import net.ntworld.hexagon.foundation.ArgumentBuilderDataImpl
 
-class ArgumentBuilderDataBaseTests {
-    private val data = argumentBuilderDataOf(
+class ArgumentBuilderDataImplTest {
+    private val data = ArgumentBuilderDataImpl(
         mapOf(
             "int-zero" to 0,
             "int-positive" to 100,

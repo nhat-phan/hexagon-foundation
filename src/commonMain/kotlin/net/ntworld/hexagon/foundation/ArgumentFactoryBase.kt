@@ -1,31 +1,24 @@
 package net.ntworld.hexagon.foundation
 
 import net.ntworld.hexagon.foundation.exception.ValidationException
+import net.ntworld.hexagon.foundation.internal.ArgumentDataImpl
 import net.ntworld.hexagon.foundation.internal.MessageBagImpl
 import net.ntworld.hexagon.foundation.validator.ArgumentValidator
 
-abstract class ArgumentFactoryBase<A : Argument> : ArgumentFactory<ArgumentBuilderBase, A> {
-    protected val errors: MessageBag = MessageBagImpl()
+abstract class ArgumentFactoryBase<out A : Argument>() : ArgumentFactory<ArgumentBuilderBase, A> {
+    private val errors: MessageBag = MessageBagImpl()
 
-    abstract fun build(uniqueId: String, context: ArgumentContext, data: ArgumentBuilderData): A
+    abstract fun make(data: ArgumentData): A
 
-    abstract fun validate(data: ArgumentBuilderData): Boolean
+    abstract fun validate(builderData: ArgumentBuilderData, errors: MessageBag): Boolean
 
-    override fun make(builder: ArgumentBuilderBase): A {
+    final override fun makeArgument(builder: ArgumentBuilderBase): A {
+        errors.clear()
+
         val data = builder.getBuilderData()
-
-        this.errors.clear()
-        if (ArgumentValidator.validate(data, errors) && this.validate(data)) {
-            return this.build(
-                data.uniqueId as String,
-                makeArgumentContext(
-                    data.contextEnvironmentType as String,
-                    data.contextEnvironmentId as String,
-                    data.contextDatetime as String
-                ),
-                data
-            )
+        if (ArgumentValidator.validateArgument(data, errors) && validate(data, errors)) {
+            return make(ArgumentDataImpl(data))
         }
-        throw ValidationException(this.errors)
+        throw ValidationException(errors)
     }
 }

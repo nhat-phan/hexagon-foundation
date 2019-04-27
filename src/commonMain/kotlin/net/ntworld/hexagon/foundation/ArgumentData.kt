@@ -1,6 +1,6 @@
 package net.ntworld.hexagon.foundation
 
-interface Argument {
+interface ArgumentData : ArgumentBuilderData {
     val uniqueId: String
 
     val currentUserId: String?

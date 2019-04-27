@@ -1,9 +1,9 @@
 package net.ntworld.hexagon.foundation
 
-interface Argument {
+interface UserArgumentData : ArgumentBuilderData {
     val uniqueId: String
 
-    val currentUserId: String?
+    val currentUserId: String
 
     val currentTenantId: String?
 

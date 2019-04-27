@@ -3,11 +3,10 @@ package net.ntworld.hexagon.foundation.internal
 import kotlinx.coroutines.Deferred
 import net.ntworld.hexagon.foundation.*
 
-internal class PortAsyncImpl<in A : Argument, out B : ArgumentBuilder, out R>(
+internal class PortAsyncImpl<in A : Argument, out B : ArgumentBuilder, out R> private constructor(
     private val builder: B,
     private val factory: ArgumentFactory<B, A>
-) : PortAsync<A, B, R> {
-    private var argument: A? = null
+) : PortAsync<B, R> {
     private var handler: HandlerAsync<A, R>? = null
     private var handlerFactory: ((argument: A) -> HandlerAsync<A, R>)? = null
 
@@ -27,35 +26,28 @@ internal class PortAsyncImpl<in A : Argument, out B : ArgumentBuilder, out R>(
         this.handlerFactory = handlerFactoryFn
     }
 
-    override fun reset(): PortAsync<A, B, R> {
-        this.argument = null
+    override fun reset(): PortAsync<B, R> {
         this.builder.reset()
 
         return this
     }
 
-    override suspend fun executeAsync(): Deferred<R> {
-        return this.handleAsync(this.argument ?: this.factory.make(this.builder))
-    }
-
-    override fun use(vararg directors: ArgumentDirector<B>): PortAsync<A, B, R> {
+    override fun use(vararg directors: ArgumentDirector<B>): PortAsync<B, R> {
         for (director in directors) {
-            director.constructArgument(this.builder)
+            director.constructArgument(builder)
         }
 
         return this
     }
 
-    override fun with(constructFn: (builder: B) -> Unit): PortAsync<A, B, R> {
-        constructFn(this.builder)
+    override fun with(constructFn: (builder: B) -> Unit): PortAsync<B, R> {
+        constructFn(builder)
 
         return this
     }
 
-    override fun with(argument: A): PortAsync<A, B, R> {
-        this.argument = argument
-
-        return this
+    override suspend fun executeAsync(): Deferred<R> {
+        return this.handleAsync(this.factory.makeArgument(this.builder))
     }
 
     private fun makeHandler(argument: A): HandlerAsync<A, R> {

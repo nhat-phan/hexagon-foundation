@@ -5,7 +5,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import net.ntworld.hexagon.foundation.HandlerAsync
-import sample.todo.CreateTodoArgument
 import sample.todo.Todo
 import sample.todo.TodoRepository
 

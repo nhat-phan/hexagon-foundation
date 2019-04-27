@@ -1,18 +1,22 @@
 package net.ntworld.hexagon.foundation
 
-open class ArgumentBuilderBase : ArgumentBuilder {
-    private val data: MutableMap<String, Any> = mutableMapOf()
+import net.ntworld.hexagon.foundation.internal.*
 
-    protected fun set(key: String, value: Any) {
-        this.data[key] = value
+open class ArgumentBuilderBase(
+    private val data: MutableMap<String, Any> = mutableMapOf()
+) : ArgumentBuilder, MutableMap<String, Any> by data {
+    override fun reset(): ArgumentBuilder {
+        data.clear()
+
+        return this
     }
 
-    protected fun <T> get(key: String): T {
+    protected fun <T> getValue(key: String): T {
         @Suppress("UNCHECKED_CAST")
         return this.data[key] as T
     }
 
-    protected fun <T> get(key: String, defaultValue: T): T {
+    protected fun <T> getValue(key: String, defaultValue: T): T {
         val value = this.data[key]
         if (null === value) {
             return defaultValue
@@ -21,34 +25,44 @@ open class ArgumentBuilderBase : ArgumentBuilder {
         return value as T
     }
 
-    protected fun remove(key: String) {
-        this.data.remove(key)
-    }
-
-    override fun reset() {
-        this.data.clear()
-    }
-
-    override fun setUniqueId(value: String): ArgumentBuilder {
-        data[BuilderKey.UNIQUE_ID.key] = value
+    final override fun setUniqueId(value: String): ArgumentBuilder {
+        data[BUILDER_KEY_UNIQUE_ID] = value.trim()
 
         return this
     }
 
-    override fun setContextEnvironment(type: String, id: String): ArgumentBuilder {
-        data[BuilderKey.CONTEXT_ENVIRONMENT_TYPE.key] = type
-        data[BuilderKey.CONTEXT_ENVIRONMENT_ID.key] = id
+    final override fun setCurrentUserId(value: String): ArgumentBuilder {
+        data[BUILDER_KEY_CURRENT_USER_ID] = value.trim()
 
         return this
     }
 
-    override fun setContextDatetime(value: String): ArgumentBuilder {
-        data[BuilderKey.CONTEXT_DATETIME.key] = value
+    final override fun setCurrentTenantId(value: String): ArgumentBuilder {
+        data[BUILDER_KEY_CURRENT_TENANT_ID] = value.trim()
 
         return this
     }
 
-    open fun getBuilderData(): ArgumentBuilderData {
-        return argumentBuilderDataOf(this.data.toMap())
+    final override fun setContextEnvironment(type: String, id: String): ArgumentBuilder {
+        data[BUILDER_KEY_CONTEXT_ENVIRONMENT_TYPE] = type.trim()
+        data[BUILDER_KEY_CONTEXT_ENVIRONMENT_ID] = id.trim()
+
+        return this
+    }
+
+    final override fun setContextDatetime(value: String): ArgumentBuilder {
+        data[BUILDER_KEY_CONTEXT_DATETIME] = value.trim()
+
+        return this
+    }
+
+    final override fun setContextIpAddress(value: String): ArgumentBuilder {
+        data[BUILDER_KEY_CONTEXT_IP_ADDRESS] = value.trim()
+
+        return this
+    }
+
+    fun getBuilderData(): ArgumentBuilderData {
+        return ArgumentBuilderDataImpl(data)
     }
 }

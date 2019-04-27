@@ -1,11 +1,11 @@
 package net.ntworld.hexagon.foundation.abac
 
-interface AuthorizationData<out T: Subject> {
-    val subject: T
+interface AuthorizationData {
+    val subject: Subject
 
     val context: Context
 
-    val action: Action?
+    val action: Action
 
-    val resources: Collection<Resource>?
+    val resources: Collection<Resource>
 }
