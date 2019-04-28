@@ -1,16 +1,16 @@
 package sample.todo.hexagon.useCase.createTodo
 
 import net.ntworld.hexagon.foundation.*
-import net.ntworld.hexagon.foundation.abac.authorizeBy
 import sample.todo.Todo
-import sample.todo.TodoServiceProvider as ITodoServiceProvider
-import sample.todo.CreateTodoArgumentBuilder as ICreateTodoArgumentBuilder
+import sample.todo.TodoServiceProvider
+import sample.todo.hexagon.builder.TodoBuilder
+import sample.todo.CreateTodoArgumentBuilder
 
 internal val CreateTodoPort =
-    fun(spi: ITodoServiceProvider): PortAsync<ICreateTodoArgumentBuilder, Todo> {
-        val builder = CreateTodoArgumentBuilderBase()
+    fun(spi: TodoServiceProvider): PortAsync<CreateTodoArgumentBuilder, Todo> {
+        val builder = TodoBuilder()
         val factory = CreateTodoArgumentFactory()
-        val handler = CreateTodoHandler(spi.todoRepository)
+        val handler = CreateTodoHandlerAsync(spi.todoRepository)
 
         return portOf(builder, factory, handler)
     }

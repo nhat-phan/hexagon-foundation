@@ -1,4 +1,4 @@
-package sample.todo.hexagon.data
+package sample.todo.hexagon.entity
 
 import sample.todo.Todo
 

@@ -4,15 +4,11 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestCoroutineScope
 import net.ntworld.hexagon.foundation.ArgumentBuilder
 import net.ntworld.hexagon.foundation.ArgumentDirector
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.After
-import sample.todo.hexagon.data.Todo
+import sample.todo.hexagon.entity.Todo
 import kotlin.system.measureTimeMillis
 import kotlin.test.Test
-import kotlin.test.assertTrue
 
 
 class SharedDirector : ArgumentDirector<ArgumentBuilder> {
