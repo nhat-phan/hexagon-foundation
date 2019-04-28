@@ -12,8 +12,8 @@ internal class CreateTodoHandler(
     private val repository: TodoRepository
 ) : HandlerAsync<CreateTodoArgument, Todo> {
 
-    override suspend fun handleAsync(args: CreateTodoArgument) = GlobalScope.async {
-        val result = create(args.task)
+    override suspend fun handleAsync(argument: CreateTodoArgument) = GlobalScope.async {
+        val result = create(argument.task)
 
         sample.todo.hexagon.data.Todo("1", result[0].task + ":" + result[1].task)
     }

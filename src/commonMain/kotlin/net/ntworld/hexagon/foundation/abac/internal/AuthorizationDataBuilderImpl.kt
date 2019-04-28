@@ -2,9 +2,13 @@ package net.ntworld.hexagon.foundation.abac.internal
 
 import net.ntworld.hexagon.foundation.Argument
 import net.ntworld.hexagon.foundation.ArgumentBuilderBase
+import net.ntworld.hexagon.foundation.MessageBag
 import net.ntworld.hexagon.foundation.abac.*
+import net.ntworld.hexagon.foundation.exception.ValidationException
+import net.ntworld.hexagon.foundation.internal.MessageBagImpl
+import net.ntworld.hexagon.foundation.validator.AuthorizationDataValidator
 
-open class AuthorizationDataBuilderBaseImpl : ArgumentBuilderBase(), AuthorizationDataBuilder {
+internal class AuthorizationDataBuilderImpl : ArgumentBuilderBase(), AuthorizationDataBuilder {
     override fun copyFrom(argument: Argument): AuthorizationDataBuilder {
         this.setSubject(makeSubject(argument.currentTenantId, argument.currentUserId))
         this.setContext(
@@ -73,6 +77,17 @@ open class AuthorizationDataBuilderBaseImpl : ArgumentBuilderBase(), Authorizati
     }
 
     override fun build(): AuthorizationData {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val errors: MessageBag = MessageBagImpl()
+
+        val data = this.getBuilderData()
+        if (AuthorizationDataValidator.validate(data, errors)) {
+            return AuthorizationDataImpl(
+                subject = data.getValue(BUILDER_KEY_AUTHORIZATION_SUBJECT),
+                context = data.getValue(BUILDER_KEY_AUTHORIZATION_CONTEXT),
+                action = data.getValue(BUILDER_KEY_AUTHORIZATION_ACTION),
+                resources = data.getValue(BUILDER_KEY_AUTHORIZATION_RESOURCES)
+            )
+        }
+        throw ValidationException(errors)
     }
 }

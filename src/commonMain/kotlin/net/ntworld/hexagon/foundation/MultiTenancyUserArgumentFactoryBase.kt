@@ -16,7 +16,7 @@ abstract class MultiTenancyUserArgumentFactoryBase<out A : Argument> : ArgumentF
         errors.clear()
 
         val data = MultiTenancyUserArgumentDataImpl(builder.getBuilderData())
-        if (ArgumentValidator.validateMultiTenancyArgument(data, errors) && validate(data, errors)) {
+        if (ArgumentValidator.validateMultiTenancyUserArgument(data, errors) && validate(data, errors)) {
             return make(data)
         }
         throw ValidationException(errors)

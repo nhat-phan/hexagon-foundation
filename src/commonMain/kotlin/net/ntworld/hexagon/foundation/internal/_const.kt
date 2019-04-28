@@ -11,3 +11,5 @@ internal const val BUILDER_KEY_CONTEXT_ENVIRONMENT_TYPE = "foundation.contextEnv
 internal const val BUILDER_KEY_CONTEXT_ENVIRONMENT_ID = "foundation.contextEnvironmentId"
 internal const val BUILDER_KEY_CONTEXT_DATETIME = "foundation.contextDatetime"
 internal const val BUILDER_KEY_CONTEXT_IP_ADDRESS = "foundation.contextIpAddress"
+
+internal const val MESSAGE_REQUIRED = "required"
