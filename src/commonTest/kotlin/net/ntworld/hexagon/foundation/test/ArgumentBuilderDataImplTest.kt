@@ -4,7 +4,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.test.assertFalse
-import net.ntworld.hexagon.foundation.ArgumentBuilderDataImpl
+import net.ntworld.hexagon.foundation.internal.ArgumentBuilderDataImpl
 
 class ArgumentBuilderDataImplTest {
     private val data = ArgumentBuilderDataImpl(

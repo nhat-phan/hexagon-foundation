@@ -5,7 +5,7 @@ import net.ntworld.hexagon.foundation.internal.MessageBagImpl
 import net.ntworld.hexagon.foundation.internal.MultiTenancyUserArgumentDataImpl
 import net.ntworld.hexagon.foundation.validator.ArgumentValidator
 
-abstract class MultiTenancyUserArgumentFactoryBase<out A : Argument> : ArgumentFactory<ArgumentBuilderBase, A> {
+abstract class MultiTenancyUserArgumentFactoryBase<out A : MultiTenancyUserArgument> : ArgumentFactory<ArgumentBuilderBase, A> {
     private val errors: MessageBag = MessageBagImpl()
 
     abstract fun make(data: MultiTenancyUserArgumentData): A

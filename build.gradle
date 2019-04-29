@@ -5,7 +5,7 @@ repositories {
     mavenCentral()
 }
 group 'com.github.nhat-phan.hexagon-foundation'
-version '0.3.0'
+version '0.3.1'
 
 apply plugin: 'maven-publish'
 

@@ -1,6 +1,11 @@
-package net.ntworld.hexagon.foundation
+package net.ntworld.hexagon.foundation.internal
 
-open class ArgumentBuilderDataImpl(private val data: Map<String, Any>) : ArgumentBuilderData, Map<String, Any> by data {
+import net.ntworld.hexagon.foundation.ArgumentBuilderData
+
+internal class ArgumentBuilderDataImpl(
+    private val data: Map<String, Any>
+) : ArgumentBuilderData, Map<String, Any> by data {
+
     override fun <T> getValue(key: String): T {
         @Suppress("UNCHECKED_CAST")
         return this.data[key] as T
@@ -40,4 +45,5 @@ open class ArgumentBuilderDataImpl(private val data: Map<String, Any>) : Argumen
         val value = this.data[key]
         return value is Int && value > 0
     }
+
 }
