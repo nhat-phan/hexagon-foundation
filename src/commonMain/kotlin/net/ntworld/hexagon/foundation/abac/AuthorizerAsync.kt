@@ -4,6 +4,6 @@ import kotlinx.coroutines.Deferred
 
 interface AuthorizerAsync {
 
-    suspend fun authorizeAsync(data: AuthorizationData): Deferred<Boolean>
+    fun authorizeAsync(data: AuthorizationData): Deferred<Boolean>
 
 }

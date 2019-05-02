@@ -46,15 +46,11 @@ internal class PortAsyncImpl<in A : Argument, out B : ArgumentBuilder, out R> pr
         return this
     }
 
-    override suspend fun executeAsync(): Deferred<R> {
-        return this.handleAsync(this.factory.makeArgument(this.builder))
-    }
+    override fun executeAsync() = this.handleAsync(this.factory.makeArgument(this.builder))
 
     private fun makeHandler(argument: A): HandlerAsync<A, R> {
         return this.handler ?: this.handlerFactory!!(argument)
     }
 
-    private suspend fun handleAsync(argument: A): Deferred<R> {
-        return this.makeHandler(argument).handleAsync(argument)
-    }
+    private fun handleAsync(argument: A) = this.makeHandler(argument).handleAsync(argument)
 }

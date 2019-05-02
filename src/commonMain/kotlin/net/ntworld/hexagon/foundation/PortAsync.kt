@@ -9,5 +9,5 @@ interface PortAsync<out B : ArgumentBuilder, out R> {
 
     fun with(constructFn: (builder: B) -> Unit): PortAsync<B, R>
 
-    suspend fun executeAsync(): Deferred<R>
+    fun executeAsync(): Deferred<R>
 }

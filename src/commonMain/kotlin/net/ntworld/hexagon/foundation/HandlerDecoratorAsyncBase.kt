@@ -6,7 +6,7 @@ open class HandlerDecoratorAsyncBase<in A : Argument, out R>(
     private val handler: HandlerAsync<A, R>
 ) : HandlerAsync<A, R> {
 
-    override suspend fun handleAsync(argument: A): Deferred<R> {
+    override fun handleAsync(argument: A): Deferred<R> {
         return this.handler.handleAsync(argument)
     }
 

@@ -1,6 +1,8 @@
 package net.ntworld.hexagon.foundation.abac
 
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import net.ntworld.hexagon.foundation.Argument
 import net.ntworld.hexagon.foundation.HandlerAsync
 import net.ntworld.hexagon.foundation.HandlerDecoratorAsyncBase
@@ -13,7 +15,7 @@ class AuthorizationDecoratorAsync<in A : Argument, out R>(
     private val directors: List<AuthorizationDataDirectorAsync>
 ) : HandlerDecoratorAsyncBase<A, R>(handler) {
 
-    override suspend fun handleAsync(argument: A): Deferred<R> {
+    override fun handleAsync(argument: A) = GlobalScope.async {
         val data = buildAuthorizationData(argument)
 
         val hasAccess: Boolean = authorizer.authorizeAsync(data).await()
@@ -21,7 +23,7 @@ class AuthorizationDecoratorAsync<in A : Argument, out R>(
             throw AccessDenyException(argument, data)
         }
 
-        return super.handleAsync(argument)
+        super.handleAsync(argument).await()
     }
 
     private suspend fun buildAuthorizationData(argument: A): AuthorizationData {

@@ -10,7 +10,6 @@ internal val CreateTodoPort =
     fun(spi: TodoServiceProvider): PortAsync<CreateTodoArgumentBuilder, Todo> {
         val builder = TodoBuilder()
         val factory = CreateTodoArgumentFactory()
-        val handler = CreateTodoHandlerAsync(spi.todoRepository)
 
         return makePortAsync(builder, factory) {
             CreateTodoHandlerAsync(spi.todoRepository)
