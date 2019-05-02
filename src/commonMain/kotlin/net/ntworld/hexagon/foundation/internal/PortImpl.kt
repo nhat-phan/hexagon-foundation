@@ -27,7 +27,7 @@ internal class PortImpl<in A : Argument, out B : ArgumentBuilder, out R> private
         return this
     }
 
-    override fun use(vararg directors: ArgumentDirector<B>): Port<B, R> {
+    override fun use(vararg directors: ArgumentBuildDirector<B>): Port<B, R> {
         for (director in directors) {
             director.constructArgument(builder)
         }

@@ -5,13 +5,13 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import net.ntworld.hexagon.foundation.ArgumentBuilder
-import net.ntworld.hexagon.foundation.ArgumentDirector
+import net.ntworld.hexagon.foundation.ArgumentBuildDirector
 import sample.todo.hexagon.entity.Todo
 import kotlin.system.measureTimeMillis
 import kotlin.test.Test
 
 
-class SharedDirector : ArgumentDirector<ArgumentBuilder> {
+class SharedBuildDirector : ArgumentBuildDirector<ArgumentBuilder> {
     override fun constructArgument(builder: ArgumentBuilder) {
         builder.setUniqueId("test")
         builder.setCurrentUserId("test")
@@ -43,21 +43,21 @@ class ApiTest {
 
         val time = measureTimeMillis {
             val one = async {
-                port.use(SharedDirector())
+                port.use(SharedBuildDirector())
                     .with { it.setTask("one") }
                     .executeAsync()
                     .await()
             }
 
             val two = async {
-                port.use(SharedDirector())
+                port.use(SharedBuildDirector())
                     .with { it.setTask("two") }
                     .executeAsync()
                     .await()
             }
 
             val three = async {
-                port.use(SharedDirector())
+                port.use(SharedBuildDirector())
                     .with { it.setTask("three") }
                     .executeAsync()
                     .await()

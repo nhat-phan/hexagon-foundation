@@ -42,21 +42,21 @@ fun makeResource(
 
 fun <A : Argument, R, T> Handler<A, R>.authorizeBy(
     authorizer: T
-): Handler<A, R> where T : Authorizer, T : AuthorizationDataDirector {
+): Handler<A, R> where T : Authorizer, T : AuthorizationDataBuildDirector {
     return AuthorizationDecorator(this, authorizer, listOf(authorizer))
 }
 
 fun <A : Argument, R> Handler<A, R>.authorizeBy(
     authorizer: Authorizer,
-    director: AuthorizationDataDirector
+    director: AuthorizationDataBuildDirector
 ): Handler<A, R> {
     return AuthorizationDecorator(this, authorizer, listOf(director))
 }
 
 fun <A : Argument, R> Handler<A, R>.authorizeBy(
     authorizer: Authorizer,
-    director: AuthorizationDataDirector,
-    vararg otherDirectors: AuthorizationDataDirector
+    director: AuthorizationDataBuildDirector,
+    vararg otherDirectors: AuthorizationDataBuildDirector
 ): Handler<A, R> {
     return AuthorizationDecorator(this, authorizer, listOf(director) + otherDirectors)
 }

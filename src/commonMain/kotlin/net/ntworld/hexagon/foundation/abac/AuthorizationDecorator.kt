@@ -9,7 +9,7 @@ import net.ntworld.hexagon.foundation.exception.AccessDenyException
 class AuthorizationDecorator<in A : Argument, out R>(
     handler: Handler<A, R>,
     private val authorizer: Authorizer,
-    private val directors: List<AuthorizationDataDirector>
+    private val directors: List<AuthorizationDataBuildDirector>
 ) : HandlerDecoratorBase<A, R>(handler) {
 
     override fun handle(argument: A): R {

@@ -1,5 +1,5 @@
 package net.ntworld.hexagon.foundation
 
-interface ArgumentDirector<in T : ArgumentBuilder> {
+interface ArgumentBuildDirector<in T : ArgumentBuilder> {
     fun constructArgument(builder: T)
 }

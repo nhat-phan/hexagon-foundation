@@ -1,6 +1,5 @@
 package net.ntworld.hexagon.foundation.internal
 
-import kotlinx.coroutines.Deferred
 import net.ntworld.hexagon.foundation.*
 
 internal class PortAsyncImpl<in A : Argument, out B : ArgumentBuilder, out R> private constructor(
@@ -32,7 +31,7 @@ internal class PortAsyncImpl<in A : Argument, out B : ArgumentBuilder, out R> pr
         return this
     }
 
-    override fun use(vararg directors: ArgumentDirector<B>): PortAsync<B, R> {
+    override fun use(vararg directors: ArgumentBuildDirector<B>): PortAsync<B, R> {
         for (director in directors) {
             director.constructArgument(builder)
         }
