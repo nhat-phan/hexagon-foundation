@@ -46,7 +46,7 @@
 //
 //fun test() {
 //    /**
-//     * mock(userRepository) {
+//     * mocking(userRepository) {
 //     *   userRepository::createUser callFake { params ->
 //     *     val x = params.get(1)
 //     *

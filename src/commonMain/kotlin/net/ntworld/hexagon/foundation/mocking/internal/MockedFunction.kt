@@ -1,12 +1,10 @@
-package net.ntworld.hexagon.foundation.mock.internal
+package net.ntworld.hexagon.foundation.mocking.internal
 
-import net.ntworld.hexagon.foundation.mock.InvokeData
-import net.ntworld.hexagon.foundation.mock.ParameterList
+import net.ntworld.hexagon.foundation.mocking.InvokeData
+import net.ntworld.hexagon.foundation.mocking.ParameterList
 import kotlin.reflect.KFunction
 
 class MockedFunction<R>(func: KFunction<R>, private val params: List<Any>) {
-    val name: String = func.name
-
     private var invokeOrdinal: Int = 0
     private var hasResult: Boolean = false
     private var result: Any? = null
@@ -38,7 +36,7 @@ class MockedFunction<R>(func: KFunction<R>, private val params: List<Any>) {
             return result as R
         }
 
-        throw Exception("Could not invoke a mock function, please use mock(...) to set a result or callFake first")
+        throw Exception("Could not invoke a mocking function, please use mocking(...) to set a result or callFake first")
     }
 
     fun setResult(result: R) {
@@ -52,5 +50,11 @@ class MockedFunction<R>(func: KFunction<R>, private val params: List<Any>) {
 
     fun setCallFake(callFake: (ParameterList, InvokeData) -> R) {
         this.callFake2 = callFake
+    }
+
+    companion object {
+        fun getKeyedName(func: KFunction<*>): String {
+            return func.name
+        }
     }
 }
