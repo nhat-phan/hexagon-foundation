@@ -17,12 +17,11 @@ open class ManualMock {
 
     protected fun <R> mockFunction(func: KFunction<R>, vararg params: Any): R {
         val name = MockedFunction.getKeyedName(func)
-        if (data.contains(name)) {
-            throw Exception("Function $name already mocked, please use reset(mocking) before using the mocking again")
+        if (!data.contains(name)) {
+            data[name] = MockedFunction(func)
         }
 
-        val mockedFunction = MockedFunction(func, params.toList())
-        data[name] = mockedFunction
-        return mockedFunction.invoke()
+        @Suppress("UNCHECKED_CAST")
+        return (data[name] as MockedFunction<R>).invoke(params.toList())
     }
 }

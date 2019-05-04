@@ -4,36 +4,59 @@ import net.ntworld.hexagon.foundation.mocking.InvokeData
 import net.ntworld.hexagon.foundation.mocking.ParameterList
 import kotlin.reflect.KFunction
 
-class MockedFunction<R>(func: KFunction<R>, private val params: List<Any>) {
-    private var invokeOrdinal: Int = 0
+internal class MockedFunction<R>(private val func: KFunction<R>) {
     private var hasResult: Boolean = false
     private var result: Any? = null
     private var callFake1: ((ParameterList) -> R)? = null
     private var callFake2: ((ParameterList, InvokeData) -> R)? = null
 
+    private var calledCount: Int = -1
+    private var calledWith1: ((ParameterList) -> Boolean)? = null
+    private var calledWith2: ((ParameterList, InvokeData) -> Boolean)? = null
+
+    private val calls: FunctionCalls = FunctionCalls()
+
     fun reset() {
-        this.invokeOrdinal = 0
         this.hasResult = false
         this.result = null
         this.callFake1 = null
         this.callFake2 = null
+
+        this.calledCount = -1
+        this.calledWith1 = null
+        this.calledWith2 = null
+
+        this.calls.reset()
     }
 
-    fun invoke(): R {
-        val ordinal = invokeOrdinal + 1
-        invokeOrdinal++
+    fun verify() {
+        if (calledCount != -1 && calledCount != calls.count()) {
+            throw Exception("Expect function ${getKeyedName(func)} called ${calledCount} time(s) but it actually called ${calls.count()} time(s).")
+        }
 
+        if (null !== calledWith2 && !calls.verify(calledWith2!!)) {
+            throw Exception("Expect function ${getKeyedName(func)} called with params is failed.")
+        }
+
+        if (null !== calledWith1 && !calls.verify(calledWith1!!)) {
+            throw Exception("Expect function ${getKeyedName(func)} called with params is failed.")
+        }
+
+        this.reset()
+    }
+
+    fun invoke(params: List<Any>): R {
         if (null !== callFake2) {
-            return callFake2!!.invoke(ParameterList(params), InvokeData(ordinal))
+            return calls.callFake(params, callFake2!!)
         }
 
         if (null !== callFake1) {
-            return callFake1!!.invoke(ParameterList(params))
+            return calls.callFake(params, callFake1!!)
         }
 
         if (hasResult) {
             @Suppress("UNCHECKED_CAST")
-            return result as R
+            return calls.returnResult(params, result as R)
         }
 
         throw Exception("Could not invoke a mocking function, please use mocking(...) to set a result or callFake first")
