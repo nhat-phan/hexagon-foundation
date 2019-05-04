@@ -6,6 +6,12 @@ import kotlin.reflect.KFunction
 open class ManualMock {
     private val data: MutableMap<String, MockedFunction<*>> = hashMapOf()
 
+    internal fun verifyAll() {
+        for (mockedFunctions in data.values) {
+            mockedFunctions.verify()
+        }
+    }
+
     internal fun <R> getMockedFunction(func: KFunction<R>): MockedFunction<R> {
         val name = MockedFunction.getKeyedName(func)
         if (data.contains(name)) {

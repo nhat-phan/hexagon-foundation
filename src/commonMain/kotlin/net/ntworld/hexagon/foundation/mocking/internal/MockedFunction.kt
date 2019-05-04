@@ -75,6 +75,18 @@ internal class MockedFunction<R>(private val func: KFunction<R>) {
         this.callFake2 = callFake
     }
 
+    fun setCalledCount(count: Int) {
+        this.calledCount = count
+    }
+
+    fun setCalledWith1(block: (ParameterList) -> Boolean) {
+        this.calledWith1 = block
+    }
+
+    fun setCalledWith2(block: (ParameterList, InvokeData) -> Boolean) {
+        this.calledWith2 = block
+    }
+
     companion object {
         fun getKeyedName(func: KFunction<*>): String {
             return func.name
