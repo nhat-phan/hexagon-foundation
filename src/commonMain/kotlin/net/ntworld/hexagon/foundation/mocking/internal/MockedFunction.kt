@@ -10,6 +10,7 @@ internal class MockedFunction<R>(private val func: KFunction<R>) {
     private var callFake1: ((ParameterList) -> R)? = null
     private var callFake2: ((ParameterList, InvokeData) -> R)? = null
 
+    private var calledAtLeast: Int = -1
     private var calledCount: Int = -1
     private var calledWith1: ((ParameterList) -> Boolean)? = null
     private var calledWith2: ((ParameterList, InvokeData) -> Boolean)? = null
@@ -23,6 +24,7 @@ internal class MockedFunction<R>(private val func: KFunction<R>) {
         this.callFake2 = null
 
         this.calledCount = -1
+        this.calledAtLeast = -1
         this.calledWith1 = null
         this.calledWith2 = null
 
@@ -31,7 +33,11 @@ internal class MockedFunction<R>(private val func: KFunction<R>) {
 
     fun verify() {
         if (calledCount != -1 && calledCount != calls.count()) {
-            throw Exception("Expect function ${getKeyedName(func)} called ${calledCount} time(s) but it actually called ${calls.count()} time(s).")
+            throw Exception("Expect function ${getKeyedName(func)} called $calledCount time(s) but it actually called ${calls.count()} time(s).")
+        }
+
+        if (calledAtLeast != -1 && calledAtLeast < calls.count()) {
+            throw Exception("Expect function ${getKeyedName(func)} called at least $calledAtLeast time(s) but it actually called ${calls.count()} time(s).")
         }
 
         if (null !== calledWith2 && !calls.verify(calledWith2!!)) {
@@ -73,6 +79,10 @@ internal class MockedFunction<R>(private val func: KFunction<R>) {
 
     fun setCallFake(callFake: (ParameterList, InvokeData) -> R) {
         this.callFake2 = callFake
+    }
+
+    fun setCalledAtLeast(count: Int) {
+        this.calledAtLeast = count
     }
 
     fun setCalledCount(count: Int) {

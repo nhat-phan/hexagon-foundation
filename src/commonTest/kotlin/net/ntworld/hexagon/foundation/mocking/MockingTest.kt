@@ -72,7 +72,7 @@ class MockingTest {
         this.serviceProvider.checkEmail("id", "email")
 
         verify(serviceProvider) {
-            ServiceProvider::checkEmail { called = 1 }
+            ServiceProvider::checkEmail called true
         }
     }
 
@@ -85,12 +85,10 @@ class MockingTest {
         this.serviceProvider.checkEmail("id", "email")
 
         verify(serviceProvider) {
-            ServiceProvider::checkEmail {
-                with { params ->
-                    val (id, email) = params
+            ServiceProvider::checkEmail calledWith { params ->
+                val (id, email) = params
 
-                    id == "id" && email == "email"
-                }
+                id == "id" && email == "email"
             }
         }
     }
@@ -104,12 +102,10 @@ class MockingTest {
         this.serviceProvider.checkEmail("id", "email")
 
         verify(serviceProvider) {
-            ServiceProvider::checkEmail {
-                with { params, invokeData ->
-                    val (id, email) = params
+            ServiceProvider::checkEmail calledWith { params, invokeData ->
+                val (id, email) = params
 
-                    invokeData.ordinal == 1 && id == "id" && email == "email"
-                }
+                invokeData.ordinal == 1 && id == "id" && email == "email"
             }
         }
     }
