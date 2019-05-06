@@ -11,7 +11,11 @@ class MockBuilder(private val instance: ManualMock) {
         instance.getMockedFunction(this).setCallFake(fakeImplementation)
     }
 
-    infix fun <R> KFunction<R>.willReturns(block: () -> R) {
+    infix fun <R> KFunction<R>.willReturn(result: R) {
+        instance.getMockedFunction(this).setResult(result)
+    }
+
+    infix fun <R> KFunction<R>.willReturn(block: () -> R) {
         instance.getMockedFunction(this).setResult(block())
     }
 }

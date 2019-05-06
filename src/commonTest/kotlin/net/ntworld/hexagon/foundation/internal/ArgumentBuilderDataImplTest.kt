@@ -1,10 +1,9 @@
-package net.ntworld.hexagon.foundation.test
+package net.ntworld.hexagon.foundation.internal
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.test.assertFalse
-import net.ntworld.hexagon.foundation.internal.ArgumentBuilderDataImpl
 
 class ArgumentBuilderDataImplTest {
     private val data = ArgumentBuilderDataImpl(

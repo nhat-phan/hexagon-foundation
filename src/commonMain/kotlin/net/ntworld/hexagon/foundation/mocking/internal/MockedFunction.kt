@@ -59,7 +59,7 @@ internal class MockedFunction<R>(private val func: KFunction<R>) {
             return calls.returnResult(params, result as R)
         }
 
-        throw Exception("Could not invoke a mocking function, please use mocking(...) to set a result or callFake first")
+        throw Exception("Could not invoke a mocking function, please use mock(...) to set a result or callFake first")
     }
 
     fun setResult(result: R) {

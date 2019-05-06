@@ -46,7 +46,7 @@ internal class FunctionCalls {
     }
 
     fun verify(block: (ParameterList, InvokeData) -> Boolean): Boolean {
-        for (index in 0..count()) {
+        for (index in 0 until count()) {
             if (!block.invoke(calledParams[index], InvokeData(index + 1))) {
                 return false
             }
