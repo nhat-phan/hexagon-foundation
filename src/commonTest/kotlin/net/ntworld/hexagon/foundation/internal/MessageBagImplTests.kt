@@ -151,4 +151,42 @@ class MessageBagImplTests {
         bag.remove("a", "test")
         assertFalse(bag.isNotEmpty())
     }
+
+    @Test
+    fun testOperatorPlus() {
+        val one = this.makeMessageBag()
+        val two = this.makeMessageBag()
+
+        one.add("a", "a1")
+        one.add("a", "a2")
+        two.add("a", "a2")
+        two.add("a", "a3")
+        two.add("b", "b1")
+
+        val result = one + two
+        assertNotSame(one, result)
+        assertNotSame(two, result)
+        assertEquals(
+            mapOf("a" to setOf("a1", "a2", "a3"), "b" to setOf("b1")),
+            result.toMap()
+        )
+    }
+
+    @Test
+    fun testOperatorPlusAssign() {
+        val one = this.makeMessageBag()
+        val two = this.makeMessageBag()
+
+        one.add("a", "a1")
+        one.add("a", "a2")
+        two.add("a", "a2")
+        two.add("a", "a3")
+        two.add("b", "b1")
+
+        one += two
+        assertEquals(
+            mapOf("a" to setOf("a1", "a2", "a3"), "b" to setOf("b1")),
+            one.toMap()
+        )
+    }
 }

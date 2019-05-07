@@ -18,4 +18,8 @@ interface MessageBag {
     fun isEmpty(): Boolean
 
     fun isNotEmpty(): Boolean
+
+    operator fun plus(bag: MessageBag): MessageBag
+
+    operator fun plusAssign(bag: MessageBag)
 }

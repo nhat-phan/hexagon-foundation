@@ -1,7 +1,5 @@
 package net.ntworld.hexagon.foundation
 
-import net.ntworld.hexagon.foundation.internal.*
-
 interface ArgumentBuilderData : Map<String, Any> {
     fun <T> getValue(key: String): T
 

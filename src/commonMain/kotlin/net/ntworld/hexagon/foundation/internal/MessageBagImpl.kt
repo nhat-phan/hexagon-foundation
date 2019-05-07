@@ -59,4 +59,25 @@ internal class MessageBagImpl : MessageBag {
     override fun isNotEmpty(): Boolean {
         return this.messages.isNotEmpty()
     }
+
+    private fun copyFrom(bag: MessageBag) {
+        val source = bag.toMap().entries
+        for (entry in source) {
+            for (message in entry.value) {
+                this.add(entry.key, message)
+            }
+        }
+    }
+
+    override fun plus(bag: MessageBag): MessageBag {
+        val result = MessageBagImpl()
+        result.copyFrom(this)
+        result.copyFrom(bag)
+
+        return result
+    }
+
+    override fun plusAssign(bag: MessageBag) {
+        this.copyFrom(bag)
+    }
 }
