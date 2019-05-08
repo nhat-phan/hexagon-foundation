@@ -26,3 +26,14 @@ fun <A : Argument, B : ArgumentBuilder, R> makePortAsync(
     factory: ArgumentFactory<B, A>,
     handlerFn: (argument: A) -> HandlerAsync<A, R>
 ): PortAsync<B, R> = PortAsyncImpl(builder, factory, handlerFn)
+
+operator fun <T : ArgumentBuilder> ArgumentBuildDirector<T>.plus(buildDirector: ArgumentBuildDirector<T>): ArgumentBuildDirector<T> {
+    if (buildDirector is ArgumentBuildDirectorCollection) {
+        buildDirector.add(this)
+        return buildDirector
+    }
+
+    val collection = ArgumentBuildDirectorCollection(this)
+    collection.add(buildDirector)
+    return collection
+}
