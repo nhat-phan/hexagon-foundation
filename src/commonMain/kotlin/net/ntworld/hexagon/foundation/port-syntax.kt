@@ -1,5 +1,7 @@
 package net.ntworld.hexagon.foundation
 
+import kotlinx.coroutines.Deferred
+
 /**
  * Create Port:
  *
@@ -22,7 +24,7 @@ package net.ntworld.hexagon.foundation
 interface PortUsage<B : ArgumentBuilder, out T> {
     infix fun use(director: ArgumentBuildDirector<B>): PortUsage<B, T>
 
-    infix fun with(block: B.() -> Unit): T
+    infix fun with(block: B.() -> Unit): Deferred<T>
 }
 
 interface API {
@@ -38,7 +40,8 @@ class Jwt() : ArgumentBuildDirector<ArgumentBuilder> {
 
 fun test() {
     val api: API = "" as API
-    val result = api.createUser use Jwt() with {
+    val result = api.createUser use Jwt() + Jwt() with {
         setContextEnvironment("test", "id")
     }
+
 }

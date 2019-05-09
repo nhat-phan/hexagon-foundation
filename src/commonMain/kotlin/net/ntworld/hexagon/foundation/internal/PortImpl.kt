@@ -3,53 +3,34 @@ package net.ntworld.hexagon.foundation.internal
 import net.ntworld.hexagon.foundation.*
 
 internal class PortImpl<in A : Argument, out B : ArgumentBuilder, out R> private constructor(
-    private val builder: B,
-    private val factory: ArgumentFactory<B, A>
-) : Port<B, R> {
+    builder: B,
+    validator: ArgumentValidator<B>,
+    factory: ArgumentFactory<B, A>
+) : PortBase<A, B, R>(builder, validator, factory) {
     private var handler: Handler<A, R>? = null
     private var handlerFactory: ((argument: A) -> Handler<A, R>)? = null
 
-    constructor(builder: B, factory: ArgumentFactory<B, A>, handler: Handler<A, R>) : this(builder, factory) {
+    constructor(
+        builder: B,
+        validator: ArgumentValidator<B>,
+        factory: ArgumentFactory<B, A>,
+        handler: Handler<A, R>
+    ) : this(builder, validator, factory) {
         this.handler = handler
     }
 
     constructor(
         builder: B,
+        validator: ArgumentValidator<B>,
         factory: ArgumentFactory<B, A>,
         handlerFactoryFn: (argument: A) -> Handler<A, R>
-    ) : this(builder, factory) {
+    ) : this(builder, validator, factory) {
         this.handlerFactory = handlerFactoryFn
     }
 
-    override fun reset(): Port<B, R> {
-        this.builder.reset()
+    override fun execute(argument: A): R {
+        val handler = this.handler ?: this.handlerFactory!!(argument)
 
-        return this
-    }
-
-    override fun use(vararg directors: ArgumentBuildDirector<B>): Port<B, R> {
-        for (director in directors) {
-            director.constructArgument(builder)
-        }
-
-        return this
-    }
-
-    override fun with(constructFn: (builder: B) -> Unit): Port<B, R> {
-        constructFn(this.builder)
-
-        return this
-    }
-
-    override fun execute(): R {
-        return this.handle(this.factory.makeArgument(this.builder))
-    }
-
-    private fun makeHandler(argument: A): Handler<A, R> {
-        return this.handler ?: this.handlerFactory!!(argument)
-    }
-
-    private fun handle(argument: A): R {
-        return this.makeHandler(argument).handle(argument)
+        return handler.handle(argument)
     }
 }
