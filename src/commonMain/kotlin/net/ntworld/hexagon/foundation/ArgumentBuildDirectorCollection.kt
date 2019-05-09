@@ -1,7 +1,7 @@
 package net.ntworld.hexagon.foundation
 
 class ArgumentBuildDirectorCollection<T : ArgumentBuilder>(base: ArgumentBuildDirector<T>) : ArgumentBuildDirector<T> {
-    val directors: MutableList<ArgumentBuildDirector<T>> = mutableListOf(base)
+    private val directors: MutableList<ArgumentBuildDirector<T>> = mutableListOf(base)
 
     override fun constructArgument(builder: T) {
         for (director in directors) {

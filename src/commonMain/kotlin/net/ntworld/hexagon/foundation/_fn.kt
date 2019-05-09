@@ -36,3 +36,14 @@ operator fun <T : ArgumentBuilder> ArgumentBuildDirector<T>.plus(buildDirector: 
     collection.add(buildDirector)
     return collection
 }
+
+operator fun <T : ArgumentBuilder> ArgumentValidator<T>.plus(validator: ArgumentValidator<T>): ArgumentValidator<T> {
+    if (validator is ArgumentValidatorCollection) {
+        validator.add(this)
+        return validator
+    }
+
+    val collection = ArgumentValidatorCollection(this)
+    collection.add(validator)
+    return collection
+}

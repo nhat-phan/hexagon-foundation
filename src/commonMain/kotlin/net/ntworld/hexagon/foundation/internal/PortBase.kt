@@ -32,23 +32,6 @@ internal abstract class PortBase<in A : Argument, out B : ArgumentBuilder, out R
 
         return this
     }
-//
-//    private fun validate() {
-//        val errors = MessageBagImpl()
-//        val isValid = validator.validate(builder)
-//            .fold(true) { acc, result ->
-//                if (result.isValid) {
-//                    return@fold acc
-//                }
-//
-//                errors += result.errors
-//                return@fold false
-//            }
-//
-//        if (!isValid) {
-//            throw ValidationException(errors)
-//        }
-//    }
 
     abstract fun execute(argument: A): R
 }
