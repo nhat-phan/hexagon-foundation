@@ -43,21 +43,21 @@ class ApiTest {
         val time = measureTimeMillis {
             val one = async {
                 val result = api.createTodo use SharedBuildDirector() with {
-                    setTask("one")
+                    task = "one"
                 }
                 result.await()
             }
 
             val two = async {
                 val result = api.createTodo use SharedBuildDirector() with {
-                    setTask("two")
+                    task = "two"
                 }
                 result.await()
             }
 
             val three = async {
                 val result = api.createTodo use SharedBuildDirector() with {
-                    setTask("three")
+                    task = "three"
                 }
                 result.await()
             }

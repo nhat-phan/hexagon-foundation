@@ -1,8 +1,7 @@
 package sample.todo.hexagon.useCase.createTodo
 
-import net.ntworld.hexagon.foundation.MessageBag
-import net.ntworld.hexagon.foundation.UserArgumentFactoryBase
-import net.ntworld.hexagon.foundation.UserArgumentData
+import net.ntworld.hexagon.foundation.*
+import sample.todo.CreateTodoArgumentBuilder
 
 internal class CreateTodoArgumentFactory : UserArgumentFactoryBase<CreateTodoArgument>() {
     override fun make(data: UserArgumentData): CreateTodoArgument {
