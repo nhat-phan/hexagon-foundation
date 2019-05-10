@@ -15,6 +15,7 @@ internal abstract class PortBase<in A : Argument, out B : ArgumentBuilder, out R
     }
 
     override fun with(block: B.() -> Unit): R {
+        builder.apply(block)
         if (null !== this.validator) {
             val validationResult = this.validator.validate(builder)
             if (!validationResult.isValid) {

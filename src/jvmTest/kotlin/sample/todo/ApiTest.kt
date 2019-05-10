@@ -39,28 +39,27 @@ class ApiTest {
     fun testCreate() = runBlocking {
         val spi = FakeTodoServiceProvider()
         val api = TodoApi(spi)
-        val port = api.createTodoPort()
 
         val time = measureTimeMillis {
             val one = async {
-                port.use(SharedBuildDirector())
-                    .with { it.setTask("one") }
-                    .executeAsync()
-                    .await()
+                val result = api.createTodo use SharedBuildDirector() with {
+                    setTask("one")
+                }
+                result.await()
             }
 
             val two = async {
-                port.use(SharedBuildDirector())
-                    .with { it.setTask("two") }
-                    .executeAsync()
-                    .await()
+                val result = api.createTodo use SharedBuildDirector() with {
+                    setTask("two")
+                }
+                result.await()
             }
 
             val three = async {
-                port.use(SharedBuildDirector())
-                    .with { it.setTask("three") }
-                    .executeAsync()
-                    .await()
+                val result = api.createTodo use SharedBuildDirector() with {
+                    setTask("three")
+                }
+                result.await()
             }
 
             println(one.await().task + " - " + two.await().task + " - " + three.await().task)

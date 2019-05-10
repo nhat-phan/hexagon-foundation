@@ -4,7 +4,7 @@ import net.ntworld.hexagon.foundation.*
 
 internal class PortImpl<in A : Argument, out B : ArgumentBuilder, out R> private constructor(
     builder: B,
-    validator: ArgumentValidator<B>,
+    validator: ArgumentValidator<B>?,
     factory: ArgumentFactory<B, A>
 ) : PortBase<A, B, R>(builder, validator, factory) {
     private var handler: Handler<A, R>? = null
@@ -12,7 +12,7 @@ internal class PortImpl<in A : Argument, out B : ArgumentBuilder, out R> private
 
     constructor(
         builder: B,
-        validator: ArgumentValidator<B>,
+        validator: ArgumentValidator<B>?,
         factory: ArgumentFactory<B, A>,
         handler: Handler<A, R>
     ) : this(builder, validator, factory) {
@@ -21,7 +21,7 @@ internal class PortImpl<in A : Argument, out B : ArgumentBuilder, out R> private
 
     constructor(
         builder: B,
-        validator: ArgumentValidator<B>,
+        validator: ArgumentValidator<B>?,
         factory: ArgumentFactory<B, A>,
         handlerFactoryFn: (argument: A) -> Handler<A, R>
     ) : this(builder, validator, factory) {

@@ -1,30 +1,59 @@
 package net.ntworld.hexagon.foundation
 
 import net.ntworld.hexagon.foundation.internal.PortAsyncImpl
+import net.ntworld.hexagon.foundation.internal.PortImpl
 
-//fun <A : Argument, B : ArgumentBuilder, R> makePort(
-//    builder: B,
-//    factory: ArgumentFactory<B, A>,
-//    handler: Handler<A, R>
-//): Port<B, R> = PortImpl(builder, factory, handler)
-//
-//fun <A : Argument, B : ArgumentBuilder, R> makePort(
-//    builder: B,
-//    factory: ArgumentFactory<B, A>,
-//    handlerFn: (argument: A) -> Handler<A, R>
-//): Port<B, R> = PortImpl(builder, factory, handlerFn)
+fun <A : Argument, B : ArgumentBuilder, R> makePort(
+    builder: B,
+    factory: ArgumentFactory<B, A>,
+    handler: Handler<A, R>
+): Port<B, R> = PortImpl(builder, null, factory, handler)
+
+fun <A : Argument, B : ArgumentBuilder, R> makePort(
+    builder: B,
+    factory: ArgumentFactory<B, A>,
+    handlerFn: (argument: A) -> Handler<A, R>
+): Port<B, R> = PortImpl(builder, null, factory, handlerFn)
+
+fun <A : Argument, B : ArgumentBuilder, R> makePort(
+    builder: B,
+    validator: ArgumentValidator<B>,
+    factory: ArgumentFactory<B, A>,
+    handler: Handler<A, R>
+): Port<B, R> = PortImpl(builder, validator, factory, handler)
+
+fun <A : Argument, B : ArgumentBuilder, R> makePort(
+    builder: B,
+    validator: ArgumentValidator<B>,
+    factory: ArgumentFactory<B, A>,
+    handlerFn: (argument: A) -> Handler<A, R>
+): Port<B, R> = PortImpl(builder, validator, factory, handlerFn)
 
 fun <A : Argument, B : ArgumentBuilder, R> makePortAsync(
     builder: B,
     factory: ArgumentFactory<B, A>,
     handler: HandlerAsync<A, R>
-): PortAsync<B, R> = PortAsyncImpl(builder, factory, handler)
+): PortAsync<B, R> = PortAsyncImpl(builder, null, factory, handler)
 
 fun <A : Argument, B : ArgumentBuilder, R> makePortAsync(
     builder: B,
     factory: ArgumentFactory<B, A>,
     handlerFn: (argument: A) -> HandlerAsync<A, R>
-): PortAsync<B, R> = PortAsyncImpl(builder, factory, handlerFn)
+): PortAsync<B, R> = PortAsyncImpl(builder, null, factory, handlerFn)
+
+fun <A : Argument, B : ArgumentBuilder, R> makePortAsync(
+    builder: B,
+    validator: ArgumentValidator<B>,
+    factory: ArgumentFactory<B, A>,
+    handler: HandlerAsync<A, R>
+): PortAsync<B, R> = PortAsyncImpl(builder, validator, factory, handler)
+
+fun <A : Argument, B : ArgumentBuilder, R> makePortAsync(
+    builder: B,
+    validator: ArgumentValidator<B>,
+    factory: ArgumentFactory<B, A>,
+    handlerFn: (argument: A) -> HandlerAsync<A, R>
+): PortAsync<B, R> = PortAsyncImpl(builder, validator, factory, handlerFn)
 
 operator fun <T : ArgumentBuilder> ArgumentBuildDirector<T>.plus(buildDirector: ArgumentBuildDirector<T>): ArgumentBuildDirector<T> {
     if (buildDirector is ArgumentBuildDirectorCollection) {
