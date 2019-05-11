@@ -3,6 +3,10 @@ package net.ntworld.hexagon.foundation.validation
 import net.ntworld.hexagon.foundation.ArgumentBuilderBase
 import net.ntworld.hexagon.foundation.ArgumentValidator
 import net.ntworld.hexagon.foundation.ValidationResult
+import net.ntworld.hexagon.foundation.validation.rule.GreaterThan
+import net.ntworld.hexagon.foundation.validation.rule.GreaterThanOrEqual
+import net.ntworld.hexagon.foundation.validation.rule.NotEmpty
+import net.ntworld.hexagon.foundation.validation.rule.Required
 import kotlin.reflect.KProperty
 
 interface Rule {
@@ -24,6 +28,25 @@ class ValidatorBuilder {
 
     infix fun <R> KProperty<R>.should(rule: Rule): ValidatorRuleBuilder {
         TODO()
+    }
+
+    val required: Rule = Required()
+    val notEmpty: Rule = NotEmpty()
+
+    val gt: (value: Int) -> Rule = fun(value: Int): Rule {
+        return GreaterThan(value)
+    }
+
+    val greaterThan: (value: Int) -> Rule = fun(value: Int): Rule {
+        return GreaterThan(value)
+    }
+
+    val gte: (value: Int) -> Rule = fun(value: Int): Rule {
+        return GreaterThanOrEqual(value)
+    }
+
+    val greaterThanOrEqual: (value: Int) -> Rule = fun(value: Int): Rule {
+        return GreaterThanOrEqual(value)
     }
 }
 
