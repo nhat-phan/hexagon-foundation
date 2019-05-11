@@ -57,23 +57,6 @@ operator fun Rule.plus(rule: Rule): Rule {
     TODO("here")
 }
 
-object required: Rule {
-    override val message: String
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-
-    override fun passes(attribute: String, value: Any?): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-}
-
-object notEmpty: Rule {
-    override val message: String
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-
-    override fun passes(attribute: String, value: Any?): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-}
 
 fun test() {
     Validator<Test> {
@@ -82,7 +65,7 @@ fun test() {
             message = "required"
         }
 
-        Test::task should notEmpty and required otherwise {
+        Test::task should gt(3) and required and notEmpty otherwise {
             message = "required"
         }
     }
