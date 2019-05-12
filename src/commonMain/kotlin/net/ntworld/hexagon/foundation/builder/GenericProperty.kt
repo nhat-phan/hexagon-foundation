@@ -2,7 +2,7 @@ package net.ntworld.hexagon.foundation.builder
 
 import kotlin.reflect.KProperty
 
-class GenericProperty<T : Any>(private val options: GenericPropertyOptions<T>) : Property<T> {
+open class GenericProperty<T : Any>(private val options: GenericPropertyOptions<T>) : Property<T> {
     override fun hasDefaultValue(): Boolean {
         return null !== options.propertyDefaultValue
     }
