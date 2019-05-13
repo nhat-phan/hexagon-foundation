@@ -38,7 +38,7 @@ fun Builder.string(
     sanitize: ((String) -> String)? = null,
     trim: Boolean = false,
     uppercase: Boolean = false,
-    lowercase: Boolean,
+    lowercase: Boolean = false,
     name: String? = null,
     default: String? = null
 ) = StringProperty(StringPropertyOptions(name, default, trim, uppercase, lowercase, sanitize))

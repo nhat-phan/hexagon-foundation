@@ -15,7 +15,7 @@ class StringProperty(private val options: StringPropertyOptions) : GenericProper
         }
 
         if (options.lowercase) {
-            sanitizers.add { it.toUpperCase() }
+            sanitizers.add { it.toLowerCase() }
         }
 
         val sanitizer = options.propertySanitizer
