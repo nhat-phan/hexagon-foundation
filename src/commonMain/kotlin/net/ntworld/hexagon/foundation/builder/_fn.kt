@@ -46,5 +46,8 @@ fun Builder.string(
 fun Builder.string(block: StringPropertyOptions.() -> Unit) =
     StringProperty(StringPropertyOptions().apply(block))
 
+fun <T> Builder.nullable(block: Builder.() -> Property<T>): NullableProperty<T> = NullableProperty(block.invoke(this))
+fun <T> Builder.nullable(property: Property<T>): NullableProperty<T> = NullableProperty(property)
+
 // fun <T> Builder.array(name: String? = null, default: Array<T>? = null) = type(name, default)
 // fun <T> Builder.array(block: GenericPropertyOptions<Array<T>>.() -> Unit) = type(block)
