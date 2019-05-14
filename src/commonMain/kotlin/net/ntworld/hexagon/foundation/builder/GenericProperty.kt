@@ -12,7 +12,7 @@ open class GenericProperty<T : Any>(private val options: GenericPropertyOptions<
     }
 
     override fun getPropertyKey(property: KProperty<*>): String {
-        return options.propertyName ?: property.name
+        return property.name
     }
 
     override fun getValue(builder: Builder, property: KProperty<*>): T {

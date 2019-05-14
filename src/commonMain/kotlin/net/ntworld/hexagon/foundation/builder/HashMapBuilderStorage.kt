@@ -5,6 +5,7 @@ class HashMapBuilderStorage : BuilderStorage {
 
     override fun containsKey(key: String): Boolean = data.containsKey(key)
 
+    @Suppress("UNCHECKED_CAST")
     override fun <T> get(key: String): T = data[key] as T
 
     override fun <T> set(key: String, value: T) {

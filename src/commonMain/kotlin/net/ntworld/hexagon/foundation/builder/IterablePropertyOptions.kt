@@ -1,11 +1,10 @@
 package net.ntworld.hexagon.foundation.builder
 
 class IterablePropertyOptions<E : Any, T : Iterable<E>>(
-    name: String? = null,
     defaultValue: T? = null,
     filter: ((E) -> Boolean)? = null,
     sanitize: ((T) -> T)? = null
-) : GenericPropertyOptions<T>(name, defaultValue) {
+) : GenericPropertyOptions<T>(defaultValue) {
     lateinit var filter: (E) -> Boolean
     lateinit var sanitize: (T) -> T
 

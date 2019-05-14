@@ -1,13 +1,12 @@
 package net.ntworld.hexagon.foundation.builder
 
 class StringPropertyOptions internal constructor(
-    name: String? = null,
     defaultValue: String? = null,
     trim: Boolean = false,
     uppercase: Boolean = false,
     lowercase: Boolean = false,
     sanitize: ((String) -> String)? = null
-) : GenericPropertyOptions<String>(name, defaultValue) {
+) : GenericPropertyOptions<String>(defaultValue) {
     var trim: Boolean = trim
     var uppercase: Boolean = uppercase
     var lowercase: Boolean = lowercase

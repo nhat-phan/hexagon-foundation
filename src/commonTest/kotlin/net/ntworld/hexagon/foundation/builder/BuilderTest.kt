@@ -9,11 +9,7 @@ class BuilderTest {
     interface PrimitivePropertyBuilder<T> : Builder {
         var property: T
 
-        var propertyNamed: T
-
         var propertyWithDefaultValue: T
-
-        var propertyNamedWithDefaultValue: T
     }
 
     @Test
@@ -22,9 +18,7 @@ class BuilderTest {
             override val builderStorage = HashMapBuilderStorage()
 
             override var property by boolean()
-            override var propertyNamed by boolean(name = "property_named")
             override var propertyWithDefaultValue by boolean(default = true)
-            override var propertyNamedWithDefaultValue by boolean(name = "property_named_with_default", default = true)
         }
         runPrimitivePropertyBuilderTest(BooleanBuilder(), true, false)
 
@@ -32,9 +26,7 @@ class BuilderTest {
             override val builderStorage = HashMapBuilderStorage()
 
             override var property by byte()
-            override var propertyNamed by byte(name = "property_named")
             override var propertyWithDefaultValue by byte(default = 127)
-            override var propertyNamedWithDefaultValue by byte(name = "property_named_with_default", default = 127)
         }
         runPrimitivePropertyBuilderTest(ByteBuilder(), 127, 49)
     }
@@ -47,16 +39,9 @@ class BuilderTest {
         assertFalse(builder.builderStorage.containsKey("propertyWithDefaultValue"))
         assertEquals(defaultValue, builder.propertyWithDefaultValue)
 
-        assertFalse(builder.builderStorage.containsKey("property_named_with_default"))
-        assertEquals(defaultValue, builder.propertyNamedWithDefaultValue)
-
         builder.propertyWithDefaultValue = testValue
         assertTrue(builder.builderStorage.containsKey("propertyWithDefaultValue"))
         assertEquals(testValue, builder.propertyWithDefaultValue)
-
-        builder.propertyNamedWithDefaultValue = testValue
-        assertTrue(builder.builderStorage.containsKey("property_named_with_default"))
-        assertEquals(testValue, builder.propertyNamedWithDefaultValue)
     }
 
     @Test
