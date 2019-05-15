@@ -48,24 +48,12 @@ fun Builder.string(block: StringPropertyOptions.() -> Unit) =
 fun <T> Builder.nullable(block: Builder.() -> Property<T>): NullableProperty<T> = NullableProperty(block.invoke(this))
 fun <T> Builder.nullable(property: Property<T>): NullableProperty<T> = NullableProperty(property)
 
-fun <T : Any> Builder.array(
-    default: Array<T>? = null,
-    filter: ((T) -> Boolean)? = null,
-    map: ((T) -> T)? = null,
-    sanitize: ((Array<T>) -> Array<T>)? = null
-// ) = IterablePropertyFactory.makeArray(IterablePropertyOptions(default, filter, map, sanitize))
-) = generic(default)
-
-fun <T : Any> Builder.array(block: IterablePropertyOptions<T, Array<T>>.() -> Unit) =
-    generic(block)
-// IterablePropertyFactory.makeArray(IterablePropertyOptions<T, Array<T>>().apply(block))
-
 fun Builder.booleanArray(
     default: BooleanArray? = null,
     filter: ((Boolean) -> Boolean)? = null,
     map: ((Boolean) -> Boolean)? = null,
     sanitize: ((BooleanArray) -> BooleanArray)? = null
-) = IterablePropertyFactory.makeBooleanArray(IterablePropertyOptions(default, filter, map, sanitize))
+) = IterablePropertyFactory.makeBooleanArray(IterablePropertyOptions(default, map, filter, sanitize))
 
 fun Builder.booleanArray(block: IterablePropertyOptions<Boolean, BooleanArray>.() -> Unit) =
     IterablePropertyFactory.makeBooleanArray(IterablePropertyOptions<Boolean, BooleanArray>().apply(block))
@@ -75,7 +63,20 @@ fun Builder.byteArray(
     filter: ((Byte) -> Boolean)? = null,
     map: ((Byte) -> Byte)? = null,
     sanitize: ((ByteArray) -> ByteArray)? = null
-) = IterablePropertyFactory.makeByteArray(IterablePropertyOptions(default, filter, map, sanitize))
+) = IterablePropertyFactory.makeByteArray(IterablePropertyOptions(default, map, filter, sanitize))
 
 fun Builder.byteArray(block: IterablePropertyOptions<Byte, ByteArray>.() -> Unit) =
     IterablePropertyFactory.makeByteArray(IterablePropertyOptions<Byte, ByteArray>().apply(block))
+
+// -----------------------------------------------------
+// Array is special one, we have to use inline & reified
+// -----------------------------------------------------
+inline fun <reified T> Builder.array(
+    default: Array<T>? = null,
+    noinline filter: ((T) -> Boolean)? = null,
+    noinline map: ((T) -> T)? = null,
+    noinline sanitize: ((Array<T>) -> Array<T>)? = null
+) = makeArrayProperty(ArrayPropertyOptions(default, map, filter, sanitize))
+
+inline fun <reified T> Builder.array(block: ArrayPropertyOptions<T>.() -> Unit) =
+    makeArrayProperty(ArrayPropertyOptions<T>().apply(block))

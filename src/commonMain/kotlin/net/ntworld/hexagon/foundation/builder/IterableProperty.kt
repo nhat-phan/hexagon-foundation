@@ -9,14 +9,14 @@ class IterableProperty<E : Any, T : Any>(
 ) : GenericProperty<T>(options) {
     override fun getValue(builder: Builder, property: KProperty<*>): T {
         var result = super.getValue(builder, property)
-        val filter = options.propertyFilter
-        if (null !== filter) {
-            result = filterFn(result, filter)
-        }
-
         val map = options.propertyMap
         if (null !== map) {
             result = mapFn(result, map)
+        }
+
+        val filter = options.propertyFilter
+        if (null !== filter) {
+            result = filterFn(result, filter)
         }
 
         val sanitizer = options.propertySanitizer

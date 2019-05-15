@@ -16,16 +16,7 @@ open class GenericProperty<T : Any>(private val options: GenericPropertyOptions<
     }
 
     override fun getValue(builder: Builder, property: KProperty<*>): T {
-        val key = this.getPropertyKey(property)
-
-        if (builder.builderStorage.containsKey(key)) {
-            return builder.builderStorage.get(key)
-        }
-
-        if (this.hasDefaultValue()) {
-            return this.getDefaultValue()
-        }
-        throw Exception("")
+        return readValue(builder, property, this)
     }
 
     override fun setValue(builder: Builder, property: KProperty<*>, value: T) {
@@ -33,5 +24,20 @@ open class GenericProperty<T : Any>(private val options: GenericPropertyOptions<
             this.getPropertyKey(property),
             value
         )
+    }
+
+    companion object {
+        fun <T> readValue(builder: Builder, property: KProperty<*>, builderProperty: Property<T>): T {
+            val key = builderProperty.getPropertyKey(property)
+
+            if (builder.builderStorage.containsKey(key)) {
+                return builder.builderStorage.get(key)
+            }
+
+            if (builderProperty.hasDefaultValue()) {
+                return builderProperty.getDefaultValue()
+            }
+            throw Exception("")
+        }
     }
 }

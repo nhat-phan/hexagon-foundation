@@ -1,14 +1,14 @@
 package net.ntworld.hexagon.foundation.builder
 
-class IterablePropertyOptions<E : Any, T: Any>(
-    defaultValue: T? = null,
-    map: ((E) -> E)? = null,
-    filter: ((E) -> Boolean)? = null,
-    sanitize: ((T) -> T)? = null
-) : GenericPropertyOptions<T>(defaultValue) {
-    lateinit var filter: (E) -> Boolean
-    lateinit var map: (E) -> E
-    lateinit var sanitize: (T) -> T
+class ArrayPropertyOptions<T>(
+    defaultValue: Array<T>? = null,
+    map: ((T) -> T)? = null,
+    filter: ((T) -> Boolean)? = null,
+    sanitize: ((Array<T>) -> Array<T>)? = null
+) : GenericPropertyOptions<Array<T>>(defaultValue) {
+    lateinit var filter: (T) -> Boolean
+    lateinit var map: (T) -> T
+    lateinit var sanitize: (Array<T>) -> Array<T>
 
     init {
         if (null !== map) {
@@ -24,7 +24,7 @@ class IterablePropertyOptions<E : Any, T: Any>(
         }
     }
 
-    internal val propertyFilter: ((E) -> Boolean)?
+    val propertyFilter: ((T) -> Boolean)?
         get() {
             if (this::filter.isInitialized) {
                 return this.filter
@@ -32,7 +32,7 @@ class IterablePropertyOptions<E : Any, T: Any>(
             return null
         }
 
-    internal val propertyMap: ((E) -> E)?
+    val propertyMap: ((T) -> T)?
         get() {
             if (this::map.isInitialized) {
                 return this.map
@@ -40,7 +40,7 @@ class IterablePropertyOptions<E : Any, T: Any>(
             return null
         }
 
-    internal val propertySanitizer: ((T) -> T)?
+    val propertySanitizer: ((Array<T>) -> Array<T>)?
         get() {
             if (this::sanitize.isInitialized) {
                 return this.sanitize

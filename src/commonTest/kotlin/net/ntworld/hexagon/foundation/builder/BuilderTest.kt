@@ -95,8 +95,6 @@ class BuilderTest {
             var f by string(default = " Test ", uppercase = true)
             var g by string(default = " Test ", lowercase = true)
             var h by string(default = " Test ", sanitize = { it.toUpperCase() })
-
-            // var n by array<String>(default = arrayOf(), filter = { it.trim().isNotEmpty() })
         }
 
         val builderWithDefault = SampleWithDefaultBuilder()
@@ -132,5 +130,18 @@ class BuilderTest {
         assertEquals(" TEST ", builderWithDefault.h)
         builderWithDefault.h = "   VaLuE   "
         assertEquals("   VALUE   ", builderWithDefault.h)
+    }
+
+    @Test
+    fun testArrayProperty() {
+        class SampleBuilder : Builder {
+            override val builderStorage = HashMapBuilderStorage()
+
+            var strings by array<String>(map = { it.trim() })
+        }
+
+        val builder = SampleBuilder()
+        builder.strings = arrayOf("  a  ", "   b", "c    ")
+        assertTrue(arrayOf("a", "b", "c").contentDeepEquals(builder.strings))
     }
 }
