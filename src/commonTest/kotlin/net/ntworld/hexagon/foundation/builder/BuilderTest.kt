@@ -95,7 +95,10 @@ class BuilderTest {
             var f by string(default = " Test ", uppercase = true)
             var g by string(default = " Test ", lowercase = true)
             var h by string(default = " Test ", sanitize = { it.toUpperCase() })
+
+            // var n by array<String>(default = arrayOf(), filter = { it.trim().isNotEmpty() })
         }
+
         val builderWithDefault = SampleWithDefaultBuilder()
 
         assertEquals(" Test ", builderWithDefault.a)

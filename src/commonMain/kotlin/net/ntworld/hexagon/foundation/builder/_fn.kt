@@ -48,5 +48,34 @@ fun Builder.string(block: StringPropertyOptions.() -> Unit) =
 fun <T> Builder.nullable(block: Builder.() -> Property<T>): NullableProperty<T> = NullableProperty(block.invoke(this))
 fun <T> Builder.nullable(property: Property<T>): NullableProperty<T> = NullableProperty(property)
 
-// fun <T> Builder.array(default: Array<T>? = null) = type(default)
-// fun <T> Builder.array(block: GenericPropertyOptions<Array<T>>.() -> Unit) = type(block)
+fun <T : Any> Builder.array(
+    default: Array<T>? = null,
+    filter: ((T) -> Boolean)? = null,
+    map: ((T) -> T)? = null,
+    sanitize: ((Array<T>) -> Array<T>)? = null
+// ) = IterablePropertyFactory.makeArray(IterablePropertyOptions(default, filter, map, sanitize))
+) = generic(default)
+
+fun <T : Any> Builder.array(block: IterablePropertyOptions<T, Array<T>>.() -> Unit) =
+    generic(block)
+// IterablePropertyFactory.makeArray(IterablePropertyOptions<T, Array<T>>().apply(block))
+
+fun Builder.booleanArray(
+    default: BooleanArray? = null,
+    filter: ((Boolean) -> Boolean)? = null,
+    map: ((Boolean) -> Boolean)? = null,
+    sanitize: ((BooleanArray) -> BooleanArray)? = null
+) = IterablePropertyFactory.makeBooleanArray(IterablePropertyOptions(default, filter, map, sanitize))
+
+fun Builder.booleanArray(block: IterablePropertyOptions<Boolean, BooleanArray>.() -> Unit) =
+    IterablePropertyFactory.makeBooleanArray(IterablePropertyOptions<Boolean, BooleanArray>().apply(block))
+
+fun Builder.byteArray(
+    default: ByteArray? = null,
+    filter: ((Byte) -> Boolean)? = null,
+    map: ((Byte) -> Byte)? = null,
+    sanitize: ((ByteArray) -> ByteArray)? = null
+) = IterablePropertyFactory.makeByteArray(IterablePropertyOptions(default, filter, map, sanitize))
+
+fun Builder.byteArray(block: IterablePropertyOptions<Byte, ByteArray>.() -> Unit) =
+    IterablePropertyFactory.makeByteArray(IterablePropertyOptions<Byte, ByteArray>().apply(block))
