@@ -1,5 +1,9 @@
 package net.ntworld.hexagon.foundation.builder
 
+// -----------------------------------------------------
+// Generic
+// -----------------------------------------------------
+
 fun <T : Any> Builder.generic(default: T? = null) =
     GenericProperty(GenericPropertyOptions(default))
 
@@ -9,6 +13,14 @@ fun <T : Any> Builder.generic(block: GenericPropertyOptions<T>.() -> Unit) =
 fun <T : Any> Builder.type(default: T? = null) = generic(default)
 
 fun <T : Any> Builder.type(block: GenericPropertyOptions<T>.() -> Unit) = generic(block)
+
+fun <T : Any> Builder.custom(default: T? = null) = generic(default)
+
+fun <T : Any> Builder.custom(block: GenericPropertyOptions<T>.() -> Unit) = generic(block)
+
+// -----------------------------------------------------
+// Primitive types
+// -----------------------------------------------------
 
 fun Builder.boolean(default: Boolean? = null) = generic(default)
 fun Builder.boolean(block: GenericPropertyOptions<Boolean>.() -> Unit) = generic(block)
@@ -45,8 +57,16 @@ fun Builder.string(
 fun Builder.string(block: StringPropertyOptions.() -> Unit) =
     StringProperty(StringPropertyOptions().apply(block))
 
+// -----------------------------------------------------
+// Nullable
+// -----------------------------------------------------
+
 fun <T> Builder.nullable(block: Builder.() -> Property<T>): NullableProperty<T> = NullableProperty(block.invoke(this))
 fun <T> Builder.nullable(property: Property<T>): NullableProperty<T> = NullableProperty(property)
+
+// -----------------------------------------------------
+// TypedArray types
+// -----------------------------------------------------
 
 fun Builder.booleanArray(
     default: BooleanArray? = null,
@@ -129,8 +149,53 @@ fun Builder.charArray(block: IterablePropertyOptions<Char, CharArray>.() -> Unit
     IterablePropertyFactory.makeCharArray(IterablePropertyOptions<Char, CharArray>().apply(block))
 
 // -----------------------------------------------------
+// Collection types
+// -----------------------------------------------------
+
+fun <E : Any> Builder.collection(
+    default: Collection<E>? = null,
+    filter: ((E) -> Boolean)? = null,
+    map: ((E) -> E)? = null,
+    sanitize: ((Collection<E>) -> Collection<E>)? = null
+) = IterablePropertyFactory.makeCollection(IterablePropertyOptions(default, map, filter, sanitize))
+
+fun <E : Any> Builder.collection(block: IterablePropertyOptions<E, Collection<E>>.() -> Unit) =
+    IterablePropertyFactory.makeCollection(IterablePropertyOptions<E, Collection<E>>().apply(block))
+
+fun <E : Any> Builder.list(
+    default: List<E>? = null,
+    filter: ((E) -> Boolean)? = null,
+    map: ((E) -> E)? = null,
+    sanitize: ((List<E>) -> List<E>)? = null
+) = IterablePropertyFactory.makeList(IterablePropertyOptions(default, map, filter, sanitize))
+
+fun <E : Any> Builder.list(block: IterablePropertyOptions<E, List<E>>.() -> Unit) =
+    IterablePropertyFactory.makeList(IterablePropertyOptions<E, List<E>>().apply(block))
+
+fun <E : Any> Builder.set(
+    default: Set<E>? = null,
+    filter: ((E) -> Boolean)? = null,
+    map: ((E) -> E)? = null,
+    sanitize: ((Set<E>) -> Set<E>)? = null
+) = IterablePropertyFactory.makeSet(IterablePropertyOptions(default, map, filter, sanitize))
+
+fun <E : Any> Builder.set(block: IterablePropertyOptions<E, Set<E>>.() -> Unit) =
+    IterablePropertyFactory.makeSet(IterablePropertyOptions<E, Set<E>>().apply(block))
+
+fun <K, V> Builder.map(
+    default: Map<K, V>? = null,
+    filter: ((Map.Entry<K, V>) -> Boolean)? = null,
+    map: ((Map.Entry<K, V>) -> Map.Entry<K, V>)? = null,
+    sanitize: ((Map<K, V>) -> Map<K, V>)? = null
+) = IterablePropertyFactory.makeMap(IterablePropertyOptions(default, map, filter, sanitize))
+
+fun <K, V> Builder.map(block: IterablePropertyOptions<Map.Entry<K, V>, Map<K, V>>.() -> Unit) =
+    IterablePropertyFactory.makeMap(IterablePropertyOptions<Map.Entry<K, V>, Map<K, V>>().apply(block))
+
+// -----------------------------------------------------
 // Array is special one, we have to use inline & reified
 // -----------------------------------------------------
+
 inline fun <reified T> Builder.array(
     default: Array<T>? = null,
     noinline filter: ((T) -> Boolean)? = null,
