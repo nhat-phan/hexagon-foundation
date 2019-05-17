@@ -68,6 +68,66 @@ fun Builder.byteArray(
 fun Builder.byteArray(block: IterablePropertyOptions<Byte, ByteArray>.() -> Unit) =
     IterablePropertyFactory.makeByteArray(IterablePropertyOptions<Byte, ByteArray>().apply(block))
 
+fun Builder.shortArray(
+    default: ShortArray? = null,
+    filter: ((Short) -> Boolean)? = null,
+    map: ((Short) -> Short)? = null,
+    sanitize: ((ShortArray) -> ShortArray)? = null
+) = IterablePropertyFactory.makeShortArray(IterablePropertyOptions(default, map, filter, sanitize))
+
+fun Builder.shortArray(block: IterablePropertyOptions<Short, ShortArray>.() -> Unit) =
+    IterablePropertyFactory.makeShortArray(IterablePropertyOptions<Short, ShortArray>().apply(block))
+
+fun Builder.intArray(
+    default: IntArray? = null,
+    filter: ((Int) -> Boolean)? = null,
+    map: ((Int) -> Int)? = null,
+    sanitize: ((IntArray) -> IntArray)? = null
+) = IterablePropertyFactory.makeIntArray(IterablePropertyOptions(default, map, filter, sanitize))
+
+fun Builder.intArray(block: IterablePropertyOptions<Int, IntArray>.() -> Unit) =
+    IterablePropertyFactory.makeIntArray(IterablePropertyOptions<Int, IntArray>().apply(block))
+
+fun Builder.longArray(
+    default: LongArray? = null,
+    filter: ((Long) -> Boolean)? = null,
+    map: ((Long) -> Long)? = null,
+    sanitize: ((LongArray) -> LongArray)? = null
+) = IterablePropertyFactory.makeLongArray(IterablePropertyOptions(default, map, filter, sanitize))
+
+fun Builder.longArray(block: IterablePropertyOptions<Long, LongArray>.() -> Unit) =
+    IterablePropertyFactory.makeLongArray(IterablePropertyOptions<Long, LongArray>().apply(block))
+
+fun Builder.floatArray(
+    default: FloatArray? = null,
+    filter: ((Float) -> Boolean)? = null,
+    map: ((Float) -> Float)? = null,
+    sanitize: ((FloatArray) -> FloatArray)? = null
+) = IterablePropertyFactory.makeFloatArray(IterablePropertyOptions(default, map, filter, sanitize))
+
+fun Builder.floatArray(block: IterablePropertyOptions<Float, FloatArray>.() -> Unit) =
+    IterablePropertyFactory.makeFloatArray(IterablePropertyOptions<Float, FloatArray>().apply(block))
+
+fun Builder.doubleArray(
+    default: DoubleArray? = null,
+    filter: ((Double) -> Boolean)? = null,
+    map: ((Double) -> Double)? = null,
+    sanitize: ((DoubleArray) -> DoubleArray)? = null
+) = IterablePropertyFactory.makeDoubleArray(IterablePropertyOptions(default, map, filter, sanitize))
+
+fun Builder.doubleArray(block: IterablePropertyOptions<Double, DoubleArray>.() -> Unit) =
+    IterablePropertyFactory.makeDoubleArray(IterablePropertyOptions<Double, DoubleArray>().apply(block))
+
+fun Builder.charArray(
+    default: CharArray? = null,
+    filter: ((Char) -> Boolean)? = null,
+    map: ((Char) -> Char)? = null,
+    sanitize: ((CharArray) -> CharArray)? = null
+) = IterablePropertyFactory.makeCharArray(IterablePropertyOptions(default, map, filter, sanitize))
+
+fun Builder.charArray(block: IterablePropertyOptions<Char, CharArray>.() -> Unit) =
+    IterablePropertyFactory.makeCharArray(IterablePropertyOptions<Char, CharArray>().apply(block))
+
 // -----------------------------------------------------
 // Array is special one, we have to use inline & reified
 // -----------------------------------------------------
