@@ -166,4 +166,15 @@ internal object IterablePropertyFactory {
         )
     }
 
+    fun <E : Any> makeArrayList(options: IterablePropertyOptions<E, ArrayList<E>>): IterableProperty<E, ArrayList<E>> {
+        return IterableProperty(
+            options,
+            filterFn = { input, predicate ->
+                ArrayList(input.filter(predicate))
+            },
+            mapFn = { input, transform ->
+                ArrayList(input.map(transform))
+            }
+        )
+    }
 }

@@ -185,6 +185,16 @@ fun <K, V> Builder.map(
 fun <K, V> Builder.map(block: IterablePropertyOptions<Map.Entry<K, V>, Map<K, V>>.() -> Unit) =
     IterablePropertyFactory.makeMap(IterablePropertyOptions<Map.Entry<K, V>, Map<K, V>>().apply(block))
 
+fun <E : Any> Builder.arrayList(
+    default: ArrayList<E>? = null,
+    map: ((E) -> E)? = null,
+    filter: ((E) -> Boolean)? = null,
+    sanitize: ((ArrayList<E>) -> ArrayList<E>)? = null
+) = IterablePropertyFactory.makeArrayList(IterablePropertyOptions(default, map, filter, sanitize))
+
+fun <E : Any> Builder.arrayList(block: IterablePropertyOptions<E, ArrayList<E>>.() -> Unit) =
+    IterablePropertyFactory.makeArrayList(IterablePropertyOptions<E, ArrayList<E>>().apply(block))
+
 // -----------------------------------------------------
 // Array is special one, we have to use inline & reified
 // -----------------------------------------------------
@@ -373,16 +383,26 @@ fun <K, V> Builder.nullableMap(
 fun <K, V> Builder.nullableMap(block: IterablePropertyOptions<Map.Entry<K, V>, Map<K, V>>.() -> Unit) =
     nullable(map(block))
 
+fun <E : Any> Builder.nullableArrayList(
+    default: ArrayList<E>? = null,
+    map: ((E) -> E)? = null,
+    filter: ((E) -> Boolean)? = null,
+    sanitize: ((ArrayList<E>) -> ArrayList<E>)? = null
+) = nullable(arrayList(default, map, filter, sanitize))
+
+fun <E : Any> Builder.nullableArrayList(block: IterablePropertyOptions<E, ArrayList<E>>.() -> Unit) =
+    nullable(arrayList(block))
+
 // -----------------------------------------------------
 // Nullable Array
 // -----------------------------------------------------
 
-fun <T : Any> Builder.nullableArray(
+inline fun <reified T> Builder.nullableArray(
     default: Array<T>? = null,
-    map: ((T) -> T)? = null,
-    filter: ((T) -> Boolean)? = null,
-    sanitize: ((Array<T>) -> Array<T>)? = null
+    noinline map: ((T) -> T)? = null,
+    noinline filter: ((T) -> Boolean)? = null,
+    noinline sanitize: ((Array<T>) -> Array<T>)? = null
 ) = nullable(array(default, map, filter, sanitize))
 
-fun <T : Any> Builder.nullableArray(block: ArrayPropertyOptions<T>.() -> Unit) =
+inline fun <reified T> Builder.nullableArray(block: ArrayPropertyOptions<T>.() -> Unit) =
     nullable(array(block))
