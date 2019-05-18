@@ -58,20 +58,13 @@ fun Builder.string(block: StringPropertyOptions.() -> Unit) =
     StringProperty(StringPropertyOptions().apply(block))
 
 // -----------------------------------------------------
-// Nullable
-// -----------------------------------------------------
-
-fun <T> Builder.nullable(block: Builder.() -> Property<T>): NullableProperty<T> = NullableProperty(block.invoke(this))
-fun <T> Builder.nullable(property: Property<T>): NullableProperty<T> = NullableProperty(property)
-
-// -----------------------------------------------------
 // TypedArray types
 // -----------------------------------------------------
 
 fun Builder.booleanArray(
     default: BooleanArray? = null,
-    filter: ((Boolean) -> Boolean)? = null,
     map: ((Boolean) -> Boolean)? = null,
+    filter: ((Boolean) -> Boolean)? = null,
     sanitize: ((BooleanArray) -> BooleanArray)? = null
 ) = IterablePropertyFactory.makeBooleanArray(IterablePropertyOptions(default, map, filter, sanitize))
 
@@ -80,8 +73,8 @@ fun Builder.booleanArray(block: IterablePropertyOptions<Boolean, BooleanArray>.(
 
 fun Builder.byteArray(
     default: ByteArray? = null,
-    filter: ((Byte) -> Boolean)? = null,
     map: ((Byte) -> Byte)? = null,
+    filter: ((Byte) -> Boolean)? = null,
     sanitize: ((ByteArray) -> ByteArray)? = null
 ) = IterablePropertyFactory.makeByteArray(IterablePropertyOptions(default, map, filter, sanitize))
 
@@ -90,8 +83,8 @@ fun Builder.byteArray(block: IterablePropertyOptions<Byte, ByteArray>.() -> Unit
 
 fun Builder.shortArray(
     default: ShortArray? = null,
-    filter: ((Short) -> Boolean)? = null,
     map: ((Short) -> Short)? = null,
+    filter: ((Short) -> Boolean)? = null,
     sanitize: ((ShortArray) -> ShortArray)? = null
 ) = IterablePropertyFactory.makeShortArray(IterablePropertyOptions(default, map, filter, sanitize))
 
@@ -100,8 +93,8 @@ fun Builder.shortArray(block: IterablePropertyOptions<Short, ShortArray>.() -> U
 
 fun Builder.intArray(
     default: IntArray? = null,
-    filter: ((Int) -> Boolean)? = null,
     map: ((Int) -> Int)? = null,
+    filter: ((Int) -> Boolean)? = null,
     sanitize: ((IntArray) -> IntArray)? = null
 ) = IterablePropertyFactory.makeIntArray(IterablePropertyOptions(default, map, filter, sanitize))
 
@@ -110,8 +103,8 @@ fun Builder.intArray(block: IterablePropertyOptions<Int, IntArray>.() -> Unit) =
 
 fun Builder.longArray(
     default: LongArray? = null,
-    filter: ((Long) -> Boolean)? = null,
     map: ((Long) -> Long)? = null,
+    filter: ((Long) -> Boolean)? = null,
     sanitize: ((LongArray) -> LongArray)? = null
 ) = IterablePropertyFactory.makeLongArray(IterablePropertyOptions(default, map, filter, sanitize))
 
@@ -120,8 +113,8 @@ fun Builder.longArray(block: IterablePropertyOptions<Long, LongArray>.() -> Unit
 
 fun Builder.floatArray(
     default: FloatArray? = null,
-    filter: ((Float) -> Boolean)? = null,
     map: ((Float) -> Float)? = null,
+    filter: ((Float) -> Boolean)? = null,
     sanitize: ((FloatArray) -> FloatArray)? = null
 ) = IterablePropertyFactory.makeFloatArray(IterablePropertyOptions(default, map, filter, sanitize))
 
@@ -130,8 +123,8 @@ fun Builder.floatArray(block: IterablePropertyOptions<Float, FloatArray>.() -> U
 
 fun Builder.doubleArray(
     default: DoubleArray? = null,
-    filter: ((Double) -> Boolean)? = null,
     map: ((Double) -> Double)? = null,
+    filter: ((Double) -> Boolean)? = null,
     sanitize: ((DoubleArray) -> DoubleArray)? = null
 ) = IterablePropertyFactory.makeDoubleArray(IterablePropertyOptions(default, map, filter, sanitize))
 
@@ -140,8 +133,8 @@ fun Builder.doubleArray(block: IterablePropertyOptions<Double, DoubleArray>.() -
 
 fun Builder.charArray(
     default: CharArray? = null,
-    filter: ((Char) -> Boolean)? = null,
     map: ((Char) -> Char)? = null,
+    filter: ((Char) -> Boolean)? = null,
     sanitize: ((CharArray) -> CharArray)? = null
 ) = IterablePropertyFactory.makeCharArray(IterablePropertyOptions(default, map, filter, sanitize))
 
@@ -154,8 +147,8 @@ fun Builder.charArray(block: IterablePropertyOptions<Char, CharArray>.() -> Unit
 
 fun <E : Any> Builder.collection(
     default: Collection<E>? = null,
-    filter: ((E) -> Boolean)? = null,
     map: ((E) -> E)? = null,
+    filter: ((E) -> Boolean)? = null,
     sanitize: ((Collection<E>) -> Collection<E>)? = null
 ) = IterablePropertyFactory.makeCollection(IterablePropertyOptions(default, map, filter, sanitize))
 
@@ -164,8 +157,8 @@ fun <E : Any> Builder.collection(block: IterablePropertyOptions<E, Collection<E>
 
 fun <E : Any> Builder.list(
     default: List<E>? = null,
-    filter: ((E) -> Boolean)? = null,
     map: ((E) -> E)? = null,
+    filter: ((E) -> Boolean)? = null,
     sanitize: ((List<E>) -> List<E>)? = null
 ) = IterablePropertyFactory.makeList(IterablePropertyOptions(default, map, filter, sanitize))
 
@@ -174,8 +167,8 @@ fun <E : Any> Builder.list(block: IterablePropertyOptions<E, List<E>>.() -> Unit
 
 fun <E : Any> Builder.set(
     default: Set<E>? = null,
-    filter: ((E) -> Boolean)? = null,
     map: ((E) -> E)? = null,
+    filter: ((E) -> Boolean)? = null,
     sanitize: ((Set<E>) -> Set<E>)? = null
 ) = IterablePropertyFactory.makeSet(IterablePropertyOptions(default, map, filter, sanitize))
 
@@ -184,8 +177,8 @@ fun <E : Any> Builder.set(block: IterablePropertyOptions<E, Set<E>>.() -> Unit) 
 
 fun <K, V> Builder.map(
     default: Map<K, V>? = null,
-    filter: ((Map.Entry<K, V>) -> Boolean)? = null,
     map: ((Map.Entry<K, V>) -> Map.Entry<K, V>)? = null,
+    filter: ((Map.Entry<K, V>) -> Boolean)? = null,
     sanitize: ((Map<K, V>) -> Map<K, V>)? = null
 ) = IterablePropertyFactory.makeMap(IterablePropertyOptions(default, map, filter, sanitize))
 
@@ -198,10 +191,198 @@ fun <K, V> Builder.map(block: IterablePropertyOptions<Map.Entry<K, V>, Map<K, V>
 
 inline fun <reified T> Builder.array(
     default: Array<T>? = null,
-    noinline filter: ((T) -> Boolean)? = null,
     noinline map: ((T) -> T)? = null,
+    noinline filter: ((T) -> Boolean)? = null,
     noinline sanitize: ((Array<T>) -> Array<T>)? = null
 ) = makeArrayProperty(ArrayPropertyOptions(default, map, filter, sanitize))
 
 inline fun <reified T> Builder.array(block: ArrayPropertyOptions<T>.() -> Unit) =
     makeArrayProperty(ArrayPropertyOptions<T>().apply(block))
+
+
+// -----------------------------------------------------
+// Nullable
+// -----------------------------------------------------
+
+fun <T> Builder.nullable(block: Builder.() -> Property<T>): NullableProperty<T> = NullableProperty(block.invoke(this))
+fun <T> Builder.nullable(property: Property<T>): NullableProperty<T> = NullableProperty(property)
+
+// -----------------------------------------------------
+// Nullable Primitive types
+// -----------------------------------------------------
+
+fun Builder.nullableBoolean(default: Boolean? = null) = nullable(boolean(default))
+fun Builder.nullableBoolean(block: GenericPropertyOptions<Boolean>.() -> Unit) = nullable(boolean(block))
+
+fun Builder.nullableByte(default: Byte? = null) = nullable(byte(default))
+fun Builder.nullableByte(block: GenericPropertyOptions<Byte>.() -> Unit) = nullable(byte(block))
+
+fun Builder.nullableShort(default: Short? = null) = nullable(short(default))
+fun Builder.nullableShort(block: GenericPropertyOptions<Short>.() -> Unit) = nullable(short(block))
+
+fun Builder.nullableInt(default: Int? = null) = nullable(int(default))
+fun Builder.nullableInt(block: GenericPropertyOptions<Int>.() -> Unit) = nullable(int(block))
+
+fun Builder.nullableLong(default: Long? = null) = nullable(long(default))
+fun Builder.nullableLong(block: GenericPropertyOptions<Long>.() -> Unit) = nullable(long(block))
+
+fun Builder.nullableFloat(default: Float? = null) = nullable(float(default))
+fun Builder.nullableFloat(block: GenericPropertyOptions<Float>.() -> Unit) = nullable(float(block))
+
+fun Builder.nullableDouble(default: Double? = null) = nullable(double(default))
+fun Builder.nullableDouble(block: GenericPropertyOptions<Double>.() -> Unit) = nullable(double(block))
+
+fun Builder.nullableChar(default: Char? = null) = nullable(char(default))
+fun Builder.nullableChar(block: GenericPropertyOptions<Char>.() -> Unit) = nullable(char(block))
+
+fun Builder.nullableString(
+    sanitize: ((String) -> String)? = null,
+    trim: Boolean = false,
+    uppercase: Boolean = false,
+    lowercase: Boolean = false,
+    default: String? = null
+) = nullable(string(sanitize, trim, uppercase, lowercase, default))
+
+fun Builder.nullableString(block: StringPropertyOptions.() -> Unit) = nullable(string(block))
+
+// -----------------------------------------------------
+// Nullable TypedArray types
+// -----------------------------------------------------
+
+fun Builder.nullableBooleanArray(
+    default: BooleanArray? = null,
+    map: ((Boolean) -> Boolean)? = null,
+    filter: ((Boolean) -> Boolean)? = null,
+    sanitize: ((BooleanArray) -> BooleanArray)? = null
+) = nullable(booleanArray(default, map, filter, sanitize))
+
+fun Builder.nullableBooleanArray(block: IterablePropertyOptions<Boolean, BooleanArray>.() -> Unit) =
+    nullable(booleanArray(block))
+
+fun Builder.nullableByteArray(
+    default: ByteArray? = null,
+    map: ((Byte) -> Byte)? = null,
+    filter: ((Byte) -> Boolean)? = null,
+    sanitize: ((ByteArray) -> ByteArray)? = null
+) = nullable(byteArray(default, map, filter, sanitize))
+
+fun Builder.nullableByteArray(block: IterablePropertyOptions<Byte, ByteArray>.() -> Unit) =
+    nullable(byteArray(block))
+
+fun Builder.nullableShortArray(
+    default: ShortArray? = null,
+    map: ((Short) -> Short)? = null,
+    filter: ((Short) -> Boolean)? = null,
+    sanitize: ((ShortArray) -> ShortArray)? = null
+) = nullable(shortArray(default, map, filter, sanitize))
+
+fun Builder.nullableShortArray(block: IterablePropertyOptions<Short, ShortArray>.() -> Unit) =
+    nullable(shortArray(block))
+
+fun Builder.nullableIntArray(
+    default: IntArray? = null,
+    map: ((Int) -> Int)? = null,
+    filter: ((Int) -> Boolean)? = null,
+    sanitize: ((IntArray) -> IntArray)? = null
+) = nullable(intArray(default, map, filter, sanitize))
+
+fun Builder.nullableIntArray(block: IterablePropertyOptions<Int, IntArray>.() -> Unit) =
+    nullable(intArray(block))
+
+fun Builder.nullableLongArray(
+    default: LongArray? = null,
+    map: ((Long) -> Long)? = null,
+    filter: ((Long) -> Boolean)? = null,
+    sanitize: ((LongArray) -> LongArray)? = null
+) = nullable(longArray(default, map, filter, sanitize))
+
+fun Builder.nullableLongArray(block: IterablePropertyOptions<Long, LongArray>.() -> Unit) =
+    nullable(longArray(block))
+
+fun Builder.nullableFloatArray(
+    default: FloatArray? = null,
+    map: ((Float) -> Float)? = null,
+    filter: ((Float) -> Boolean)? = null,
+    sanitize: ((FloatArray) -> FloatArray)? = null
+) = nullable(floatArray(default, map, filter, sanitize))
+
+fun Builder.nullableFloatArray(block: IterablePropertyOptions<Float, FloatArray>.() -> Unit) =
+    nullable(floatArray(block))
+
+fun Builder.nullableDoubleArray(
+    default: DoubleArray? = null,
+    map: ((Double) -> Double)? = null,
+    filter: ((Double) -> Boolean)? = null,
+    sanitize: ((DoubleArray) -> DoubleArray)? = null
+) = nullable(doubleArray(default, map, filter, sanitize))
+
+fun Builder.nullableDoubleArray(block: IterablePropertyOptions<Double, DoubleArray>.() -> Unit) =
+    nullable(doubleArray(block))
+
+fun Builder.nullableCharArray(
+    default: CharArray? = null,
+    map: ((Char) -> Char)? = null,
+    filter: ((Char) -> Boolean)? = null,
+    sanitize: ((CharArray) -> CharArray)? = null
+) = nullable(charArray(default, map, filter, sanitize))
+
+fun Builder.nullableCharArray(block: IterablePropertyOptions<Char, CharArray>.() -> Unit) =
+    nullable(charArray(block))
+
+// -----------------------------------------------------
+// Nullable Collection types
+// -----------------------------------------------------
+
+fun <E : Any> Builder.nullableCollection(
+    default: Collection<E>? = null,
+    map: ((E) -> E)? = null,
+    filter: ((E) -> Boolean)? = null,
+    sanitize: ((Collection<E>) -> Collection<E>)? = null
+) = nullable(collection(default, map, filter, sanitize))
+
+fun <E : Any> Builder.nullableCollection(block: IterablePropertyOptions<E, Collection<E>>.() -> Unit) =
+    nullable(collection(block))
+
+fun <E : Any> Builder.nullableList(
+    default: List<E>? = null,
+    map: ((E) -> E)? = null,
+    filter: ((E) -> Boolean)? = null,
+    sanitize: ((List<E>) -> List<E>)? = null
+) = nullable(list(default, map, filter, sanitize))
+
+fun <E : Any> Builder.nullableList(block: IterablePropertyOptions<E, List<E>>.() -> Unit) =
+    nullable(list(block))
+
+fun <E : Any> Builder.nullableSet(
+    default: Set<E>? = null,
+    map: ((E) -> E)? = null,
+    filter: ((E) -> Boolean)? = null,
+    sanitize: ((Set<E>) -> Set<E>)? = null
+) = nullable(set(default, map, filter, sanitize))
+
+fun <E : Any> Builder.nullableSet(block: IterablePropertyOptions<E, Set<E>>.() -> Unit) =
+    nullable(set(block))
+
+fun <K, V> Builder.nullableMap(
+    default: Map<K, V>? = null,
+    map: ((Map.Entry<K, V>) -> Map.Entry<K, V>)? = null,
+    filter: ((Map.Entry<K, V>) -> Boolean)? = null,
+    sanitize: ((Map<K, V>) -> Map<K, V>)? = null
+) = nullable(map(default, map, filter, sanitize))
+
+fun <K, V> Builder.nullableMap(block: IterablePropertyOptions<Map.Entry<K, V>, Map<K, V>>.() -> Unit) =
+    nullable(map(block))
+
+// -----------------------------------------------------
+// Nullable Array
+// -----------------------------------------------------
+
+fun <T : Any> Builder.nullableArray(
+    default: Array<T>? = null,
+    map: ((T) -> T)? = null,
+    filter: ((T) -> Boolean)? = null,
+    sanitize: ((Array<T>) -> Array<T>)? = null
+) = nullable(array(default, map, filter, sanitize))
+
+fun <T : Any> Builder.nullableArray(block: ArrayPropertyOptions<T>.() -> Unit) =
+    nullable(array(block))
