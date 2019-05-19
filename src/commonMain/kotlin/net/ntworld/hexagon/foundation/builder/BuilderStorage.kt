@@ -1,9 +1,7 @@
 package net.ntworld.hexagon.foundation.builder
 
-interface BuilderStorage {
-    fun containsKey(key: String): Boolean
+import net.ntworld.hexagon.foundation.validation.Validatable
 
-    fun <T> get(key: String): T
-
-    fun <T> set(key: String, value: T)
+interface BuilderStorage : Validatable {
+    fun clear()
 }

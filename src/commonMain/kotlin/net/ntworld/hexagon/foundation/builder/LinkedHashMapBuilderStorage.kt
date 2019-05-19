@@ -8,6 +8,8 @@ class LinkedHashMapBuilderStorage : BuilderStorage {
     @Suppress("UNCHECKED_CAST")
     override fun <T> get(key: String): T = data[key] as T
 
+    override fun clear() = data.clear()
+
     override fun <T> set(key: String, value: T) {
         data[key] = value
     }
