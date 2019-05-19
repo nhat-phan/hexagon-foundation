@@ -12,4 +12,11 @@ interface Property<T> {
     operator fun getValue(builder: Builder, property: KProperty<*>): T
 
     operator fun setValue(builder: Builder, property: KProperty<*>, value: T)
+
+    operator fun provideDelegate(builder: Builder, property: KProperty<*>): Property<T> {
+        if (this.hasDefaultValue()) {
+            builder.builderStorage.set(this.getPropertyKey(property), this.getDefaultValue())
+        }
+        return this
+    }
 }

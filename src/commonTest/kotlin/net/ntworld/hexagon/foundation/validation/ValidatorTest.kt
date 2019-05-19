@@ -17,19 +17,15 @@ class ValidatorTest {
             var b by string(default = "test")
         }
         val builder = SampleBuilder()
-        // val x: KProperty0<*> = builder::b
-        // println(builder::b.get())
 
-//        var result = builder.validate {
-//            builder::a always required
-//        }
-//        assertFalse(result.isValid)
+        var result = builder.validate {
+            builder::a always required
+        }
+        assertFalse(result.isValid)
 
-        // val p: KProperty<Int> = SampleBuilder::b
-
-//        val result = builder.validate {
-//            builder::b always required
-//        }
-//        assertTrue(result.isValid)
+        result = builder.validate {
+            builder::b always required
+        }
+        assertTrue(result.isValid)
     }
 }

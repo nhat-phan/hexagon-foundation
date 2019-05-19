@@ -36,7 +36,7 @@ class BuilderTest {
         defaultValue: T,
         testValue: T
     ) {
-        assertFalse(builder.builderStorage.containsKey("propertyWithDefaultValue"))
+        assertTrue(builder.builderStorage.containsKey("propertyWithDefaultValue"))
         assertEquals(defaultValue, builder.propertyWithDefaultValue)
 
         builder.propertyWithDefaultValue = testValue

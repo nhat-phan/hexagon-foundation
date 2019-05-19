@@ -11,11 +11,8 @@ open class GenericPropertyOptions<T : Any>(
         }
     }
 
-    val propertyDefaultValue: T?
+    val hasDefaultValue: Boolean
         get() {
-            if (this::default.isInitialized) {
-                return this.default
-            }
-            return null
+            return this::default.isInitialized
         }
 }

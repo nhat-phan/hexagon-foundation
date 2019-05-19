@@ -3,9 +3,9 @@ package net.ntworld.hexagon.foundation.builder
 import kotlin.reflect.KProperty
 
 inline fun <reified T> makeArrayProperty(options: ArrayPropertyOptions<T>): Property<Array<T>> {
-    return object: Property<Array<T>> {
+    return object : Property<Array<T>> {
         override fun hasDefaultValue(): Boolean {
-            return null !== options.propertyDefaultValue
+            return options.hasDefaultValue
         }
 
         override fun getDefaultValue(): Array<T> {
