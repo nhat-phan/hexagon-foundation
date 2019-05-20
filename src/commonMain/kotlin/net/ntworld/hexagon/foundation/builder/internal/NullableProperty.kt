@@ -1,8 +1,10 @@
-package net.ntworld.hexagon.foundation.builder
+package net.ntworld.hexagon.foundation.builder.internal
 
+import net.ntworld.hexagon.foundation.builder.Builder
+import net.ntworld.hexagon.foundation.builder.Property
 import kotlin.reflect.KProperty
 
-class NullableProperty<T>(private val property: Property<T>) : Property<T?> {
+internal class NullableProperty<T>(private val property: Property<T>) : Property<T?> {
     override fun hasDefaultValue(): Boolean = true
 
     override fun getDefaultValue(): T? {

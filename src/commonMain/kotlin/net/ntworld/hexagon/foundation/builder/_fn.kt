@@ -1,14 +1,16 @@
 package net.ntworld.hexagon.foundation.builder
 
+import net.ntworld.hexagon.foundation.builder.internal.*
+
 // -----------------------------------------------------
 // Generic
 // -----------------------------------------------------
 
-fun <T : Any> Builder.generic(default: T? = null) =
-    GenericProperty(GenericPropertyOptions(default))
+fun <T : Any> Builder.generic(default: T? = null): Property<T> =
+    GenericProperty(GenericPropertyOptionsImpl(default))
 
-fun <T : Any> Builder.generic(block: GenericPropertyOptions<T>.() -> Unit) =
-    GenericProperty(GenericPropertyOptions<T>().apply(block))
+fun <T : Any> Builder.generic(block: GenericPropertyOptions<T>.() -> Unit): Property<T> =
+    GenericProperty(GenericPropertyOptionsImpl<T>().apply(block))
 
 fun <T : Any> Builder.type(default: T? = null) = generic(default)
 
@@ -52,10 +54,10 @@ fun Builder.string(
     uppercase: Boolean = false,
     lowercase: Boolean = false,
     default: String? = null
-) = StringProperty(StringPropertyOptions(default, trim, uppercase, lowercase, sanitize))
+): Property<String> = StringProperty(StringPropertyOptionsImpl(default, trim, uppercase, lowercase, sanitize))
 
-fun Builder.string(block: StringPropertyOptions.() -> Unit) =
-    StringProperty(StringPropertyOptions().apply(block))
+fun Builder.string(block: StringPropertyOptions.() -> Unit): Property<String> =
+    StringProperty(StringPropertyOptionsImpl().apply(block))
 
 // -----------------------------------------------------
 // TypedArray types
@@ -66,80 +68,88 @@ fun Builder.booleanArray(
     map: ((Boolean) -> Boolean)? = null,
     filter: ((Boolean) -> Boolean)? = null,
     sanitize: ((BooleanArray) -> BooleanArray)? = null
-) = IterablePropertyFactory.makeBooleanArray(IterablePropertyOptions(default, map, filter, sanitize))
+): Property<BooleanArray> =
+    IterablePropertyFactory.makeBooleanArray(IterablePropertyOptionsImpl(default, map, filter, sanitize))
 
-fun Builder.booleanArray(block: IterablePropertyOptions<Boolean, BooleanArray>.() -> Unit) =
-    IterablePropertyFactory.makeBooleanArray(IterablePropertyOptions<Boolean, BooleanArray>().apply(block))
+fun Builder.booleanArray(block: IterablePropertyOptions<Boolean, BooleanArray>.() -> Unit): Property<BooleanArray> =
+    IterablePropertyFactory.makeBooleanArray(IterablePropertyOptionsImpl<Boolean, BooleanArray>().apply(block))
 
 fun Builder.byteArray(
     default: ByteArray? = null,
     map: ((Byte) -> Byte)? = null,
     filter: ((Byte) -> Boolean)? = null,
     sanitize: ((ByteArray) -> ByteArray)? = null
-) = IterablePropertyFactory.makeByteArray(IterablePropertyOptions(default, map, filter, sanitize))
+): Property<ByteArray> =
+    IterablePropertyFactory.makeByteArray(IterablePropertyOptionsImpl(default, map, filter, sanitize))
 
-fun Builder.byteArray(block: IterablePropertyOptions<Byte, ByteArray>.() -> Unit) =
-    IterablePropertyFactory.makeByteArray(IterablePropertyOptions<Byte, ByteArray>().apply(block))
+fun Builder.byteArray(block: IterablePropertyOptions<Byte, ByteArray>.() -> Unit): Property<ByteArray> =
+    IterablePropertyFactory.makeByteArray(IterablePropertyOptionsImpl<Byte, ByteArray>().apply(block))
 
 fun Builder.shortArray(
     default: ShortArray? = null,
     map: ((Short) -> Short)? = null,
     filter: ((Short) -> Boolean)? = null,
     sanitize: ((ShortArray) -> ShortArray)? = null
-) = IterablePropertyFactory.makeShortArray(IterablePropertyOptions(default, map, filter, sanitize))
+): Property<ShortArray> =
+    IterablePropertyFactory.makeShortArray(IterablePropertyOptionsImpl(default, map, filter, sanitize))
 
-fun Builder.shortArray(block: IterablePropertyOptions<Short, ShortArray>.() -> Unit) =
-    IterablePropertyFactory.makeShortArray(IterablePropertyOptions<Short, ShortArray>().apply(block))
+fun Builder.shortArray(block: IterablePropertyOptions<Short, ShortArray>.() -> Unit): Property<ShortArray> =
+    IterablePropertyFactory.makeShortArray(IterablePropertyOptionsImpl<Short, ShortArray>().apply(block))
 
 fun Builder.intArray(
     default: IntArray? = null,
     map: ((Int) -> Int)? = null,
     filter: ((Int) -> Boolean)? = null,
     sanitize: ((IntArray) -> IntArray)? = null
-) = IterablePropertyFactory.makeIntArray(IterablePropertyOptions(default, map, filter, sanitize))
+): Property<IntArray> =
+    IterablePropertyFactory.makeIntArray(IterablePropertyOptionsImpl(default, map, filter, sanitize))
 
-fun Builder.intArray(block: IterablePropertyOptions<Int, IntArray>.() -> Unit) =
-    IterablePropertyFactory.makeIntArray(IterablePropertyOptions<Int, IntArray>().apply(block))
+fun Builder.intArray(block: IterablePropertyOptions<Int, IntArray>.() -> Unit): Property<IntArray> =
+    IterablePropertyFactory.makeIntArray(IterablePropertyOptionsImpl<Int, IntArray>().apply(block))
 
 fun Builder.longArray(
     default: LongArray? = null,
     map: ((Long) -> Long)? = null,
     filter: ((Long) -> Boolean)? = null,
     sanitize: ((LongArray) -> LongArray)? = null
-) = IterablePropertyFactory.makeLongArray(IterablePropertyOptions(default, map, filter, sanitize))
+): Property<LongArray> =
+    IterablePropertyFactory.makeLongArray(IterablePropertyOptionsImpl(default, map, filter, sanitize))
 
-fun Builder.longArray(block: IterablePropertyOptions<Long, LongArray>.() -> Unit) =
-    IterablePropertyFactory.makeLongArray(IterablePropertyOptions<Long, LongArray>().apply(block))
+fun Builder.longArray(block: IterablePropertyOptions<Long, LongArray>.() -> Unit): Property<LongArray> =
+    IterablePropertyFactory.makeLongArray(IterablePropertyOptionsImpl<Long, LongArray>().apply(block))
 
 fun Builder.floatArray(
     default: FloatArray? = null,
     map: ((Float) -> Float)? = null,
     filter: ((Float) -> Boolean)? = null,
     sanitize: ((FloatArray) -> FloatArray)? = null
-) = IterablePropertyFactory.makeFloatArray(IterablePropertyOptions(default, map, filter, sanitize))
+): Property<FloatArray> =
+    IterablePropertyFactory.makeFloatArray(IterablePropertyOptionsImpl(default, map, filter, sanitize))
 
-fun Builder.floatArray(block: IterablePropertyOptions<Float, FloatArray>.() -> Unit) =
-    IterablePropertyFactory.makeFloatArray(IterablePropertyOptions<Float, FloatArray>().apply(block))
+fun Builder.floatArray(block: IterablePropertyOptions<Float, FloatArray>.() -> Unit): Property<FloatArray> =
+    IterablePropertyFactory.makeFloatArray(IterablePropertyOptionsImpl<Float, FloatArray>().apply(block))
 
 fun Builder.doubleArray(
     default: DoubleArray? = null,
     map: ((Double) -> Double)? = null,
     filter: ((Double) -> Boolean)? = null,
     sanitize: ((DoubleArray) -> DoubleArray)? = null
-) = IterablePropertyFactory.makeDoubleArray(IterablePropertyOptions(default, map, filter, sanitize))
+): Property<DoubleArray> =
+    IterablePropertyFactory.makeDoubleArray(IterablePropertyOptionsImpl(default, map, filter, sanitize))
 
-fun Builder.doubleArray(block: IterablePropertyOptions<Double, DoubleArray>.() -> Unit) =
-    IterablePropertyFactory.makeDoubleArray(IterablePropertyOptions<Double, DoubleArray>().apply(block))
+fun Builder.doubleArray(block: IterablePropertyOptions<Double, DoubleArray>.() -> Unit): Property<DoubleArray> =
+    IterablePropertyFactory.makeDoubleArray(IterablePropertyOptionsImpl<Double, DoubleArray>().apply(block))
 
 fun Builder.charArray(
     default: CharArray? = null,
     map: ((Char) -> Char)? = null,
     filter: ((Char) -> Boolean)? = null,
     sanitize: ((CharArray) -> CharArray)? = null
-) = IterablePropertyFactory.makeCharArray(IterablePropertyOptions(default, map, filter, sanitize))
+): Property<CharArray> =
+    IterablePropertyFactory.makeCharArray(IterablePropertyOptionsImpl(default, map, filter, sanitize))
 
-fun Builder.charArray(block: IterablePropertyOptions<Char, CharArray>.() -> Unit) =
-    IterablePropertyFactory.makeCharArray(IterablePropertyOptions<Char, CharArray>().apply(block))
+fun Builder.charArray(block: IterablePropertyOptions<Char, CharArray>.() -> Unit): Property<CharArray> =
+    IterablePropertyFactory.makeCharArray(IterablePropertyOptionsImpl<Char, CharArray>().apply(block))
 
 // -----------------------------------------------------
 // Collection types
@@ -150,50 +160,52 @@ fun <E : Any> Builder.collection(
     map: ((E) -> E)? = null,
     filter: ((E) -> Boolean)? = null,
     sanitize: ((Collection<E>) -> Collection<E>)? = null
-) = IterablePropertyFactory.makeCollection(IterablePropertyOptions(default, map, filter, sanitize))
+): Property<Collection<E>> =
+    IterablePropertyFactory.makeCollection(IterablePropertyOptionsImpl(default, map, filter, sanitize))
 
-fun <E : Any> Builder.collection(block: IterablePropertyOptions<E, Collection<E>>.() -> Unit) =
-    IterablePropertyFactory.makeCollection(IterablePropertyOptions<E, Collection<E>>().apply(block))
+fun <E : Any> Builder.collection(block: IterablePropertyOptions<E, Collection<E>>.() -> Unit): Property<Collection<E>> =
+    IterablePropertyFactory.makeCollection(IterablePropertyOptionsImpl<E, Collection<E>>().apply(block))
 
 fun <E : Any> Builder.list(
     default: List<E>? = null,
     map: ((E) -> E)? = null,
     filter: ((E) -> Boolean)? = null,
     sanitize: ((List<E>) -> List<E>)? = null
-) = IterablePropertyFactory.makeList(IterablePropertyOptions(default, map, filter, sanitize))
+): Property<List<E>> = IterablePropertyFactory.makeList(IterablePropertyOptionsImpl(default, map, filter, sanitize))
 
-fun <E : Any> Builder.list(block: IterablePropertyOptions<E, List<E>>.() -> Unit) =
-    IterablePropertyFactory.makeList(IterablePropertyOptions<E, List<E>>().apply(block))
+fun <E : Any> Builder.list(block: IterablePropertyOptions<E, List<E>>.() -> Unit): Property<List<E>> =
+    IterablePropertyFactory.makeList(IterablePropertyOptionsImpl<E, List<E>>().apply(block))
 
 fun <E : Any> Builder.set(
     default: Set<E>? = null,
     map: ((E) -> E)? = null,
     filter: ((E) -> Boolean)? = null,
     sanitize: ((Set<E>) -> Set<E>)? = null
-) = IterablePropertyFactory.makeSet(IterablePropertyOptions(default, map, filter, sanitize))
+): Property<Set<E>> = IterablePropertyFactory.makeSet(IterablePropertyOptionsImpl(default, map, filter, sanitize))
 
-fun <E : Any> Builder.set(block: IterablePropertyOptions<E, Set<E>>.() -> Unit) =
-    IterablePropertyFactory.makeSet(IterablePropertyOptions<E, Set<E>>().apply(block))
+fun <E : Any> Builder.set(block: IterablePropertyOptions<E, Set<E>>.() -> Unit): Property<Set<E>> =
+    IterablePropertyFactory.makeSet(IterablePropertyOptionsImpl<E, Set<E>>().apply(block))
 
 fun <K, V> Builder.map(
     default: Map<K, V>? = null,
     map: ((Map.Entry<K, V>) -> Map.Entry<K, V>)? = null,
     filter: ((Map.Entry<K, V>) -> Boolean)? = null,
     sanitize: ((Map<K, V>) -> Map<K, V>)? = null
-) = IterablePropertyFactory.makeMap(IterablePropertyOptions(default, map, filter, sanitize))
+): Property<Map<K, V>> = IterablePropertyFactory.makeMap(IterablePropertyOptionsImpl(default, map, filter, sanitize))
 
-fun <K, V> Builder.map(block: IterablePropertyOptions<Map.Entry<K, V>, Map<K, V>>.() -> Unit) =
-    IterablePropertyFactory.makeMap(IterablePropertyOptions<Map.Entry<K, V>, Map<K, V>>().apply(block))
+fun <K, V> Builder.map(block: IterablePropertyOptions<Map.Entry<K, V>, Map<K, V>>.() -> Unit): Property<Map<K, V>> =
+    IterablePropertyFactory.makeMap(IterablePropertyOptionsImpl<Map.Entry<K, V>, Map<K, V>>().apply(block))
 
 fun <E : Any> Builder.arrayList(
     default: ArrayList<E>? = null,
     map: ((E) -> E)? = null,
     filter: ((E) -> Boolean)? = null,
     sanitize: ((ArrayList<E>) -> ArrayList<E>)? = null
-) = IterablePropertyFactory.makeArrayList(IterablePropertyOptions(default, map, filter, sanitize))
+): Property<ArrayList<E>> =
+    IterablePropertyFactory.makeArrayList(IterablePropertyOptionsImpl(default, map, filter, sanitize))
 
-fun <E : Any> Builder.arrayList(block: IterablePropertyOptions<E, ArrayList<E>>.() -> Unit) =
-    IterablePropertyFactory.makeArrayList(IterablePropertyOptions<E, ArrayList<E>>().apply(block))
+fun <E : Any> Builder.arrayList(block: IterablePropertyOptions<E, ArrayList<E>>.() -> Unit): Property<ArrayList<E>> =
+    IterablePropertyFactory.makeArrayList(IterablePropertyOptionsImpl<E, ArrayList<E>>().apply(block))
 
 // -----------------------------------------------------
 // Array is special one, we have to use inline & reified
@@ -204,9 +216,9 @@ inline fun <reified T> Builder.array(
     noinline map: ((T) -> T)? = null,
     noinline filter: ((T) -> Boolean)? = null,
     noinline sanitize: ((Array<T>) -> Array<T>)? = null
-) = makeArrayProperty(ArrayPropertyOptions(default, map, filter, sanitize))
+): Property<Array<T>> = makeArrayProperty(ArrayPropertyOptions(default, map, filter, sanitize))
 
-inline fun <reified T> Builder.array(block: ArrayPropertyOptions<T>.() -> Unit) =
+inline fun <reified T> Builder.array(block: ArrayPropertyOptions<T>.() -> Unit): Property<Array<T>> =
     makeArrayProperty(ArrayPropertyOptions<T>().apply(block))
 
 
@@ -214,8 +226,8 @@ inline fun <reified T> Builder.array(block: ArrayPropertyOptions<T>.() -> Unit) 
 // Nullable
 // -----------------------------------------------------
 
-fun <T> Builder.nullable(block: Builder.() -> Property<T>): NullableProperty<T> = NullableProperty(block.invoke(this))
-fun <T> Builder.nullable(property: Property<T>): NullableProperty<T> = NullableProperty(property)
+fun <T> Builder.nullable(block: Builder.() -> Property<T>): Property<T?> = NullableProperty(block.invoke(this))
+fun <T> Builder.nullable(property: Property<T>): Property<T?> = NullableProperty(property)
 
 // -----------------------------------------------------
 // Nullable Primitive types

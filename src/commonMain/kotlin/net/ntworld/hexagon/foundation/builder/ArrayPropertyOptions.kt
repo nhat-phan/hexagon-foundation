@@ -5,12 +5,17 @@ class ArrayPropertyOptions<T>(
     map: ((T) -> T)? = null,
     filter: ((T) -> Boolean)? = null,
     sanitize: ((Array<T>) -> Array<T>)? = null
-) : GenericPropertyOptions<Array<T>>(defaultValue) {
+) {
+    lateinit var default: Array<T>
     lateinit var filter: (T) -> Boolean
     lateinit var map: (T) -> T
     lateinit var sanitize: (Array<T>) -> Array<T>
 
     init {
+        if (null !== defaultValue) {
+            this.default = defaultValue
+        }
+
         if (null !== map) {
             this.map = map
         }
@@ -23,6 +28,11 @@ class ArrayPropertyOptions<T>(
             this.sanitize = sanitize
         }
     }
+
+    val hasDefaultValue: Boolean
+        get() {
+            return this::default.isInitialized
+        }
 
     val propertyFilter: ((T) -> Boolean)?
         get() {

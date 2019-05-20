@@ -1,5 +1,6 @@
 package net.ntworld.hexagon.foundation.builder
 
+import net.ntworld.hexagon.foundation.exception.NotInitializedException
 import kotlin.reflect.KProperty
 
 inline fun <reified T> makeArrayProperty(options: ArrayPropertyOptions<T>): Property<Array<T>> {
@@ -17,7 +18,7 @@ inline fun <reified T> makeArrayProperty(options: ArrayPropertyOptions<T>): Prop
         }
 
         override fun getValue(builder: Builder, property: KProperty<*>): Array<T> {
-            val originValue = GenericProperty.readValue(builder, property, this)
+            val originValue = this.readValue(builder, property)
             var list = originValue.toList()
 
             val map = options.propertyMap
@@ -43,6 +44,19 @@ inline fun <reified T> makeArrayProperty(options: ArrayPropertyOptions<T>): Prop
                 this.getPropertyKey(property),
                 value
             )
+        }
+
+        private fun readValue(builder: Builder, property: KProperty<*>): Array<T> {
+            val key = this.getPropertyKey(property)
+
+            if (builder.builderStorage.containsKey(key)) {
+                return builder.builderStorage.get(key)
+            }
+
+            if (this.hasDefaultValue()) {
+                return this.getDefaultValue()
+            }
+            throw NotInitializedException(builder, property)
         }
     }
 }

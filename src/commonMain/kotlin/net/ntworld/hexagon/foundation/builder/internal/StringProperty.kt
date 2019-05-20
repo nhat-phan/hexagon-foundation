@@ -1,8 +1,9 @@
-package net.ntworld.hexagon.foundation.builder
+package net.ntworld.hexagon.foundation.builder.internal
 
+import net.ntworld.hexagon.foundation.builder.Builder
 import kotlin.reflect.KProperty
 
-class StringProperty(private val options: StringPropertyOptions) : GenericProperty<String>(options) {
+internal class StringProperty(private val options: StringPropertyOptionsImpl) : GenericProperty<String>(options) {
     override fun getValue(builder: Builder, property: KProperty<*>): String {
         val result = super.getValue(builder, property)
         val sanitizers = ArrayList<(String) -> String>(4)
