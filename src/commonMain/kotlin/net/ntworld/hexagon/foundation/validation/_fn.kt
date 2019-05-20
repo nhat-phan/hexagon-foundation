@@ -23,7 +23,7 @@ fun Builder.validate(block: ValidatorBuilder.() -> Unit): ValidationResult {
     return Validator(block).validate(this.builderStorage)
 }
 
-fun Builder.assert(block: ValidatorBuilder.() -> Unit): Builder {
+fun <BuilderInterface: Builder> BuilderInterface.assert(block: ValidatorBuilder.() -> Unit): BuilderInterface {
     val result = Validator(block).validate(this.builderStorage)
     if (!result.isValid) {
         throw ValidationException(result.errors)

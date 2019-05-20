@@ -3,7 +3,6 @@ package net.ntworld.hexagon.foundation.abac
 import net.ntworld.hexagon.foundation.Argument
 import net.ntworld.hexagon.foundation.Handler
 import net.ntworld.hexagon.foundation.HandlerDecoratorBase
-import net.ntworld.hexagon.foundation.abac.internal.AuthorizationDataBuilderImpl
 import net.ntworld.hexagon.foundation.exception.AccessDenyException
 
 class AuthorizationDecorator<in A : Argument, out R>(
@@ -24,11 +23,12 @@ class AuthorizationDecorator<in A : Argument, out R>(
     }
 
     private fun buildAuthorizationData(argument: A): AuthorizationData {
-        val builder = AuthorizationDataBuilderImpl().copyFrom(argument)
-        for (director in directors) {
-            director.constructAuthorizationData(builder, argument)
-        }
-        return builder.build()
+        TODO()
+//        val builder = AuthorizationDataBuilderImpl().copyFrom(argument)
+//        for (director in directors) {
+//            director.constructAuthorizationData(builder, argument)
+//        }
+//        return builder.build()
     }
 
 }

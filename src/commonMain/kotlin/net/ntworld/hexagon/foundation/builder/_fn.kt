@@ -2,6 +2,14 @@ package net.ntworld.hexagon.foundation.builder
 
 import net.ntworld.hexagon.foundation.builder.internal.*
 
+infix fun <T, BuilderInterface : Builder> BuilderInterface.convertTo(factory: (builder: BuilderInterface) -> T): T {
+    return factory.invoke(this)
+}
+
+infix fun <T, BuilderInterface : Builder> BuilderInterface.to(factory: (builder: BuilderInterface) -> T): T {
+    return factory.invoke(this)
+}
+
 // -----------------------------------------------------
 // Generic
 // -----------------------------------------------------

@@ -1,6 +1,6 @@
 package net.ntworld.hexagon.foundation
 
-interface MultiTenancyUserArgumentData : ArgumentBuilderData {
+interface MultiTenancyUserArgumentData {
     val uniqueId: String
 
     val currentUserId: String

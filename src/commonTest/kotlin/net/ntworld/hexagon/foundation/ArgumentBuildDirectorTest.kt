@@ -1,31 +1,31 @@
 package net.ntworld.hexagon.foundation
 
-import net.ntworld.hexagon.foundation.internal.BUILDER_KEY_CONTEXT_DATETIME
-import net.ntworld.hexagon.foundation.internal.BUILDER_KEY_UNIQUE_ID
+import net.ntworld.hexagon.foundation.builder.LinkedHashMapBuilderStorage
+import net.ntworld.hexagon.foundation.builder.string
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class Jwt : ArgumentBuildDirector<ArgumentBuilder> {
     override fun constructArgument(builder: ArgumentBuilder) {
-        builder.setUniqueId("jwt")
+        builder.uniqueId = "jwt"
     }
 }
 
 class Session : ArgumentBuildDirector<ArgumentBuilder> {
     override fun constructArgument(builder: ArgumentBuilder) {
-        builder.setContextDatetime("session")
+        builder.contextDatetime = "session"
     }
 }
 
-class CustomBuilder : ArgumentBuilderBase() {
-    fun setTask(task: String) {
-        this["task"] = task
-    }
+class CustomBuilder : ArgumentBuilder {
+    override val builderStorage = LinkedHashMapBuilderStorage()
+
+    var task by string()
 }
 
 class CustomBuildDirector : ArgumentBuildDirector<CustomBuilder> {
     override fun constructArgument(builder: CustomBuilder) {
-        builder.setTask("from-custom-build-director")
+        builder.task = "from-custom-build-director"
     }
 }
 
@@ -36,8 +36,8 @@ class ArgumentBuildDirectorTest {
         val builder = CustomBuilder()
         director.constructArgument(builder)
 
-        assertEquals("jwt", builder[BUILDER_KEY_UNIQUE_ID])
-        assertEquals("session", builder[BUILDER_KEY_CONTEXT_DATETIME])
+        assertEquals("jwt", builder.uniqueId)
+        assertEquals("session", builder.contextDatetime)
     }
 
     @Test
@@ -46,8 +46,8 @@ class ArgumentBuildDirectorTest {
         val builder = CustomBuilder()
         director.constructArgument(builder)
 
-        assertEquals("jwt", builder[BUILDER_KEY_UNIQUE_ID])
-        assertEquals("from-custom-build-director", builder["task"])
+        assertEquals("jwt", builder.uniqueId)
+        assertEquals("from-custom-build-director", builder.task)
     }
 
     @Test
@@ -56,8 +56,8 @@ class ArgumentBuildDirectorTest {
         val builder = CustomBuilder()
         director.constructArgument(builder)
 
-        assertEquals("jwt", builder[BUILDER_KEY_UNIQUE_ID])
-        assertEquals("session", builder[BUILDER_KEY_CONTEXT_DATETIME])
-        assertEquals("from-custom-build-director", builder["task"])
+        assertEquals("jwt", builder.uniqueId)
+        assertEquals("session", builder.contextDatetime)
+        assertEquals("from-custom-build-director", builder.task)
     }
 }

@@ -1,17 +1,68 @@
 package net.ntworld.hexagon.foundation
 
-interface ArgumentBuilder {
-    fun reset(): ArgumentBuilder
+import net.ntworld.hexagon.foundation.builder.Builder
+import net.ntworld.hexagon.foundation.internal.ArgumentBuilderDelegate
 
-    fun setUniqueId(value: String): ArgumentBuilder
+interface ArgumentBuilder : Builder {
+    fun reset(): ArgumentBuilder {
+        this.builderStorage.clear()
 
-    fun setCurrentUserId(value: String): ArgumentBuilder
+        return this
+    }
 
-    fun setCurrentTenantId(value: String): ArgumentBuilder
+    var uniqueId: String
+        get() {
+            return ArgumentBuilderDelegate.uniqueId.getValue(this, this::uniqueId)
+        }
+        set(value) {
+            return ArgumentBuilderDelegate.uniqueId.setValue(this, this::uniqueId, value)
+        }
 
-    fun setContextEnvironment(type: String, id: String): ArgumentBuilder
+    var currentTenantId: String?
+        get() {
+            return ArgumentBuilderDelegate.currentTenantId.getValue(this, this::currentTenantId)
+        }
+        set(value) {
+            return ArgumentBuilderDelegate.currentTenantId.setValue(this, this::currentTenantId, value)
+        }
 
-    fun setContextDatetime(value: String): ArgumentBuilder
+    var currentUserId: String?
+        get() {
+            return ArgumentBuilderDelegate.currentUserId.getValue(this, this::currentUserId)
+        }
+        set(value) {
+            return ArgumentBuilderDelegate.currentUserId.setValue(this, this::currentUserId, value)
+        }
 
-    fun setContextIpAddress(value: String): ArgumentBuilder
+    var contextEnvironmentType: String
+        get() {
+            return ArgumentBuilderDelegate.contextEnvironmentType.getValue(this, this::contextEnvironmentType)
+        }
+        set(value) {
+            return ArgumentBuilderDelegate.contextEnvironmentType.setValue(this, this::contextEnvironmentType, value)
+        }
+
+    var contextEnvironmentId: String
+        get() {
+            return ArgumentBuilderDelegate.contextEnvironmentId.getValue(this, this::contextEnvironmentId)
+        }
+        set(value) {
+            return ArgumentBuilderDelegate.contextEnvironmentId.setValue(this, this::contextEnvironmentId, value)
+        }
+
+    var contextDatetime: String
+        get() {
+            return ArgumentBuilderDelegate.contextDatetime.getValue(this, this::contextDatetime)
+        }
+        set(value) {
+            return ArgumentBuilderDelegate.contextDatetime.setValue(this, this::contextDatetime, value)
+        }
+
+    var contextIpAddress: String
+        get() {
+            return ArgumentBuilderDelegate.contextIpAddress.getValue(this, this::contextIpAddress)
+        }
+        set(value) {
+            return ArgumentBuilderDelegate.contextIpAddress.setValue(this, this::contextIpAddress, value)
+        }
 }
