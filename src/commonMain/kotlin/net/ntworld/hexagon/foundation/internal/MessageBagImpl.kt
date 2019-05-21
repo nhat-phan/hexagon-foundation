@@ -80,4 +80,8 @@ internal class MessageBagImpl : MessageBag {
     override fun plusAssign(bag: MessageBag) {
         this.copyFrom(bag)
     }
+
+    override fun toString(): String {
+        return this.messages.toString()
+    }
 }
