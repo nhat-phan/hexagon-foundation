@@ -1,6 +1,7 @@
 package net.ntworld.hexagon.foundation.validation.rule
 
 import net.ntworld.hexagon.foundation.validation.Rule
+import net.ntworld.hexagon.foundation.validation.warning
 
 internal class NotEmpty: Rule {
     override val message: String = ":attribute must be not empty."
@@ -10,16 +11,22 @@ internal class NotEmpty: Rule {
             null -> return false
             is String -> return value.isNotEmpty()
             is Collection<*> -> return value.isNotEmpty()
+            is Map<*, *> -> return value.isNotEmpty()
             is Array<*> -> return value.isNotEmpty()
-            is Byte -> return value > 0
-            is Short -> return value > 0
-            is Int -> return value > 0
-            is Long -> return value > 0
-            is Float -> return value > 0
-            is Double -> return value > 0
-            is Boolean -> return value
+            is BooleanArray -> return value.isNotEmpty()
+            is ByteArray -> return value.isNotEmpty()
+            is ShortArray -> return value.isNotEmpty()
+            is IntArray -> return value.isNotEmpty()
+            is LongArray -> return value.isNotEmpty()
+            is FloatArray -> return value.isNotEmpty()
+            is DoubleArray -> return value.isNotEmpty()
+            is CharArray -> return value.isNotEmpty()
+            else -> warning("Validation \"$RULE_NAME\" rule does not support type " + value::class.toString())
         }
         return true
     }
 
+    companion object {
+        const val RULE_NAME = "notEmpty"
+    }
 }

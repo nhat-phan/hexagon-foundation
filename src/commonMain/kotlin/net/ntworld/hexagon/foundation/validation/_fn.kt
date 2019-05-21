@@ -20,8 +20,12 @@ operator fun Rule.plus(rule: Rule): Rule {
     return collection
 }
 
+fun Rule.warning(message: String) {
+    println(message)
+}
+
 fun Builder.validate(block: ValidatorBuilder<Builder>.() -> Unit): ValidationResult {
-    return Validator<Builder>(block).validate(this)
+    return Validator(block).validate(this)
 }
 
 fun <BuilderInterface : Builder> BuilderInterface.assert(block: ValidatorBuilder<BuilderInterface>.() -> Unit): BuilderInterface {
