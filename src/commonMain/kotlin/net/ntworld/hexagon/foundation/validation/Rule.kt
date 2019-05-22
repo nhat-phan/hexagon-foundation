@@ -1,23 +1,31 @@
 package net.ntworld.hexagon.foundation.validation
 
-interface Rule {
+interface Rule<T : Any> {
     val message: String
 
-    fun passes(attribute: String, value: Any?): Boolean
+    fun passes(attribute: String, value: T): Boolean
 }
 
-//class Test : ArgumentBuilderBase() {
-//    var task: String by this
+//interface StarkBuilder {
+//    var number: Int
+//    var string: String
 //}
+
 //fun test() {
-//    Validator<Test> {
-//        Test::task {
-//            rule = required
-//            message = "required"
-//        }
+//    val validator = Validator<StarkBuilder> {
+//        StarkBuilder::string required { email() + notEmpty } customMessage "test"
+//        StarkBuilder::string required email() + notEmptyString
+//        StarkBuilder::string { email() and gt("123") }
 //
-//        Test::task must gt(3) and required and notEmpty otherwise {
-//            message = "required"
-//        }
+//        StarkBuilder::number { gt(123) }
+//        StarkBuilder::number required { gt(123) }
+//        StarkBuilder::number required gt(123) and lt()
+//        StarkBuilder::number always required and gt(123)
+//        StarkBuilder::number always exists and gt(123)
+//        StarkBuilder::number always exists
+//
+//        StarkBuilder::number whenExist { lt() }
+//        StarkBuilder::number ifPresent { lt() }
+//        StarkBuilder::number optional gt(0)
 //    }
 //}

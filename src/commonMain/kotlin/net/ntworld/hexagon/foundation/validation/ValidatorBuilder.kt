@@ -3,52 +3,33 @@ package net.ntworld.hexagon.foundation.validation
 import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
 
-class ValidatorBuilder<T>(private val validator: Validator<T>) {
-    // KProperty0 ---------------------------------------------------
-    private fun registerProperty(property: KProperty0<*>, builder: RuleBuilder): RuleBuilder {
-        val rules = builder.getRuleCollection()
-        if (null !== rules) {
-            validator.registerProperty(property, rules)
-        }
-        return builder
-    }
+interface ValidatorBuilder<T : Any> {
+    // KProperty0 ----------------------------------------------------
+    operator fun <R : Any> KProperty0<R>.invoke(block: RuleCollection<R>.() -> Rule<R>)
 
-    operator fun KProperty0<*>.invoke(block: RuleBuilder.() -> Unit) {
-        registerProperty(this, RuleBuilder().apply(block))
-    }
+    infix fun <R : Any> KProperty0<R>.required(block: RuleCollection<R>.() -> Rule<R>): RuleCollection<T>
 
-    infix fun KProperty0<*>.always(rule: Rule): RuleBuilder {
-        val builder = RuleBuilder()
-        builder.rule = rule
+    infix fun <R : Any> KProperty0<R>.required(rule: Rule<R>): RuleCollection<R>
 
-        return registerProperty(this, builder)
-    }
+    infix fun <R : Any> KProperty0<R>.always(rule: Rule<Any>): RuleCollection<R>
 
-    infix fun KProperty0<*>.must(rule: Rule) = always(rule)
-    infix fun KProperty0<*>.mustBe(rule: Rule) = always(rule)
+    // KProperty1 ----------------------------------------------------
 
-    // KProperty1 ---------------------------------------------------
+    operator fun <R : Any> KProperty1<T, R>.invoke(block: RuleCollection<R>.() -> Rule<R>)
 
-    private fun registerProperty(property: KProperty1<T, *>, builder: RuleBuilder): RuleBuilder {
-        val rules = builder.getRuleCollection()
-        if (null !== rules) {
-            validator.registerProperty(property, rules)
-        }
-        return builder
-    }
+    infix fun <R : Any> KProperty1<T, R>.required(block: RuleCollection<R>.() -> Rule<R>): RuleCollection<T>
 
-    operator fun KProperty1<T, *>.invoke(block: RuleBuilder.() -> Unit) {
-        registerProperty(this, RuleBuilder().apply(block))
-    }
+    infix fun <R : Any> KProperty1<T, R>.required(rule: Rule<R>): RuleCollection<R>
 
-    infix fun KProperty1<T, *>.always(rule: Rule): RuleBuilder {
-        val builder = RuleBuilder()
-        builder.rule = rule
+    infix fun <R : Any> KProperty1<T, R>.always(rule: Rule<Any>): RuleCollection<R>
 
-        return registerProperty(this, builder)
-    }
+    // Builtin rules -------------------------------------------------
 
-    infix fun KProperty1<T, *>.must(rule: Rule) = always(rule)
-    infix fun KProperty1<T, *>.mustBe(rule: Rule) = always(rule)
-
+    val exists: Rule<Any>
+    val required: Rule<Any>
+    val notEmptyString: Rule<String>
+    fun gt(value: String): RuleCollection<String>
+    fun <V : Number> gt(value: Number): RuleCollection<V>
+    fun <V : Number> lt(): RuleCollection<V>
+    fun email(): RuleCollection<String>
 }

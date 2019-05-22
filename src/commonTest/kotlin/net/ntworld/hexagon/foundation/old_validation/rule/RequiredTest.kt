@@ -1,9 +1,9 @@
-package net.ntworld.hexagon.foundation.validation.rule
+package net.ntworld.hexagon.foundation.old_validation.rule
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class NotEmptyTest {
+class RequiredTest {
     data class TestData<T>(
         val type: String,
         val value: T,
@@ -196,7 +196,7 @@ class NotEmptyTest {
             arrayListDataset +
             arrayCustomDataset
 
-        val rule = NotEmpty()
+        val rule = Required()
         for (item in dataset) {
             assertEquals(item.valid, rule.passes("test", item.value), "Failed with case '${item}'")
         }

@@ -1,10 +1,10 @@
-package net.ntworld.hexagon.foundation.validation.rule
+package net.ntworld.hexagon.foundation.old_validation.rule
 
-import net.ntworld.hexagon.foundation.validation.Rule
-import net.ntworld.hexagon.foundation.validation.warning
+import net.ntworld.hexagon.foundation.old_validation.Rule
+import net.ntworld.hexagon.foundation.old_validation.warning
 
-internal class Required : Rule {
-    override val message: String = ":attribute is required."
+internal class NotEmpty: Rule {
+    override val message: String = ":attribute must be not empty."
 
     override fun passes(attribute: String, value: Any?): Boolean {
         when (value) {

@@ -1,6 +1,6 @@
-package net.ntworld.hexagon.foundation.validation.rule
+package net.ntworld.hexagon.foundation.old_validation.rule
 
-import net.ntworld.hexagon.foundation.validation.Rule
+import net.ntworld.hexagon.foundation.old_validation.Rule
 
 class GreaterThanOrEqual(private val min: Int) : Rule {
     override val message: String = ":attribute must be greater than or equal :value."

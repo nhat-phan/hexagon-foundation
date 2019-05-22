@@ -1,4 +1,4 @@
-package net.ntworld.hexagon.foundation.validation
+package net.ntworld.hexagon.foundation.old_validation
 
 class RuleBuilder {
     var rule: Rule? = null
