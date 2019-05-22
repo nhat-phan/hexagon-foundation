@@ -1,7 +1,6 @@
 package net.ntworld.hexagon.foundation.validation.internal
 
 import net.ntworld.hexagon.foundation.MessageBag
-import net.ntworld.hexagon.foundation.validation.RuleCollection
 import net.ntworld.hexagon.foundation.validation.Validatable
 import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
@@ -9,11 +8,11 @@ import kotlin.reflect.KProperty1
 internal class ValidatorItem<T, R : Any>(
     val property0: KProperty0<R>?,
     val property1: KProperty1<T, R>?,
-    val rules: RuleCollection<R>
+    val rules: RuleCollectionImpl<R>
 ) {
     internal fun validate(attribute: String, input: T, errors: MessageBag): Boolean {
         val value = this.getValue(attribute, input)
-        val valid = rules.validate(attribute, value)
+        val valid = rules.passes(attribute, value)
         if (!valid) {
             rules.buildErrorMessages(errors, attribute, value)
         }
