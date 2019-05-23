@@ -7,8 +7,7 @@ import net.ntworld.hexagon.foundation.internal.MultiTenancyArgumentDataImpl
 import net.ntworld.hexagon.foundation.internal.PortAsyncImpl
 import net.ntworld.hexagon.foundation.internal.PortImpl
 import net.ntworld.hexagon.foundation.internal.UserArgumentDataImpl
-import net.ntworld.hexagon.foundation.old_validation.assert
-import net.ntworld.hexagon.foundation.old_validation.required
+import net.ntworld.hexagon.foundation.validation.assert
 
 fun <A : Argument, B : ArgumentBuilder, R> makePort(
     builder: B,

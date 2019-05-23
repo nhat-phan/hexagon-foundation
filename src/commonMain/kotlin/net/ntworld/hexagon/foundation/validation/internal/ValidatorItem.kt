@@ -6,8 +6,8 @@ import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
 
 internal class ValidatorItem<T, R : Any>(
-    val property0: KProperty0<R>?,
-    val property1: KProperty1<T, R>?,
+    val property0: KProperty0<R?>?,
+    val property1: KProperty1<T, R?>?,
     val rules: RuleCollectionImpl<R>
 ) {
     internal fun validate(attribute: String, input: T, errors: MessageBag): Boolean {

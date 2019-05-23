@@ -20,39 +20,39 @@ interface RuleBuilder<T : Any> {
 
     // KProperty0 ----------------------------------------------------
     @RuleBuilderDsl
-    infix fun <R : Any> KProperty0<R>.always(rule: Rule<Any>): RuleBuilder<R>
+    infix fun <R : Any> KProperty0<R?>.always(rule: Rule<Any>): RuleBuilder<R>
 
     @RuleBuilderDsl
-    operator fun <R : Any> KProperty0<R>.invoke(block: RuleBuilder<R>.() -> Unit) {
+    operator fun <R : Any> KProperty0<R?>.invoke(block: RuleBuilder<R>.() -> Unit) {
         this.always(Optional()).apply(block)
     }
 
     @RuleBuilderDsl
-    infix fun <R : Any> KProperty0<R>.required(block: RuleBuilder<R>.() -> Unit): RuleBuilder<R> {
+    infix fun <R : Any> KProperty0<R?>.required(block: RuleBuilder<R>.() -> Unit): RuleBuilder<R> {
         return this.always(Required()).apply(block)
     }
 
     @RuleBuilderDsl
-    infix fun <R : Any> KProperty0<R>.required(rule: Rule<R>): RuleBuilder<R> {
+    infix fun <R : Any> KProperty0<R?>.required(rule: Rule<R>): RuleBuilder<R> {
         return this.always(Required()).and(rule)
     }
 
     // KProperty1 ----------------------------------------------------
     @RuleBuilderDsl
-    infix fun <R : Any> KProperty1<T, R>.always(rule: Rule<Any>): RuleBuilder<R>
+    infix fun <R : Any> KProperty1<T, R?>.always(rule: Rule<Any>): RuleBuilder<R>
 
     @RuleBuilderDsl
-    operator fun <R : Any> KProperty1<T, R>.invoke(block: RuleBuilder<R>.() -> Unit) {
+    operator fun <R : Any> KProperty1<T, R?>.invoke(block: RuleBuilder<R>.() -> Unit) {
         this.always(Optional()).apply(block)
     }
 
     @RuleBuilderDsl
-    infix fun <R : Any> KProperty1<T, R>.required(block: RuleBuilder<R>.() -> Unit): RuleBuilder<R> {
+    infix fun <R : Any> KProperty1<T, R?>.required(block: RuleBuilder<R>.() -> Unit): RuleBuilder<R> {
         return this.always(Required()).apply(block)
     }
 
     @RuleBuilderDsl
-    infix fun <R : Any> KProperty1<T, R>.required(rule: Rule<R>): RuleBuilder<R> {
+    infix fun <R : Any> KProperty1<T, R?>.required(rule: Rule<R>): RuleBuilder<R> {
         return this.always(Required()).and(rule)
     }
 }

@@ -22,7 +22,7 @@ class Validator<T : Any>(block: ValidatorBuilder<T>.() -> Unit) : Rule<T> {
         ValidatorBuilderImpl(this).apply(block)
     }
 
-    internal fun <R : Any> registerProperty(property: KProperty0<R>, rules: RuleCollectionImpl<R>) {
+    internal fun <R : Any> registerProperty(property: KProperty0<R?>, rules: RuleCollectionImpl<R>) {
         val key = property.name
         if (!data.containsKey(key)) {
             data[key] = ValidatorItem(property, null, rules)
@@ -34,7 +34,7 @@ class Validator<T : Any>(block: ValidatorBuilder<T>.() -> Unit) : Rule<T> {
         item.rules.addRule(rules)
     }
 
-    internal fun <R : Any> registerProperty(property: KProperty1<T, R>, rules: RuleCollectionImpl<R>) {
+    internal fun <R : Any> registerProperty(property: KProperty1<T, R?>, rules: RuleCollectionImpl<R>) {
         val key = property.name
         if (!data.containsKey(key)) {
             data[key] = ValidatorItem(null, property, rules)

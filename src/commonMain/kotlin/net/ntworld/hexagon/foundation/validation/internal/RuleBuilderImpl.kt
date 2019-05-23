@@ -30,11 +30,11 @@ class RuleBuilderImpl<T : Any>(started: Rule<Any>) : RuleBuilder<T> {
         this.message = message
     }
 
-    override fun <R : Any> KProperty0<R>.always(rule: Rule<Any>): RuleBuilder<R> {
+    override fun <R : Any> KProperty0<R?>.always(rule: Rule<Any>): RuleBuilder<R> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun <R : Any> KProperty1<T, R>.always(rule: Rule<Any>): RuleBuilder<R> {
+    override fun <R : Any> KProperty1<T, R?>.always(rule: Rule<Any>): RuleBuilder<R> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

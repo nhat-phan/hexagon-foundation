@@ -1,4 +1,4 @@
-package net.ntworld.hexagon.foundation.old_validation.rule
+package net.ntworld.hexagon.foundation.validation.rule
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
