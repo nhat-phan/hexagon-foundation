@@ -198,7 +198,7 @@ class RequiredTest {
 
         val rule = Required()
         for (item in dataset) {
-            assertEquals(item.valid, rule.passes("test", item.value), "Failed with case '${item}'")
+            assertEquals(item.valid, rule.passes("test", item.value), "Failed with case '$item'")
         }
     }
 }

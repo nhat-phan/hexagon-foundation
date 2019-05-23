@@ -1,6 +1,9 @@
 package net.ntworld.hexagon.foundation.validation
 
+import net.ntworld.hexagon.foundation.validation.internal.ComparisonOperatorEnum
+import net.ntworld.hexagon.foundation.validation.internal.RuleFactory
 import net.ntworld.hexagon.foundation.validation.rule.NotEmptyString
+import net.ntworld.hexagon.foundation.validation.rule.NumberComparison
 import net.ntworld.hexagon.foundation.validation.rule.Optional
 import net.ntworld.hexagon.foundation.validation.rule.Required
 import kotlin.reflect.KProperty0
@@ -46,32 +49,59 @@ interface ValidatorBuilder<T : Any> {
 
     @SystemRuleDsl
     val exists: Rule<Any>
-        get() {
-            TODO()
-        }
+        get() = RuleFactory.notNull
 
     @SystemRuleDsl
     val required: Rule<Any>
-        get() = Required()
+        get() = RuleFactory.required
+
+    @SystemRuleDsl
+    val notNull: Rule<Any>
+        get() = RuleFactory.notNull
 
     @SystemRuleDsl
     val notEmptyString: Rule<String>
-        get() = NotEmptyString()
+        get() = RuleFactory.notEmptyString
 
     @SystemRuleDsl
-    fun gt(value: String): Rule<String> {
-        TODO()
-    }
+    fun <V> eq(value: V): Rule<V> where V : Number, V : Comparable<V> =
+        NumberComparison(ComparisonOperatorEnum.EQUAL, value)
 
     @SystemRuleDsl
-    fun <V : Number> gt(min: Number): Rule<V> {
-        TODO()
-    }
+    fun <V> equal(value: V): Rule<V> where V : Number, V : Comparable<V> =
+        NumberComparison(ComparisonOperatorEnum.EQUAL, value)
 
     @SystemRuleDsl
-    fun <V : Number> lt(): Rule<V> {
-        TODO()
-    }
+    fun <V> gt(min: V): Rule<V> where V : Number, V : Comparable<V> =
+        NumberComparison(ComparisonOperatorEnum.GREATER_THAN, min)
+
+    @SystemRuleDsl
+    fun <V> greaterThan(min: V): Rule<V> where V : Number, V : Comparable<V> =
+        NumberComparison(ComparisonOperatorEnum.GREATER_THAN, min)
+
+    @SystemRuleDsl
+    fun <V> gte(min: V): Rule<V> where V : Number, V : Comparable<V> =
+        NumberComparison(ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL, min)
+
+    @SystemRuleDsl
+    fun <V> greaterThanOrEqual(min: V): Rule<V> where V : Number, V : Comparable<V> =
+        NumberComparison(ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL, min)
+
+    @SystemRuleDsl
+    fun <V> lt(max: V): Rule<V> where V : Number, V : Comparable<V> =
+        NumberComparison(ComparisonOperatorEnum.LESS_THAN, max)
+
+    @SystemRuleDsl
+    fun <V> lessThan(max: V): Rule<V> where V : Number, V : Comparable<V> =
+        NumberComparison(ComparisonOperatorEnum.LESS_THAN, max)
+
+    @SystemRuleDsl
+    fun <V> lte(max: V): Rule<V> where V : Number, V : Comparable<V> =
+        NumberComparison(ComparisonOperatorEnum.LESS_THAN_OR_EQUAL, max)
+
+    @SystemRuleDsl
+    fun <V> lessThanOrEqual(max: V): Rule<V> where V : Number, V : Comparable<V> =
+        NumberComparison(ComparisonOperatorEnum.LESS_THAN_OR_EQUAL, max)
 
     @SystemRuleDsl
     fun email(): Rule<String> {
