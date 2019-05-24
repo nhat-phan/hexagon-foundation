@@ -10,11 +10,11 @@ internal class NumberComparison<T>(
     override val message: String
         get() {
             return when (operator) {
-                ComparisonOperatorEnum.EQUAL -> ":attribute must be equal :value"
-                ComparisonOperatorEnum.GREATER_THAN -> ":attribute must be greater than :value"
-                ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL -> ":attribute must be greater than or equal :value"
-                ComparisonOperatorEnum.LESS_THAN -> ":attribute must be less than :value"
-                ComparisonOperatorEnum.LESS_THAN_OR_EQUAL -> ":attribute must be less than or equal :value"
+                ComparisonOperatorEnum.EQUAL -> ":attribute must be equal ${this.value}."
+                ComparisonOperatorEnum.GREATER_THAN -> ":attribute must be greater than ${this.value}."
+                ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL -> ":attribute must be greater than or equal ${this.value}."
+                ComparisonOperatorEnum.LESS_THAN -> ":attribute must be less than ${this.value}."
+                ComparisonOperatorEnum.LESS_THAN_OR_EQUAL -> ":attribute must be less than or equal ${this.value}."
             }
         }
 

@@ -11,17 +11,33 @@ import kotlin.reflect.KProperty1
 
 @ValidatorDsl
 interface ValidatorBuilder<T : Any> {
+    // Builder feature ----------------------------------------------------
+    @ValidatorDsl
+    infix fun extend(validator: Validator<T>): ValidatorBuilder<T>
+
+    @ValidatorDsl
+    infix fun use(validator: Validator<T>): ValidatorBuilder<T> = extend(validator)
+
+    @ValidatorDsl
+    infix fun run(validator: Validator<T>): ValidatorBuilder<T> = extend(validator)
+
+    // stopAtFirstError() -> not implemented yet.
+
     // KProperty0 ----------------------------------------------------
+    @ValidatorDsl
     infix fun <R : Any> KProperty0<R?>.always(rule: Rule<Any>): RuleBuilder<R>
 
+    @ValidatorDsl
     operator fun <R : Any> KProperty0<R?>.invoke(block: RuleBuilder<R>.() -> Unit) {
         this.always(Optional()).apply(block)
     }
 
+    @ValidatorDsl
     infix fun <R : Any> KProperty0<R?>.required(block: RuleBuilder<R>.() -> Unit): RuleBuilder<R> {
         return this.always(Required()).apply(block)
     }
 
+    @ValidatorDsl
     infix fun <R : Any> KProperty0<R?>.required(rule: Rule<R>): RuleBuilder<R> {
         return this.always(Required()).and(rule)
     }

@@ -1,5 +1,6 @@
 package net.ntworld.hexagon.foundation.validation
 
+import net.ntworld.hexagon.foundation.MessageBag
 import net.ntworld.hexagon.foundation.ValidationResult
 import net.ntworld.hexagon.foundation.internal.MessageBagImpl
 import net.ntworld.hexagon.foundation.internal.ValidationResultImpl
@@ -16,6 +17,7 @@ class Validator<T : Any>(block: ValidatorBuilder<T>.() -> Unit) : Rule<T> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    private val parents: MutableSet<Validator<T>> = mutableSetOf()
     private val data: MutableMap<String, ValidatorItem<T, *>> = mutableMapOf()
 
     init {
@@ -46,11 +48,23 @@ class Validator<T : Any>(block: ValidatorBuilder<T>.() -> Unit) : Rule<T> {
         item.rules.addRule(rules)
     }
 
+    internal fun extend(validator: Validator<T>) {
+        this.parents.add(validator)
+    }
+
     fun validate(input: T): ValidationResult {
         val errors = MessageBagImpl()
-        val isValid = this.data.entries.fold(true) { acc, entry ->
-            entry.value.validate(entry.key, input, errors)
+        val isParentsValid = this.parents.fold(true, { acc, validator ->
+            this.runValidation(validator, input, errors) && acc
+        })
+
+        val isValid = this.runValidation(this, input, errors)
+        return ValidationResultImpl(isParentsValid && isValid, errors)
+    }
+
+    private fun runValidation(validator: Validator<T>, input: T, errors: MessageBag): Boolean {
+        return validator.data.entries.fold(true) { acc, entry ->
+            entry.value.validate(entry.key, input, errors) && acc
         }
-        return ValidationResultImpl(isValid, errors)
     }
 }

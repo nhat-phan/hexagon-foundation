@@ -2,6 +2,7 @@ package net.ntworld.hexagon.foundation.validation
 
 import net.ntworld.hexagon.foundation.builder.Builder
 import net.ntworld.hexagon.foundation.builder.LinkedHashMapBuilderStorage
+import net.ntworld.hexagon.foundation.builder.int
 import net.ntworld.hexagon.foundation.builder.string
 import kotlin.js.JsName
 import kotlin.test.Test
@@ -96,5 +97,30 @@ class ValidatorTest {
             data::string required {}
         }
         assertFalse(result.isValid)
+    }
+
+    @Test
+    fun testExtend() {
+        class SampleBuilder : Builder {
+            override val builderStorage = LinkedHashMapBuilderStorage()
+
+            var string by string()
+            var number by int()
+        }
+
+        val validatorReused = Validator<SampleBuilder> {
+            SampleBuilder::string always required
+        }
+
+        val validator = Validator<SampleBuilder> {
+            extend(validatorReused)
+
+            SampleBuilder::string { rule = notEmptyString }
+            SampleBuilder::number always required and gt(10)
+        }
+
+        val data = SampleBuilder()
+        val result = data.validate(validator)
+        println(result)
     }
 }

@@ -8,6 +8,11 @@ import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
 
 internal class ValidatorBuilderImpl<T : Any>(private val validator: Validator<T>) : ValidatorBuilder<T> {
+    override fun extend(validator: Validator<T>): ValidatorBuilder<T> {
+        this.validator.extend(validator)
+        return this
+    }
+
     override fun <R : Any> KProperty0<R?>.always(rule: Rule<Any>): RuleBuilder<R> {
         val builder = RuleBuilderImpl<R>(rule)
         validator.registerProperty(this, builder.ruleCollection)

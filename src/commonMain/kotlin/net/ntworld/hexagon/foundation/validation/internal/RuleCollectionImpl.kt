@@ -16,22 +16,20 @@ internal open class RuleCollectionImpl<T : Any>(
     override fun passes(attribute: String, value: T?): Boolean {
         val startedValid = startedRule.passes(attribute, value)
         val valid = collection.fold(true) { acc, rule ->
-            val passed = rule.passes(attribute, value)
-
-            return acc && passed
+            rule.passes(attribute, value) && acc
         }
         return startedValid && valid
     }
 
     internal fun buildErrorMessages(errors: MessageBag, attribute: String, value: T?) {
         if (this.message.isNotEmpty()) {
-            errors.add(attribute, formatMessage(this.message, attribute, value))
+            this.addMessageToMessageBag(errors, this.message, attribute, value)
             return
         }
 
-        errors.add(attribute, formatMessage(startedRule.message, attribute, value))
+        this.addMessageToMessageBag(errors, startedRule.message, attribute, value)
         collection.forEach {
-            errors.add(attribute, formatMessage(it.message, attribute, value))
+            this.addMessageToMessageBag(errors, it.message, attribute, value)
         }
     }
 
@@ -44,13 +42,17 @@ internal open class RuleCollectionImpl<T : Any>(
         return this
     }
 
-    private fun formatMessage(message: String, attribute: String, value: Any?): String {
-        return message
+    private fun addMessageToMessageBag(bag: MessageBag, message: String, attribute: String, value: Any?) {
+        val formattedMessage = message
             .replace(":attribute", attribute)
             .replace("[attribute]", attribute)
             .replace("{attribute}", attribute)
             .replace(":value", value.toString())
             .replace("[value]", value.toString())
             .replace("{value}", value.toString())
+
+        if (formattedMessage.isNotEmpty()) {
+            bag.add(attribute, formattedMessage)
+        }
     }
 }
