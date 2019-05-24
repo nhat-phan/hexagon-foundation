@@ -1,6 +1,6 @@
 package net.ntworld.hexagon.foundation.validation.rule
 
-import net.ntworld.hexagon.foundation.validation.Rule
+import net.ntworld.hexagon.foundation.validation.*
 import net.ntworld.hexagon.foundation.validation.internal.ComparisonOperatorEnum
 
 internal class NumberComparison<T>(
@@ -10,11 +10,11 @@ internal class NumberComparison<T>(
     override val message: String
         get() {
             return when (operator) {
-                ComparisonOperatorEnum.EQUAL -> ":attribute must be equal ${this.value}."
-                ComparisonOperatorEnum.GREATER_THAN -> ":attribute must be greater than ${this.value}."
-                ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL -> ":attribute must be greater than or equal ${this.value}."
-                ComparisonOperatorEnum.LESS_THAN -> ":attribute must be less than ${this.value}."
-                ComparisonOperatorEnum.LESS_THAN_OR_EQUAL -> ":attribute must be less than or equal ${this.value}."
+                ComparisonOperatorEnum.EQUAL -> fillMessage(MESSAGE_NUMBER_EQUAL, value)
+                ComparisonOperatorEnum.GREATER_THAN -> fillMessage(MESSAGE_NUMBER_GREATER_THAN, value)
+                ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL -> fillMessage(MESSAGE_NUMBER_GREATER_THAN_OR_EQUAL, value)
+                ComparisonOperatorEnum.LESS_THAN -> fillMessage(MESSAGE_NUMBER_LESS_THAN, value)
+                ComparisonOperatorEnum.LESS_THAN_OR_EQUAL -> fillMessage(MESSAGE_NUMBER_LESS_THAN_OR_EQUAL, value)
             }
         }
 
@@ -29,5 +29,9 @@ internal class NumberComparison<T>(
             }
         }
         return false
+    }
+
+    private fun fillMessage(message: String, value: T): String {
+        return message.replace("{value}", value.toString())
     }
 }

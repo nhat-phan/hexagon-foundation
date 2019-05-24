@@ -1,11 +1,14 @@
 package net.ntworld.hexagon.foundation.validation
 
+import net.ntworld.hexagon.foundation.MessageBag
+import net.ntworld.hexagon.foundation.ValidationResult
 import net.ntworld.hexagon.foundation.builder.Builder
 import net.ntworld.hexagon.foundation.builder.LinkedHashMapBuilderStorage
 import net.ntworld.hexagon.foundation.builder.int
 import net.ntworld.hexagon.foundation.builder.string
 import kotlin.js.JsName
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 
 class ValidatorTest {
@@ -22,6 +25,7 @@ class ValidatorTest {
             data::string { rule = notEmptyString }
         }
         assertFalse(result.isValid)
+        assertErrorMessages(result, "string", MESSAGE_NOT_EMPTY_STRING)
     }
 
     @Test
@@ -37,6 +41,7 @@ class ValidatorTest {
             data::string required { rule = notEmptyString }
         }
         assertFalse(result.isValid)
+        assertErrorMessages(result, "string", MESSAGE_REQUIRED, MESSAGE_NOT_EMPTY_STRING)
     }
 
     @Test
@@ -52,6 +57,7 @@ class ValidatorTest {
             data::string required notEmptyString
         }
         assertFalse(result.isValid)
+        assertErrorMessages(result, "string", MESSAGE_REQUIRED, MESSAGE_NOT_EMPTY_STRING)
     }
 
     @Test
@@ -67,6 +73,7 @@ class ValidatorTest {
             data::string always required
         }
         assertFalse(result.isValid)
+        assertErrorMessages(result, "string", MESSAGE_REQUIRED)
     }
 
     @Test
@@ -82,6 +89,7 @@ class ValidatorTest {
             data::string always required and notEmptyString
         }
         assertFalse(result.isValid)
+        assertErrorMessages(result, "string", MESSAGE_REQUIRED, MESSAGE_NOT_EMPTY_STRING)
     }
 
     @Test
@@ -97,6 +105,7 @@ class ValidatorTest {
             data::string required {}
         }
         assertFalse(result.isValid)
+        assertErrorMessages(result, "string", MESSAGE_REQUIRED)
     }
 
     @Test
@@ -121,6 +130,22 @@ class ValidatorTest {
 
         val data = SampleBuilder()
         val result = data.validate(validator)
-        println(result)
+        assertErrorMessages(result, "string", MESSAGE_REQUIRED, MESSAGE_NOT_EMPTY_STRING)
+        assertErrorMessages(
+            result, "number",
+            MESSAGE_REQUIRED,
+            MESSAGE_NUMBER_GREATER_THAN.replace("{value}", "10")
+        )
+    }
+
+    private fun assertErrorMessages(result: ValidationResult, attribute: String, vararg message: String) {
+        val formattedMessages = message.map { formatMessage(it, attribute) }
+        assertEquals(formattedMessages.toSet(), result.errors.get(attribute))
+    }
+
+    private fun formatMessage(message: String, attribute: String, value: String = ""): String {
+        return message
+            .replace(":attribute", attribute)
+            .replace(":value", value)
     }
 }
