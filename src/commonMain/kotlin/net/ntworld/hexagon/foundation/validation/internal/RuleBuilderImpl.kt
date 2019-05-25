@@ -2,6 +2,8 @@ package net.ntworld.hexagon.foundation.validation.internal
 
 import net.ntworld.hexagon.foundation.validation.Rule
 import net.ntworld.hexagon.foundation.validation.RuleBuilder
+import net.ntworld.hexagon.foundation.validation.Validator
+import net.ntworld.hexagon.foundation.validation.rule.Optional
 import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
 
@@ -31,10 +33,20 @@ class RuleBuilderImpl<T : Any>(started: Rule<Any>) : RuleBuilder<T> {
     }
 
     override fun <R : Any> KProperty0<R?>.always(rule: Rule<Any>): RuleBuilder<R> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val validator = Validator<T> {}
+        val builder = RuleBuilderImpl<R>(rule)
+        validator.registerProperty(this, builder.ruleCollection)
+        this@RuleBuilderImpl.ruleCollection.addRule(validator)
+
+        return builder
     }
 
     override fun <R : Any> KProperty1<T, R?>.always(rule: Rule<Any>): RuleBuilder<R> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val validator = Validator<T> {}
+        val builder = RuleBuilderImpl<R>(rule)
+        validator.registerProperty(this, builder.ruleCollection)
+        this@RuleBuilderImpl.ruleCollection.addRule(validator)
+
+        return builder
     }
 }

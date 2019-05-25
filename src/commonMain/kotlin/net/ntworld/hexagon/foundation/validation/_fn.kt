@@ -21,7 +21,7 @@ operator fun <T : Any> Rule<T>.plus(rule: Rule<T>): Rule<T> {
     return this.and(rule)
 }
 
-fun <T : Validatable> T.validate(validator: Validator<T>): ValidationResult {
+fun <T : Validatable> T.validatedBy(validator: Validator<T>): ValidationResult {
     return validator.validate(this)
 }
 

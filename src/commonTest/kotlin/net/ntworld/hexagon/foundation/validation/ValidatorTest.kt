@@ -2,10 +2,8 @@ package net.ntworld.hexagon.foundation.validation
 
 import net.ntworld.hexagon.foundation.MessageBag
 import net.ntworld.hexagon.foundation.ValidationResult
-import net.ntworld.hexagon.foundation.builder.Builder
-import net.ntworld.hexagon.foundation.builder.LinkedHashMapBuilderStorage
-import net.ntworld.hexagon.foundation.builder.int
-import net.ntworld.hexagon.foundation.builder.string
+import net.ntworld.hexagon.foundation.builder.*
+import net.ntworld.hexagon.foundation.validation.internal.RuleExecutor
 import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -41,7 +39,7 @@ class ValidatorTest {
             data::string required { rule = notEmptyString }
         }
         assertFalse(result.isValid)
-        assertErrorMessages(result, "string", MESSAGE_REQUIRED, MESSAGE_NOT_EMPTY_STRING)
+        assertErrorMessages(result, "string", MESSAGE_REQUIRED)
     }
 
     @Test
@@ -57,7 +55,7 @@ class ValidatorTest {
             data::string required notEmptyString
         }
         assertFalse(result.isValid)
-        assertErrorMessages(result, "string", MESSAGE_REQUIRED, MESSAGE_NOT_EMPTY_STRING)
+        assertErrorMessages(result, "string", MESSAGE_REQUIRED)
     }
 
     @Test
@@ -89,7 +87,7 @@ class ValidatorTest {
             data::string always required and notEmptyString
         }
         assertFalse(result.isValid)
-        assertErrorMessages(result, "string", MESSAGE_REQUIRED, MESSAGE_NOT_EMPTY_STRING)
+        assertErrorMessages(result, "string", MESSAGE_REQUIRED)
     }
 
     @Test
@@ -109,7 +107,7 @@ class ValidatorTest {
     }
 
     @Test
-    fun testExtend() {
+    fun testExtend_Validator() {
         class SampleBuilder : Builder {
             override val builderStorage = LinkedHashMapBuilderStorage()
 
@@ -129,13 +127,36 @@ class ValidatorTest {
         }
 
         val data = SampleBuilder()
-        val result = data.validate(validator)
+        val result = data.validatedBy(validator)
+        // TODO: Fix this special case if possible
+        // Special case: because using extend() then "string" will have error message from all validators
         assertErrorMessages(result, "string", MESSAGE_REQUIRED, MESSAGE_NOT_EMPTY_STRING)
-        assertErrorMessages(
-            result, "number",
-            MESSAGE_REQUIRED,
-            MESSAGE_NUMBER_GREATER_THAN.replace("{value}", "10")
-        )
+        assertErrorMessages(result, "number", MESSAGE_REQUIRED)
+    }
+
+    @Test
+    fun testNestedValidatorBuilder_Validator() {
+        data class Child(var age: Int)
+        class ParentBuilder : Builder {
+            override val builderStorage = LinkedHashMapBuilderStorage()
+
+            var child by type<Child>()
+            var number by int()
+        }
+
+        val validator = Validator<ParentBuilder> {
+            ParentBuilder::child required {
+                Child::age always exists and gte(10)
+            }
+
+            ParentBuilder::number required gt(10) and eq(100)
+        }
+
+        println(validator)
+        val builder = ParentBuilder()
+        builder.child = Child(9)
+        builder.number = 9
+        println(validator.validate(builder))
     }
 
     private fun assertErrorMessages(result: ValidationResult, attribute: String, vararg message: String) {
@@ -144,8 +165,6 @@ class ValidatorTest {
     }
 
     private fun formatMessage(message: String, attribute: String, value: String = ""): String {
-        return message
-            .replace(":attribute", attribute)
-            .replace(":value", value)
+        return RuleExecutor.formatMessage(message, attribute, value)
     }
 }

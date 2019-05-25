@@ -19,7 +19,13 @@ internal class ValidatorItem<T, R : Any>(
         return valid
     }
 
-    private fun getValue(attribute: String, input: T): R? {
+    internal fun buildErrorMessages(errors: MessageBag, attributeDisplayed: String, attribute: String, input: T) {
+        rules.buildErrorMessages(
+            errors, attributeDisplayed, this.getValue(attribute, input)
+        )
+    }
+
+    internal fun getValue(attribute: String, input: T): R? {
         when (input) {
             is Validatable -> {
                 if (input.containsKey(attribute)) {

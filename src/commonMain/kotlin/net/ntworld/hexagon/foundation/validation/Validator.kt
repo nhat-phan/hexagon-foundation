@@ -11,10 +11,19 @@ import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
 
 class Validator<T : Any>(block: ValidatorBuilder<T>.() -> Unit) : Rule<T> {
-    override val message: String = ""
+    override val message: String = MESSAGE_NESTED_VALIDATOR
 
     override fun passes(attribute: String, value: T?): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (null !== value) {
+            return this.validate(value).isValid
+        }
+        return true
+    }
+
+    internal fun buildErrorMessages(errors: MessageBag, attribute: String, value: T?) {
+        this.data.entries.forEach {
+            it.value.buildErrorMessages(errors, "$attribute.${it.key}", it.key, value!!)
+        }
     }
 
     private val parents: MutableSet<Validator<T>> = mutableSetOf()
