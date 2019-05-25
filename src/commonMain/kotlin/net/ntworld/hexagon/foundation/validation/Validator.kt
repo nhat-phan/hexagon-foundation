@@ -26,8 +26,7 @@ class Validator<T : Any>(block: ValidatorBuilder<T>.() -> Unit) : Rule<T> {
         }
     }
 
-    private val parents: MutableSet<Validator<T>> = mutableSetOf()
-    private val data: MutableMap<String, ValidatorItem<T, *>> = mutableMapOf()
+    private val data: MutableMap<String, ValidatorItem<in T, *>> = mutableMapOf()
 
     init {
         ValidatorBuilderImpl(this).apply(block)
@@ -57,23 +56,25 @@ class Validator<T : Any>(block: ValidatorBuilder<T>.() -> Unit) : Rule<T> {
         item.rules.addRule(rules)
     }
 
-    internal fun extend(validator: Validator<T>) {
-        this.parents.add(validator)
+    internal fun extend(validator: Validator<in T>) {
+        for (entry in validator.data.entries) {
+            val key = entry.key
+            val item = entry.value
+            if (!this.data.containsKey(key)) {
+                this.data[key] = item
+                continue
+            }
+
+            (this.data[key] as ValidatorItem<in T, *>).merge(item)
+        }
     }
 
     fun validate(input: T): ValidationResult {
         val errors = MessageBagImpl()
-        val isParentsValid = this.parents.fold(true, { acc, validator ->
-            this.runValidation(validator, input, errors) && acc
-        })
-
-        val isValid = this.runValidation(this, input, errors)
-        return ValidationResultImpl(isParentsValid && isValid, errors)
-    }
-
-    private fun runValidation(validator: Validator<T>, input: T, errors: MessageBag): Boolean {
-        return validator.data.entries.fold(true) { acc, entry ->
+        val valid = this.data.entries.fold(true) { acc, entry ->
             entry.value.validate(entry.key, input, errors) && acc
         }
+
+        return ValidationResultImpl(valid, errors)
     }
 }

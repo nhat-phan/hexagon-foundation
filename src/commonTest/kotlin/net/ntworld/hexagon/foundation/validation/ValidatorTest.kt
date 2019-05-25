@@ -108,15 +108,19 @@ class ValidatorTest {
 
     @Test
     fun testExtend_Validator() {
-        class SampleBuilder : Builder {
+        open class ParentBuilder : Builder {
             override val builderStorage = LinkedHashMapBuilderStorage()
 
             var string by string()
+
+        }
+
+        class SampleBuilder : ParentBuilder() {
             var number by int()
         }
 
-        val validatorReused = Validator<SampleBuilder> {
-            SampleBuilder::string always required
+        val validatorReused = Validator<ParentBuilder> {
+            ParentBuilder::string always required
         }
 
         val validator = Validator<SampleBuilder> {
@@ -128,9 +132,7 @@ class ValidatorTest {
 
         val data = SampleBuilder()
         val result = data.validatedBy(validator)
-        // TODO: Fix this special case if possible
-        // Special case: because using extend() then "string" will have error message from all validators
-        assertErrorMessages(result, "string", MESSAGE_REQUIRED, MESSAGE_NOT_EMPTY_STRING)
+        assertErrorMessages(result, "string", MESSAGE_REQUIRED)
         assertErrorMessages(result, "number", MESSAGE_REQUIRED)
     }
 

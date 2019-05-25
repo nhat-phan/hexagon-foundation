@@ -1,6 +1,7 @@
 package net.ntworld.hexagon.foundation.validation.internal
 
 import net.ntworld.hexagon.foundation.MessageBag
+import net.ntworld.hexagon.foundation.validation.Rule
 import net.ntworld.hexagon.foundation.validation.Validatable
 import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
@@ -25,7 +26,11 @@ internal class ValidatorItem<T, R : Any>(
         )
     }
 
-    internal fun getValue(attribute: String, input: T): R? {
+    internal fun merge(item: ValidatorItem<*, *>) {
+        this.rules.addRule(item.rules as Rule<R>)
+    }
+
+    private fun getValue(attribute: String, input: T): R? {
         when (input) {
             is Validatable -> {
                 if (input.containsKey(attribute)) {

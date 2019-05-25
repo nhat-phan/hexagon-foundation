@@ -7,7 +7,7 @@ internal open class RuleCollectionImpl<T : Any>(
     started: Rule<Any>,
     internal var customMessage: String? = null
 ) : Rule<T> {
-    private val collection: MutableList<RuleExecutor<T>> = mutableListOf()
+    internal val collection: MutableList<RuleExecutor<T>> = mutableListOf()
     private var startedRule: RuleExecutor<Any> = RuleExecutor(started)
     override val message: String
         get() {

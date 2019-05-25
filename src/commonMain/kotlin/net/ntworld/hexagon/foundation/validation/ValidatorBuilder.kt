@@ -13,7 +13,7 @@ import kotlin.reflect.KProperty1
 interface ValidatorBuilder<T : Any> {
     // Builder feature ----------------------------------------------------
     @ValidatorDsl
-    infix fun extend(validator: Validator<T>): ValidatorBuilder<T>
+    infix fun extend(validator: Validator<in T>): ValidatorBuilder<T>
 
     @ValidatorDsl
     infix fun use(validator: Validator<T>): ValidatorBuilder<T> = extend(validator)
