@@ -3,7 +3,6 @@ package net.ntworld.hexagon.foundation.validation.internal
 import net.ntworld.hexagon.foundation.validation.Rule
 import net.ntworld.hexagon.foundation.validation.RuleBuilder
 import net.ntworld.hexagon.foundation.validation.Validator
-import net.ntworld.hexagon.foundation.validation.rule.Optional
 import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
 

@@ -80,6 +80,12 @@ interface ValidatorBuilder<T : Any> {
         get() = RuleFactory.notEmptyString
 
     @SystemRuleDsl
+    infix fun <V : Any> pass(fn: (V?) -> Boolean): Rule<V> = Pass(fn)
+
+    @SystemRuleDsl
+    infix fun <V : Any> passes(fn: (V?) -> Boolean): Rule<V> = pass(fn)
+
+    @SystemRuleDsl
     fun <V> eq(value: V): Rule<V> where V : Number, V : Comparable<V> =
         NumberComparison(ComparisonOperatorEnum.EQUAL, value)
 
@@ -127,6 +133,25 @@ interface ValidatorBuilder<T : Any> {
 
     @SystemRuleDsl
     fun exactLength(value: Int): Rule<String> = StringLength(ComparisonOperatorEnum.LESS_THAN_OR_EQUAL, value)
+
+    @SystemRuleDsl
+    fun <V : CharSequence> passRegex(pattern: String): Rule<V> = PassRegex(kotlin.text.Regex(pattern))
+
+    @SystemRuleDsl
+    fun <V : CharSequence> passRegex(pattern: String, option: RegexOption): Rule<V> = PassRegex(Regex(pattern, option))
+
+    @SystemRuleDsl
+    fun <V : CharSequence> passRegex(pattern: String, option: Set<RegexOption>): Rule<V> =
+        PassRegex(Regex(pattern, option))
+
+    @SystemRuleDsl
+    fun <V : CharSequence> matches(pattern: String): Rule<V> = passRegex(pattern)
+
+    @SystemRuleDsl
+    fun <V : CharSequence> matches(pattern: String, option: RegexOption): Rule<V> = passRegex(pattern, option)
+
+    @SystemRuleDsl
+    fun <V : CharSequence> matches(pattern: String, option: Set<RegexOption>): Rule<V> = passRegex(pattern, option)
 
     @SystemRuleDsl
     fun email(): Rule<String> {

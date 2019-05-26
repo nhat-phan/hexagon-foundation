@@ -1,6 +1,5 @@
 package net.ntworld.hexagon.foundation.validation
 
-import net.ntworld.hexagon.foundation.MessageBag
 import net.ntworld.hexagon.foundation.ValidationResult
 import net.ntworld.hexagon.foundation.builder.*
 import net.ntworld.hexagon.foundation.validation.internal.RuleExecutor
@@ -148,10 +147,10 @@ class ValidatorTest {
 
         val validator = Validator<ParentBuilder> {
             ParentBuilder::child required {
-                Child::age always exists and gte(10) and maxSize(10)
+                Child::age always exists and gte(10)
             }
 
-            ParentBuilder::number required gt(10) and eq(100) and maxSize(10)
+            ParentBuilder::number required gt(10) and eq(100)
         }
 
         println(validator)
