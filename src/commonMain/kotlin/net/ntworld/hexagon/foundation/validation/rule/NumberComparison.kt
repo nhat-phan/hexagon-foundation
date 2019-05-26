@@ -1,7 +1,7 @@
 package net.ntworld.hexagon.foundation.validation.rule
 
 import net.ntworld.hexagon.foundation.validation.*
-import net.ntworld.hexagon.foundation.validation.internal.ComparisonOperatorEnum
+import net.ntworld.hexagon.foundation.validation.ComparisonOperatorEnum
 
 internal class NumberComparison<T>(
     private val operator: ComparisonOperatorEnum,

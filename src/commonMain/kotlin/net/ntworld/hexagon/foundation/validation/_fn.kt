@@ -3,6 +3,7 @@ package net.ntworld.hexagon.foundation.validation
 import net.ntworld.hexagon.foundation.ValidationResult
 import net.ntworld.hexagon.foundation.exception.ValidationException
 import net.ntworld.hexagon.foundation.validation.internal.RuleCollectionImpl
+import net.ntworld.hexagon.foundation.validation.rule.ArraySize
 import net.ntworld.hexagon.foundation.validation.rule.Optional
 
 infix fun <T : Any> Rule<T>.and(rule: Rule<T>): Rule<T> {
@@ -43,4 +44,16 @@ fun <T : Validatable> T.assert(block: ValidatorBuilder<T>.() -> Unit): T {
         throw ValidationException(result.errors)
     }
     return this
+}
+
+inline fun <reified T : Any> ValidatorBuilder<*>.maxSize(value: Int): Rule<T> {
+    return ArraySize.lte(value = value)
+}
+
+inline fun <reified T : Any> ValidatorBuilder<*>.minSize(value: Int): Rule<T> {
+    return ArraySize.gte(value = value)
+}
+
+inline fun <reified T : Any> ValidatorBuilder<*>.exactSize(value: Int): Rule<T> {
+    return ArraySize.eq(value = value)
 }

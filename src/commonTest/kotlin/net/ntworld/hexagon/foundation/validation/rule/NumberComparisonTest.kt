@@ -1,6 +1,6 @@
 package net.ntworld.hexagon.foundation.validation.rule
 
-import net.ntworld.hexagon.foundation.validation.internal.ComparisonOperatorEnum
+import net.ntworld.hexagon.foundation.validation.ComparisonOperatorEnum
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

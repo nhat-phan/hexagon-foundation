@@ -1,11 +1,11 @@
 package net.ntworld.hexagon.foundation.validation
 
-import net.ntworld.hexagon.foundation.validation.internal.ComparisonOperatorEnum
 import net.ntworld.hexagon.foundation.validation.internal.RuleFactory
-import net.ntworld.hexagon.foundation.validation.rule.NotEmptyString
+import net.ntworld.hexagon.foundation.validation.rule.*
 import net.ntworld.hexagon.foundation.validation.rule.NumberComparison
 import net.ntworld.hexagon.foundation.validation.rule.Optional
 import net.ntworld.hexagon.foundation.validation.rule.Required
+import net.ntworld.hexagon.foundation.validation.rule.StringLength
 import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
 
@@ -120,7 +120,17 @@ interface ValidatorBuilder<T : Any> {
         NumberComparison(ComparisonOperatorEnum.LESS_THAN_OR_EQUAL, max)
 
     @SystemRuleDsl
+    fun minLength(value: Int): Rule<String> = StringLength(ComparisonOperatorEnum.GREATER_THAN_OR_EQUAL, value)
+
+    @SystemRuleDsl
+    fun maxLength(value: Int): Rule<String> = StringLength(ComparisonOperatorEnum.LESS_THAN_OR_EQUAL, value)
+
+    @SystemRuleDsl
+    fun exactLength(value: Int): Rule<String> = StringLength(ComparisonOperatorEnum.LESS_THAN_OR_EQUAL, value)
+
+    @SystemRuleDsl
     fun email(): Rule<String> {
         TODO()
     }
 }
+

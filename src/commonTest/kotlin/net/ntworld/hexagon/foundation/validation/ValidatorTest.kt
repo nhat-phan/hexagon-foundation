@@ -148,10 +148,10 @@ class ValidatorTest {
 
         val validator = Validator<ParentBuilder> {
             ParentBuilder::child required {
-                Child::age always exists and gte(10)
+                Child::age always exists and gte(10) and maxSize(10)
             }
 
-            ParentBuilder::number required gt(10) and eq(100)
+            ParentBuilder::number required gt(10) and eq(100) and maxSize(10)
         }
 
         println(validator)
