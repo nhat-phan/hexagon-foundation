@@ -24,6 +24,10 @@ internal class ValidatorBuilderImpl<T : Any>(private val validator: Validator<T>
         validator.registerProperty(this, builder.ruleCollection)
         return builder
     }
+
+    override fun <E : Any, V : Collection<E>> each(rule: Rule<E>): Rule<V> {
+        return super.each(rule)
+    }
 }
 
 

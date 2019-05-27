@@ -9,26 +9,40 @@ import kotlin.reflect.KProperty1
 internal class ValidatorItem<T, R : Any>(
     val property0: KProperty0<R?>?,
     val property1: KProperty1<T, R?>?,
-    val rules: RuleCollectionImpl<R>
+    val list: MutableList<RuleCollectionImpl<R>>
 ) {
     internal fun validate(attribute: String, input: T, errors: MessageBag): Boolean {
         val value = this.getValue(attribute, input)
-        val valid = rules.passes(attribute, value)
-        if (!valid) {
-            rules.buildErrorMessages(errors, attribute, value)
+        return list.fold(true) { acc, rules ->
+            val valid = rules.passes(attribute, value)
+            if (!valid) {
+                rules.buildErrorMessages(errors, attribute, value)
+            }
+            valid && acc
         }
-        return valid
     }
 
-    internal fun buildErrorMessages(errors: MessageBag, attributeDisplayed: String, attribute: String, input: T) {
-        rules.buildErrorMessages(
-            errors, attributeDisplayed, this.getValue(attribute, input)
-        )
+    internal fun buildErrorMessages(
+        errors: MessageBag,
+        attributeDisplayed: String,
+        attribute: String,
+        input: T
+    ) {
+        list.forEach {
+            it.buildErrorMessages(
+                errors, attributeDisplayed, this.getValue(attribute, input)
+            )
+        }
     }
 
     internal fun merge(item: ValidatorItem<*, *>) {
-        this.rules.addRule(item.rules as Rule<R>)
+        this.list.addAll(item.list as List<RuleCollectionImpl<R>>)
     }
+
+    private fun validateRules(rules: RuleCollectionImpl<R>, attribute: String, value: R?): Boolean {
+        return rules.passes(attribute, value)
+    }
+
 
     private fun getValue(attribute: String, input: T): R? {
         when (input) {

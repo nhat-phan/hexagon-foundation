@@ -7,6 +7,7 @@ const val MESSAGE_NOT_NULL = ":attribute must be exist."
 const val MESSAGE_NESTED_VALIDATOR = ""
 const val MESSAGE_PASS = ":attribute is invalid."
 const val MESSAGE_REGEX = ":attribute is invalid."
+const val MESSAGE_EACH = ":attribute is invalid."
 
 const val MESSAGE_NOT_EMPTY_STRING = ":attribute is required and not empty."
 

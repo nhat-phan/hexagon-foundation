@@ -42,6 +42,11 @@ interface ValidatorBuilder<T : Any> {
         return this.always(Required()).and(rule)
     }
 
+    @ValidatorDsl
+    infix fun <E : Any, R : Collection<E>> KProperty0<R?>.each(rule: Rule<E>): RuleBuilder<R> {
+        return this.always(Optional()).and(Each(rule))
+    }
+
     // KProperty1 ----------------------------------------------------
     @ValidatorDsl
     infix fun <R : Any> KProperty1<T, R?>.always(rule: Rule<Any>): RuleBuilder<R>
@@ -59,6 +64,11 @@ interface ValidatorBuilder<T : Any> {
     @ValidatorDsl
     infix fun <R : Any> KProperty1<T, R?>.required(rule: Rule<R>): RuleBuilder<R> {
         return this.always(Required()).and(rule)
+    }
+
+    @ValidatorDsl
+    infix fun <E : Any, R : Collection<E>> KProperty1<T, R?>.each(rule: Rule<E>): RuleBuilder<R> {
+        return this.always(Optional()).and(Each(rule))
     }
 
     // Builtin rules -------------------------------------------------
@@ -152,6 +162,9 @@ interface ValidatorBuilder<T : Any> {
 
     @SystemRuleDsl
     fun <V : CharSequence> matches(pattern: String, option: Set<RegexOption>): Rule<V> = passRegex(pattern, option)
+
+    @SystemRuleDsl
+    infix fun <E : Any, V : Collection<E>> each(rule: Rule<E>): Rule<V> = Each(rule)
 
 }
 

@@ -33,25 +33,25 @@ class Validator<T : Any>(block: ValidatorBuilder<T>.() -> Unit) : Rule<T> {
     internal fun <R : Any> registerProperty(property: KProperty0<R?>, rules: RuleCollectionImpl<R>) {
         val key = property.name
         if (!data.containsKey(key)) {
-            data[key] = ValidatorItem(property, null, rules)
+            data[key] = ValidatorItem(property, null, mutableListOf(rules))
             return
         }
 
         @Suppress("UNCHECKED_CAST")
         val item = data[key] as ValidatorItem<T, R>
-        item.rules.addRule(rules)
+        item.list.add(rules)
     }
 
     internal fun <R : Any> registerProperty(property: KProperty1<T, R?>, rules: RuleCollectionImpl<R>) {
         val key = property.name
         if (!data.containsKey(key)) {
-            data[key] = ValidatorItem(null, property, rules)
+            data[key] = ValidatorItem(null, property, mutableListOf(rules))
             return
         }
 
         @Suppress("UNCHECKED_CAST")
         val item = data[key] as ValidatorItem<T, R>
-        item.rules.addRule(rules)
+        item.list.add(rules)
     }
 
     internal fun extend(validator: Validator<in T>) {

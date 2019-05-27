@@ -109,29 +109,29 @@ class ValidatorTest {
         open class ParentBuilder : Builder {
             override val builderStorage = LinkedHashMapBuilderStorage()
 
-            var string by string()
-
-        }
-
-        class SampleBuilder : ParentBuilder() {
             var number by int()
         }
 
+        class SampleBuilder : ParentBuilder() {
+            var string by string()
+        }
+
         val validatorReused = Validator<ParentBuilder> {
-            ParentBuilder::string always required
+            ParentBuilder::number always required and gt(10)
         }
 
         val validator = Validator<SampleBuilder> {
             extend(validatorReused)
 
-            SampleBuilder::string { rule = notEmptyString }
-            SampleBuilder::number always required and gt(10)
+            SampleBuilder::string always required
+            SampleBuilder::number always required and lt(12)
         }
 
         val data = SampleBuilder()
+        data.number = 15
         val result = data.validatedBy(validator)
         assertErrorMessages(result, "string", MESSAGE_REQUIRED)
-        assertErrorMessages(result, "number", MESSAGE_REQUIRED)
+        assertErrorMessages(result, "number", MESSAGE_NUMBER_LESS_THAN.replace("{value}", "12"))
     }
 
     @Test
@@ -157,6 +157,22 @@ class ValidatorTest {
         builder.child = Child(9)
         builder.number = 9
         println(validator.validate(builder))
+    }
+
+    @Test
+    fun testEach_Object() {
+        val builder = object : Builder {
+            override val builderStorage = LinkedHashMapBuilderStorage()
+
+            var data by list<Int>()
+        }
+
+        builder.data = listOf(1, 2, 3)
+        val result = builder.validate {
+            builder::data always required
+            builder::data each gt(12)
+        }
+        assertErrorMessages(result, "data", MESSAGE_EACH)
     }
 
     private fun assertErrorMessages(result: ValidationResult, attribute: String, vararg message: String) {
