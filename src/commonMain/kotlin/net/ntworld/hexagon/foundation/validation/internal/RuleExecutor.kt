@@ -1,6 +1,6 @@
 package net.ntworld.hexagon.foundation.validation.internal
 
-import net.ntworld.hexagon.foundation.MessageBag
+import net.ntworld.hexagon.foundation.validation.MessageBag
 import net.ntworld.hexagon.foundation.validation.Rule
 import net.ntworld.hexagon.foundation.validation.Validator
 

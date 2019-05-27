@@ -3,17 +3,42 @@ package net.ntworld.hexagon.foundation.abac
 import net.ntworld.hexagon.foundation.Argument
 import net.ntworld.hexagon.foundation.ArgumentBuilder
 import net.ntworld.hexagon.foundation.abac.internal.ActionEnum
+import net.ntworld.hexagon.foundation.abac.internal.AuthorizationDataBuilderDelegate
 
 interface AuthorizationDataBuilder : ArgumentBuilder {
     fun copyFrom(argument: Argument): AuthorizationDataBuilder
 
-    fun setSubject(value: Subject): AuthorizationDataBuilder
+    var subject: Subject
+        get() {
+            return AuthorizationDataBuilderDelegate.subject.getValue(this, this::subject)
+        }
+        set(value) {
+            return AuthorizationDataBuilderDelegate.subject.setValue(this, this::subject, value)
+        }
 
-    fun setContext(value: Context): AuthorizationDataBuilder
+    var context: Context
+        get() {
+            return AuthorizationDataBuilderDelegate.context.getValue(this, this::context)
+        }
+        set(value) {
+            return AuthorizationDataBuilderDelegate.context.setValue(this, this::context, value)
+        }
 
-    fun setAction(value: Action): AuthorizationDataBuilder
+    var action: Action
+        get() {
+            return AuthorizationDataBuilderDelegate.action.getValue(this, this::action)
+        }
+        set(value) {
+            return AuthorizationDataBuilderDelegate.action.setValue(this, this::action, value)
+        }
 
-    fun setResources(value: Collection<Resource>): AuthorizationDataBuilder
+    var resources: Collection<Resource>
+        get() {
+            return AuthorizationDataBuilderDelegate.resources.getValue(this, this::resources)
+        }
+        set(value) {
+            return AuthorizationDataBuilderDelegate.resources.setValue(this, this::resources, value)
+        }
 
     fun clearAction(): AuthorizationDataBuilder
 

@@ -1,6 +1,5 @@
 package net.ntworld.hexagon.foundation.validation
 
-import net.ntworld.hexagon.foundation.ValidationResult
 import net.ntworld.hexagon.foundation.exception.ValidationException
 import net.ntworld.hexagon.foundation.validation.internal.RuleCollectionImpl
 import net.ntworld.hexagon.foundation.validation.rule.ArraySize
@@ -30,7 +29,7 @@ fun <T : Validatable> T.validate(block: ValidatorBuilder<in T>.() -> Unit): Vali
     return Validator(block).validate(this)
 }
 
-fun <T : Validatable> T.assert(validator: Validator<T>): T {
+infix fun <T : Validatable> T.assert(validator: Validator<T>): T {
     val result = validator.validate(this)
     if (!result.isValid) {
         throw ValidationException(result.errors)
@@ -38,7 +37,7 @@ fun <T : Validatable> T.assert(validator: Validator<T>): T {
     return this
 }
 
-fun <T : Validatable> T.assert(block: ValidatorBuilder<T>.() -> Unit): T {
+infix fun <T : Validatable> T.assert(block: ValidatorBuilder<T>.() -> Unit): T {
     val result = Validator(block).validate(this)
     if (!result.isValid) {
         throw ValidationException(result.errors)

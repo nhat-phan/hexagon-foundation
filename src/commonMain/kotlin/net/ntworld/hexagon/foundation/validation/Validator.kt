@@ -1,7 +1,5 @@
 package net.ntworld.hexagon.foundation.validation
 
-import net.ntworld.hexagon.foundation.MessageBag
-import net.ntworld.hexagon.foundation.ValidationResult
 import net.ntworld.hexagon.foundation.internal.MessageBagImpl
 import net.ntworld.hexagon.foundation.internal.ValidationResultImpl
 import net.ntworld.hexagon.foundation.validation.internal.RuleCollectionImpl

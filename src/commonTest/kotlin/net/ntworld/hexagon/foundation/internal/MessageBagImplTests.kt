@@ -1,6 +1,6 @@
 package net.ntworld.hexagon.foundation.internal
 
-import net.ntworld.hexagon.foundation.MessageBag
+import net.ntworld.hexagon.foundation.validation.MessageBag
 import kotlin.test.*
 
 class MessageBagImplTests {

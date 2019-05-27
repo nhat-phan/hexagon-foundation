@@ -8,11 +8,10 @@ import sample.todo.CreateTodoArgumentBuilder
 
 internal val CreateTodoPort =
     fun(spi: TodoServiceProvider): PortAsync<CreateTodoArgumentBuilder, Todo> {
-        TODO()
-//        val builder = TodoBuilder()
-//        val factory = CreateTodoArgumentFactory()
-//
-//        return makePortAsync(builder, factory) {
-//            CreateTodoHandlerAsync(spi.todoRepository)
-//        }
+        val builder = TodoBuilder()
+        val factory = CreateTodoArgumentFactory()
+
+        return makePortAsync(builder, factory) {
+            CreateTodoHandlerAsync(spi.todoRepository)
+        }
     }

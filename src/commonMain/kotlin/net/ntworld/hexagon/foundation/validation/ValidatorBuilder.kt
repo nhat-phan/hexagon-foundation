@@ -153,9 +153,5 @@ interface ValidatorBuilder<T : Any> {
     @SystemRuleDsl
     fun <V : CharSequence> matches(pattern: String, option: Set<RegexOption>): Rule<V> = passRegex(pattern, option)
 
-    @SystemRuleDsl
-    fun email(): Rule<String> {
-        TODO()
-    }
 }
 

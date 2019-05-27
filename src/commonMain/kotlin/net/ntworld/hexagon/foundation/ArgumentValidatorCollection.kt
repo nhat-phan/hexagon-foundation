@@ -2,6 +2,7 @@ package net.ntworld.hexagon.foundation
 
 import net.ntworld.hexagon.foundation.internal.MessageBagImpl
 import net.ntworld.hexagon.foundation.internal.ValidationResultImpl
+import net.ntworld.hexagon.foundation.validation.ValidationResult
 
 class ArgumentValidatorCollection<B : ArgumentBuilder>(base: ArgumentValidator<B>) : ArgumentValidator<B> {
     private val validators: MutableList<ArgumentValidator<B>> = mutableListOf(base)

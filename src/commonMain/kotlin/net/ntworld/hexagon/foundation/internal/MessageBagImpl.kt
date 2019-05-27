@@ -1,6 +1,6 @@
 package net.ntworld.hexagon.foundation.internal
 
-import net.ntworld.hexagon.foundation.MessageBag
+import net.ntworld.hexagon.foundation.validation.MessageBag
 
 internal class MessageBagImpl : MessageBag {
     private val messages: MutableMap<String, MutableSet<String>> = mutableMapOf<String, MutableSet<String>>()

@@ -1,11 +1,11 @@
 package net.ntworld.hexagon.foundation.abac
 
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import net.ntworld.hexagon.foundation.Argument
 import net.ntworld.hexagon.foundation.HandlerAsync
 import net.ntworld.hexagon.foundation.HandlerDecoratorAsyncBase
+import net.ntworld.hexagon.foundation.abac.internal.AuthorizationDataBuilderImpl
 import net.ntworld.hexagon.foundation.exception.AccessDenyException
 
 class AuthorizationDecoratorAsync<in A : Argument, out R>(
@@ -26,12 +26,11 @@ class AuthorizationDecoratorAsync<in A : Argument, out R>(
     }
 
     private suspend fun buildAuthorizationData(argument: A): AuthorizationData {
-        TODO()
-//        val builder = AuthorizationDataBuilderImpl().copyFrom(argument)
-//        for (director in this.directors) {
-//            director.constructAuthorizationDataAsync(builder, argument)
-//        }
-//        return builder.build()
+        val builder = AuthorizationDataBuilderImpl().copyFrom(argument)
+        for (director in this.directors) {
+            director.constructAuthorizationDataAsync(builder, argument)
+        }
+        return builder.build()
     }
 
 }

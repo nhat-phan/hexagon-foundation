@@ -1,6 +1,5 @@
 package net.ntworld.hexagon.foundation.validation
 
-import net.ntworld.hexagon.foundation.ValidationResult
 import net.ntworld.hexagon.foundation.builder.*
 import net.ntworld.hexagon.foundation.validation.internal.RuleExecutor
 import kotlin.js.JsName

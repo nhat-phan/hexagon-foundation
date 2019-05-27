@@ -1,4 +1,4 @@
-package net.ntworld.hexagon.foundation
+package net.ntworld.hexagon.foundation.validation
 
 interface MessageBag {
     fun clear(): MessageBag

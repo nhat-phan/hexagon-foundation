@@ -36,7 +36,7 @@ class FakeTodoServiceProvider : TodoServiceProvider {
 }
 
 class ApiTest {
-    // @Test
+    @Test
     fun testCreate() = runBlocking {
         val spi = FakeTodoServiceProvider()
         val api = TodoApi(spi)

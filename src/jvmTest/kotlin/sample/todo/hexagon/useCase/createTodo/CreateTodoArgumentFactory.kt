@@ -1,25 +1,23 @@
 package sample.todo.hexagon.useCase.createTodo
 
 import net.ntworld.hexagon.foundation.*
+import net.ntworld.hexagon.foundation.validation.assert
 import sample.todo.CreateTodoArgumentBuilder
 
-//internal class CreateTodoArgumentFactory : UserArgumentFactoryBase<CreateTodoArgument>() {
-//    override fun make(data: UserArgumentData): CreateTodoArgument {
-//        return CreateTodoArgument(
-//            uniqueId = data.uniqueId,
-//            currentUserId = data.currentUserId,
-//            currentTenantId = data.currentTenantId,
-//            context = data.context,
-//            task = data.getValue("task")
-//        )
-//    }
-//
-//    override fun validate(data: UserArgumentData, errors: MessageBag): Boolean {
-//        data.isNotStringOrBlank("task") {
-//            errors.add("task", "required")
-//        }
-//
-//        return errors.isEmpty()
-//    }
-//
-//}
+internal class CreateTodoArgumentFactory : ArgumentFactory<CreateTodoArgumentBuilder, CreateTodoArgument> {
+    override fun makeArgument(builder: CreateTodoArgumentBuilder): CreateTodoArgument {
+        return builder
+            .assert {
+                builder::task always required
+            }
+            .makeUserArgument {
+                CreateTodoArgument(
+                    uniqueId = it.uniqueId,
+                    currentUserId = it.currentUserId,
+                    currentTenantId = it.currentTenantId,
+                    context = it.context,
+                    task = builder.task
+                )
+            }
+    }
+}
