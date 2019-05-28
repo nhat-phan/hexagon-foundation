@@ -2,7 +2,7 @@ package net.ntworld.hexagon.foundation.builder.internal
 
 import net.ntworld.hexagon.foundation.builder.IterablePropertyOptions
 
-internal class IterablePropertyOptionsImpl<E : Any, T : Any>(
+internal class IterablePropertyOptionsImpl<E, T : Any>(
     defaultValue: T? = null,
     map: ((E) -> E)? = null,
     filter: ((E) -> Boolean)? = null,

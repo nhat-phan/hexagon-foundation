@@ -3,7 +3,7 @@ package net.ntworld.hexagon.foundation.builder.internal
 import net.ntworld.hexagon.foundation.builder.Builder
 import kotlin.reflect.KProperty
 
-internal class IterableProperty<E : Any, T : Any>(
+internal class IterableProperty<E, T : Any>(
     private val options: IterablePropertyOptionsImpl<E, T>,
     private val filterFn: (T, (E) -> Boolean) -> T,
     private val mapFn: (T, (E) -> E) -> T

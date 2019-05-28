@@ -1,6 +1,6 @@
 package net.ntworld.hexagon.foundation.validation
 
-interface Rule<T : Any> {
+interface Rule<T> {
     val message: String
 
     fun passes(attribute: String, value: T?): Boolean

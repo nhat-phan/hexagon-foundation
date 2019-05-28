@@ -2,7 +2,7 @@ package net.ntworld.hexagon.foundation.builder.internal
 
 import net.ntworld.hexagon.foundation.builder.GenericPropertyOptions
 
-internal open class GenericPropertyOptionsImpl<T : Any>(
+internal open class GenericPropertyOptionsImpl<T: Any>(
     defaultValue: T? = null
 ) : GenericPropertyOptions<T> {
     override lateinit var default: T

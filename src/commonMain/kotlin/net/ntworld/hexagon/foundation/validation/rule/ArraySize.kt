@@ -3,7 +3,7 @@ package net.ntworld.hexagon.foundation.validation.rule
 import net.ntworld.hexagon.foundation.validation.*
 import net.ntworld.hexagon.foundation.validation.ComparisonOperatorEnum
 
-class ArraySize<T : Any>(
+class ArraySize<T>(
     private val operator: ComparisonOperatorEnum,
     private val value: Int
 ) : Rule<T> {

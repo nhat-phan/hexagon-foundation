@@ -113,7 +113,7 @@ internal object IterablePropertyFactory {
         )
     }
 
-    fun <E : Any> makeCollection(options: IterablePropertyOptionsImpl<E, Collection<E>>): IterableProperty<E, Collection<E>> {
+    fun <E> makeCollection(options: IterablePropertyOptionsImpl<E, Collection<E>>): IterableProperty<E, Collection<E>> {
         return IterableProperty(
             options,
             filterFn = { input, predicate ->
@@ -125,7 +125,7 @@ internal object IterablePropertyFactory {
         )
     }
 
-    fun <E : Any> makeList(options: IterablePropertyOptionsImpl<E, List<E>>): IterableProperty<E, List<E>> {
+    fun <E> makeList(options: IterablePropertyOptionsImpl<E, List<E>>): IterableProperty<E, List<E>> {
         return IterableProperty(
             options,
             filterFn = { input, predicate ->
@@ -137,7 +137,7 @@ internal object IterablePropertyFactory {
         )
     }
 
-    fun <E : Any> makeSet(options: IterablePropertyOptionsImpl<E, Set<E>>): IterableProperty<E, Set<E>> {
+    fun <E> makeSet(options: IterablePropertyOptionsImpl<E, Set<E>>): IterableProperty<E, Set<E>> {
         return IterableProperty(
             options,
             filterFn = { input, predicate ->
@@ -166,7 +166,7 @@ internal object IterablePropertyFactory {
         )
     }
 
-    fun <E : Any> makeArrayList(options: IterablePropertyOptionsImpl<E, ArrayList<E>>): IterableProperty<E, ArrayList<E>> {
+    fun <E> makeArrayList(options: IterablePropertyOptionsImpl<E, ArrayList<E>>): IterableProperty<E, ArrayList<E>> {
         return IterableProperty(
             options,
             filterFn = { input, predicate ->

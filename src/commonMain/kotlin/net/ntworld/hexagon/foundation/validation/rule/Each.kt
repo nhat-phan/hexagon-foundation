@@ -3,7 +3,7 @@ package net.ntworld.hexagon.foundation.validation.rule
 import net.ntworld.hexagon.foundation.validation.MESSAGE_EACH
 import net.ntworld.hexagon.foundation.validation.Rule
 
-internal class Each<E : Any, T : Collection<E?>>(private val rule: Rule<E>) : Rule<T> {
+internal class Each<E, T : Collection<E?>>(private val rule: Rule<E>) : Rule<T> {
     override val message: String = MESSAGE_EACH
 
     override fun passes(attribute: String, value: T?): Boolean {

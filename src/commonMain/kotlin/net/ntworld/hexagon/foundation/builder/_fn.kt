@@ -14,19 +14,19 @@ infix fun <T, BuilderInterface : Builder> BuilderInterface.to(factory: (builder:
 // Generic
 // -----------------------------------------------------
 
-fun <T : Any> Builder.generic(default: T? = null): Property<T> =
+fun <T: Any> Builder.generic(default: T? = null): Property<T> =
     GenericProperty(GenericPropertyOptionsImpl(default))
 
-fun <T : Any> Builder.generic(block: GenericPropertyOptions<T>.() -> Unit): Property<T> =
+fun <T: Any> Builder.generic(block: GenericPropertyOptions<T>.() -> Unit): Property<T> =
     GenericProperty(GenericPropertyOptionsImpl<T>().apply(block))
 
-fun <T : Any> Builder.type(default: T? = null) = generic(default)
+fun <T: Any> Builder.type(default: T? = null) = generic(default)
 
-fun <T : Any> Builder.type(block: GenericPropertyOptions<T>.() -> Unit) = generic(block)
+fun <T: Any> Builder.type(block: GenericPropertyOptions<T>.() -> Unit) = generic(block)
 
-fun <T : Any> Builder.custom(default: T? = null) = generic(default)
+fun <T: Any> Builder.custom(default: T? = null) = generic(default)
 
-fun <T : Any> Builder.custom(block: GenericPropertyOptions<T>.() -> Unit) = generic(block)
+fun <T: Any> Builder.custom(block: GenericPropertyOptions<T>.() -> Unit) = generic(block)
 
 // -----------------------------------------------------
 // Primitive types
@@ -163,7 +163,7 @@ fun Builder.charArray(block: IterablePropertyOptions<Char, CharArray>.() -> Unit
 // Collection types
 // -----------------------------------------------------
 
-fun <E : Any> Builder.collection(
+fun <E> Builder.collection(
     default: Collection<E>? = null,
     map: ((E) -> E)? = null,
     filter: ((E) -> Boolean)? = null,
@@ -171,27 +171,27 @@ fun <E : Any> Builder.collection(
 ): Property<Collection<E>> =
     IterablePropertyFactory.makeCollection(IterablePropertyOptionsImpl(default, map, filter, sanitize))
 
-fun <E : Any> Builder.collection(block: IterablePropertyOptions<E, Collection<E>>.() -> Unit): Property<Collection<E>> =
+fun <E> Builder.collection(block: IterablePropertyOptions<E, Collection<E>>.() -> Unit): Property<Collection<E>> =
     IterablePropertyFactory.makeCollection(IterablePropertyOptionsImpl<E, Collection<E>>().apply(block))
 
-fun <E : Any> Builder.list(
+fun <E> Builder.list(
     default: List<E>? = null,
     map: ((E) -> E)? = null,
     filter: ((E) -> Boolean)? = null,
     sanitize: ((List<E>) -> List<E>)? = null
 ): Property<List<E>> = IterablePropertyFactory.makeList(IterablePropertyOptionsImpl(default, map, filter, sanitize))
 
-fun <E : Any> Builder.list(block: IterablePropertyOptions<E, List<E>>.() -> Unit): Property<List<E>> =
+fun <E> Builder.list(block: IterablePropertyOptions<E, List<E>>.() -> Unit): Property<List<E>> =
     IterablePropertyFactory.makeList(IterablePropertyOptionsImpl<E, List<E>>().apply(block))
 
-fun <E : Any> Builder.set(
+fun <E> Builder.set(
     default: Set<E>? = null,
     map: ((E) -> E)? = null,
     filter: ((E) -> Boolean)? = null,
     sanitize: ((Set<E>) -> Set<E>)? = null
 ): Property<Set<E>> = IterablePropertyFactory.makeSet(IterablePropertyOptionsImpl(default, map, filter, sanitize))
 
-fun <E : Any> Builder.set(block: IterablePropertyOptions<E, Set<E>>.() -> Unit): Property<Set<E>> =
+fun <E> Builder.set(block: IterablePropertyOptions<E, Set<E>>.() -> Unit): Property<Set<E>> =
     IterablePropertyFactory.makeSet(IterablePropertyOptionsImpl<E, Set<E>>().apply(block))
 
 fun <K, V> Builder.map(
@@ -204,7 +204,7 @@ fun <K, V> Builder.map(
 fun <K, V> Builder.map(block: IterablePropertyOptions<Map.Entry<K, V>, Map<K, V>>.() -> Unit): Property<Map<K, V>> =
     IterablePropertyFactory.makeMap(IterablePropertyOptionsImpl<Map.Entry<K, V>, Map<K, V>>().apply(block))
 
-fun <E : Any> Builder.arrayList(
+fun <E> Builder.arrayList(
     default: ArrayList<E>? = null,
     map: ((E) -> E)? = null,
     filter: ((E) -> Boolean)? = null,
@@ -212,7 +212,7 @@ fun <E : Any> Builder.arrayList(
 ): Property<ArrayList<E>> =
     IterablePropertyFactory.makeArrayList(IterablePropertyOptionsImpl(default, map, filter, sanitize))
 
-fun <E : Any> Builder.arrayList(block: IterablePropertyOptions<E, ArrayList<E>>.() -> Unit): Property<ArrayList<E>> =
+fun <E> Builder.arrayList(block: IterablePropertyOptions<E, ArrayList<E>>.() -> Unit): Property<ArrayList<E>> =
     IterablePropertyFactory.makeArrayList(IterablePropertyOptionsImpl<E, ArrayList<E>>().apply(block))
 
 // -----------------------------------------------------
@@ -363,34 +363,34 @@ fun Builder.nullableCharArray(block: IterablePropertyOptions<Char, CharArray>.()
 // Nullable Collection types
 // -----------------------------------------------------
 
-fun <E : Any> Builder.nullableCollection(
+fun <E> Builder.nullableCollection(
     default: Collection<E>? = null,
     map: ((E) -> E)? = null,
     filter: ((E) -> Boolean)? = null,
     sanitize: ((Collection<E>) -> Collection<E>)? = null
 ) = nullable(collection(default, map, filter, sanitize))
 
-fun <E : Any> Builder.nullableCollection(block: IterablePropertyOptions<E, Collection<E>>.() -> Unit) =
+fun <E> Builder.nullableCollection(block: IterablePropertyOptions<E, Collection<E>>.() -> Unit) =
     nullable(collection(block))
 
-fun <E : Any> Builder.nullableList(
+fun <E> Builder.nullableList(
     default: List<E>? = null,
     map: ((E) -> E)? = null,
     filter: ((E) -> Boolean)? = null,
     sanitize: ((List<E>) -> List<E>)? = null
 ) = nullable(list(default, map, filter, sanitize))
 
-fun <E : Any> Builder.nullableList(block: IterablePropertyOptions<E, List<E>>.() -> Unit) =
+fun <E> Builder.nullableList(block: IterablePropertyOptions<E, List<E>>.() -> Unit) =
     nullable(list(block))
 
-fun <E : Any> Builder.nullableSet(
+fun <E> Builder.nullableSet(
     default: Set<E>? = null,
     map: ((E) -> E)? = null,
     filter: ((E) -> Boolean)? = null,
     sanitize: ((Set<E>) -> Set<E>)? = null
 ) = nullable(set(default, map, filter, sanitize))
 
-fun <E : Any> Builder.nullableSet(block: IterablePropertyOptions<E, Set<E>>.() -> Unit) =
+fun <E> Builder.nullableSet(block: IterablePropertyOptions<E, Set<E>>.() -> Unit) =
     nullable(set(block))
 
 fun <K, V> Builder.nullableMap(
@@ -403,14 +403,14 @@ fun <K, V> Builder.nullableMap(
 fun <K, V> Builder.nullableMap(block: IterablePropertyOptions<Map.Entry<K, V>, Map<K, V>>.() -> Unit) =
     nullable(map(block))
 
-fun <E : Any> Builder.nullableArrayList(
+fun <E> Builder.nullableArrayList(
     default: ArrayList<E>? = null,
     map: ((E) -> E)? = null,
     filter: ((E) -> Boolean)? = null,
     sanitize: ((ArrayList<E>) -> ArrayList<E>)? = null
 ) = nullable(arrayList(default, map, filter, sanitize))
 
-fun <E : Any> Builder.nullableArrayList(block: IterablePropertyOptions<E, ArrayList<E>>.() -> Unit) =
+fun <E> Builder.nullableArrayList(block: IterablePropertyOptions<E, ArrayList<E>>.() -> Unit) =
     nullable(arrayList(block))
 
 // -----------------------------------------------------
