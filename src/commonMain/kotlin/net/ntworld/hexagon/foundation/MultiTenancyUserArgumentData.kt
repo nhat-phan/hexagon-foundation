@@ -1,11 +1,7 @@
 package net.ntworld.hexagon.foundation
 
-interface MultiTenancyUserArgumentData {
-    val uniqueId: String
+interface MultiTenancyUserArgumentData : MultiTenancyUserArgument {
+    override val currentUserId: String
 
-    val currentUserId: String
-
-    val currentTenantId: String
-
-    val context: ArgumentContext
+    override val currentTenantId: String
 }

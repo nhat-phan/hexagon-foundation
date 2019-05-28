@@ -5,7 +5,7 @@ import net.ntworld.hexagon.foundation.ArgumentContext
 import net.ntworld.hexagon.foundation.UserArgumentData
 
 internal class UserArgumentDataImpl(
-    private val data: ArgumentBuilder
+    data: ArgumentBuilder
 ) : UserArgumentData {
     override val uniqueId: String = data.uniqueId
 
@@ -13,13 +13,10 @@ internal class UserArgumentDataImpl(
 
     override val currentUserId: String = data.currentUserId as String
 
-    override val context: ArgumentContext
-        get() {
-            return ArgumentContextImpl(
-                data.contextEnvironmentType,
-                data.contextEnvironmentId,
-                data.contextIpAddress,
-                data.contextDatetime
-            )
-        }
+    override val context = ArgumentContextImpl(
+        data.contextEnvironmentType,
+        data.contextEnvironmentId,
+        data.contextIpAddress,
+        data.contextDatetime
+    )
 }

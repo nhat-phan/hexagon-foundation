@@ -5,7 +5,7 @@ import net.ntworld.hexagon.foundation.ArgumentContext
 import net.ntworld.hexagon.foundation.MultiTenancyArgumentData
 
 internal class MultiTenancyArgumentDataImpl(
-    private val data: ArgumentBuilder
+    data: ArgumentBuilder
 ) : MultiTenancyArgumentData {
     override val uniqueId: String = data.uniqueId
 
@@ -13,13 +13,10 @@ internal class MultiTenancyArgumentDataImpl(
 
     override val currentUserId: String? = data.currentUserId
 
-    override val context: ArgumentContext
-        get() {
-            return ArgumentContextImpl(
-                data.contextEnvironmentType,
-                data.contextEnvironmentId,
-                data.contextIpAddress,
-                data.contextDatetime
-            )
-        }
+    override val context: ArgumentContext = ArgumentContextImpl(
+        data.contextEnvironmentType,
+        data.contextEnvironmentId,
+        data.contextIpAddress,
+        data.contextDatetime
+    )
 }
