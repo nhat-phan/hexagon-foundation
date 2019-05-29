@@ -7,14 +7,14 @@ internal class PortImpl<in A : Argument, out B : ArgumentBuilder, out R> private
     validator: ArgumentValidator<B>?,
     factory: ArgumentFactory<B, A>
 ) : PortBase<A, B, R>(builder, validator, factory) {
-    private var handler: Handler<A, R>? = null
-    private var handlerFactory: ((argument: A) -> Handler<A, R>)? = null
+    private var handler: ArgumentHandler<A, R>? = null
+    private var handlerFactory: ((argument: A) -> ArgumentHandler<A, R>)? = null
 
     constructor(
         builder: B,
         validator: ArgumentValidator<B>?,
         factory: ArgumentFactory<B, A>,
-        handler: Handler<A, R>
+        handler: ArgumentHandler<A, R>
     ) : this(builder, validator, factory) {
         this.handler = handler
     }
@@ -23,7 +23,7 @@ internal class PortImpl<in A : Argument, out B : ArgumentBuilder, out R> private
         builder: B,
         validator: ArgumentValidator<B>?,
         factory: ArgumentFactory<B, A>,
-        handlerFactoryFn: (argument: A) -> Handler<A, R>
+        handlerFactoryFn: (argument: A) -> ArgumentHandler<A, R>
     ) : this(builder, validator, factory) {
         this.handlerFactory = handlerFactoryFn
     }

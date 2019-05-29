@@ -1,13 +1,13 @@
 package net.ntworld.hexagon.foundation.abac
 
 import net.ntworld.hexagon.foundation.Argument
-import net.ntworld.hexagon.foundation.Handler
+import net.ntworld.hexagon.foundation.ArgumentHandler
 import net.ntworld.hexagon.foundation.HandlerDecoratorBase
 import net.ntworld.hexagon.foundation.abac.internal.AuthorizationDataBuilderImpl
 import net.ntworld.hexagon.foundation.exception.AccessDenyException
 
 class AuthorizationDecorator<in A : Argument, out R>(
-    handler: Handler<A, R>,
+    handler: ArgumentHandler<A, R>,
     private val authorizer: Authorizer,
     private val directors: List<AuthorizationDataBuildDirector>
 ) : HandlerDecoratorBase<A, R>(handler) {

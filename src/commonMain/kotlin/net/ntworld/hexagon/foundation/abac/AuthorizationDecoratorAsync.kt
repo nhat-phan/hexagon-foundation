@@ -3,13 +3,13 @@ package net.ntworld.hexagon.foundation.abac
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import net.ntworld.hexagon.foundation.Argument
-import net.ntworld.hexagon.foundation.HandlerAsync
+import net.ntworld.hexagon.foundation.ArgumentHandlerAsync
 import net.ntworld.hexagon.foundation.HandlerDecoratorAsyncBase
 import net.ntworld.hexagon.foundation.abac.internal.AuthorizationDataBuilderImpl
 import net.ntworld.hexagon.foundation.exception.AccessDenyException
 
 class AuthorizationDecoratorAsync<in A : Argument, out R>(
-    handler: HandlerAsync<A, R>,
+    handler: ArgumentHandlerAsync<A, R>,
     private val authorizer: AuthorizerAsync,
     private val directors: List<AuthorizationDataDirectorAsync>
 ) : HandlerDecoratorAsyncBase<A, R>(handler) {

@@ -4,13 +4,13 @@ package sample.todo.hexagon.useCase.createTodo
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import net.ntworld.hexagon.foundation.HandlerAsync
+import net.ntworld.hexagon.foundation.ArgumentHandlerAsync
 import sample.todo.Todo
 import sample.todo.TodoRepository
 
-internal class CreateTodoHandlerAsync(
+internal class CreateTodoArgumentHandlerAsync(
     private val repository: TodoRepository
-) : HandlerAsync<CreateTodoArgument, Todo> {
+) : ArgumentHandlerAsync<CreateTodoArgument, Todo> {
 
     override fun handleAsync(argument: CreateTodoArgument) = GlobalScope.async {
         val result = create(argument.task)

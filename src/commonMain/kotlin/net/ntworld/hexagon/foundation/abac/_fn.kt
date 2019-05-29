@@ -1,8 +1,8 @@
 package net.ntworld.hexagon.foundation.abac
 
 import net.ntworld.hexagon.foundation.Argument
-import net.ntworld.hexagon.foundation.Handler
-import net.ntworld.hexagon.foundation.HandlerAsync
+import net.ntworld.hexagon.foundation.ArgumentHandler
+import net.ntworld.hexagon.foundation.ArgumentHandlerAsync
 import net.ntworld.hexagon.foundation.abac.internal.ActionImpl
 import net.ntworld.hexagon.foundation.abac.internal.ContextImpl
 import net.ntworld.hexagon.foundation.abac.internal.ResourceDataImpl
@@ -40,44 +40,44 @@ fun makeResource(
     return ResourceDataImpl(type, id, attributes, relationships, meta)
 }
 
-fun <A : Argument, R, T> Handler<A, R>.authorizeBy(
+fun <A : Argument, R, T> ArgumentHandler<A, R>.authorizeBy(
     authorizer: T
-): Handler<A, R> where T : Authorizer, T : AuthorizationDataBuildDirector {
+): ArgumentHandler<A, R> where T : Authorizer, T : AuthorizationDataBuildDirector {
     return AuthorizationDecorator(this, authorizer, listOf(authorizer))
 }
 
-fun <A : Argument, R> Handler<A, R>.authorizeBy(
+fun <A : Argument, R> ArgumentHandler<A, R>.authorizeBy(
     authorizer: Authorizer,
     director: AuthorizationDataBuildDirector
-): Handler<A, R> {
+): ArgumentHandler<A, R> {
     return AuthorizationDecorator(this, authorizer, listOf(director))
 }
 
-fun <A : Argument, R> Handler<A, R>.authorizeBy(
+fun <A : Argument, R> ArgumentHandler<A, R>.authorizeBy(
     authorizer: Authorizer,
     director: AuthorizationDataBuildDirector,
     vararg otherDirectors: AuthorizationDataBuildDirector
-): Handler<A, R> {
+): ArgumentHandler<A, R> {
     return AuthorizationDecorator(this, authorizer, listOf(director) + otherDirectors)
 }
 
-fun <A : Argument, R, T> HandlerAsync<A, R>.authorizeBy(
+fun <A : Argument, R, T> ArgumentHandlerAsync<A, R>.authorizeBy(
     authorizer: T
-): HandlerAsync<A, R> where T : AuthorizerAsync, T : AuthorizationDataDirectorAsync {
+): ArgumentHandlerAsync<A, R> where T : AuthorizerAsync, T : AuthorizationDataDirectorAsync {
     return AuthorizationDecoratorAsync(this, authorizer, listOf(authorizer))
 }
 
-fun <A : Argument, R> HandlerAsync<A, R>.authorizeBy(
+fun <A : Argument, R> ArgumentHandlerAsync<A, R>.authorizeBy(
     authorizer: AuthorizerAsync,
     director: AuthorizationDataDirectorAsync
-): HandlerAsync<A, R> {
+): ArgumentHandlerAsync<A, R> {
     return AuthorizationDecoratorAsync(this, authorizer, listOf(director))
 }
 
-fun <A : Argument, R> HandlerAsync<A, R>.authorizeBy(
+fun <A : Argument, R> ArgumentHandlerAsync<A, R>.authorizeBy(
     authorizer: AuthorizerAsync,
     director: AuthorizationDataDirectorAsync,
     vararg otherDirectors: AuthorizationDataDirectorAsync
-): HandlerAsync<A, R> {
+): ArgumentHandlerAsync<A, R> {
     return AuthorizationDecoratorAsync(this, authorizer, listOf(director) + otherDirectors)
 }
