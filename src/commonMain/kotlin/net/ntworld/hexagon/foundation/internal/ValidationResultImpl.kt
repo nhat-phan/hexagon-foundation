@@ -1,6 +1,6 @@
 package net.ntworld.hexagon.foundation.internal
 
-import net.ntworld.hexagon.foundation.validation.MessageBag
-import net.ntworld.hexagon.foundation.validation.ValidationResult
+import net.ntworld.kotlin.validator.MessageBag
+import net.ntworld.kotlin.validator.ValidationResult
 
-data class ValidationResultImpl(override val isValid: Boolean, override val errors: MessageBag) : ValidationResult
+internal class ValidationResultImpl(override val errors: MessageBag, override var isValid: Boolean) : ValidationResult

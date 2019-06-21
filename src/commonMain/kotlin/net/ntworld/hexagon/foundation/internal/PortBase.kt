@@ -1,7 +1,7 @@
 package net.ntworld.hexagon.foundation.internal
 
 import net.ntworld.hexagon.foundation.*
-import net.ntworld.hexagon.foundation.exception.ValidationException
+import net.ntworld.kotlin.validator.exception.ValidationException
 
 internal abstract class PortBase<in A : Argument, out B : ArgumentBuilder, out R> protected constructor(
     private val builder: B,

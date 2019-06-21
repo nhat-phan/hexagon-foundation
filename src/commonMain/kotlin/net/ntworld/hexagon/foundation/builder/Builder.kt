@@ -1,6 +1,6 @@
 package net.ntworld.hexagon.foundation.builder
 
-import net.ntworld.hexagon.foundation.validation.Validatable
+import net.ntworld.kotlin.validator.Validatable
 
 interface Builder : Validatable {
     val builderStorage: BuilderStorage

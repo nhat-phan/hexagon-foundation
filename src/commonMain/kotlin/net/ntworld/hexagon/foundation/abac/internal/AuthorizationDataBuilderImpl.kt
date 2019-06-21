@@ -4,7 +4,7 @@ import net.ntworld.hexagon.foundation.Argument
 import net.ntworld.hexagon.foundation.abac.*
 import net.ntworld.hexagon.foundation.builder.LinkedHashMapBuilderStorage
 import net.ntworld.hexagon.foundation.builder.convertTo
-import net.ntworld.hexagon.foundation.validation.assert
+import net.ntworld.kotlin.validator.assert
 
 internal class AuthorizationDataBuilderImpl : AuthorizationDataBuilder {
     override val builderStorage = LinkedHashMapBuilderStorage()

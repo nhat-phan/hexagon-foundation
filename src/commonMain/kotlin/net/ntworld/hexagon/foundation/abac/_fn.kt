@@ -63,21 +63,21 @@ fun <A : Argument, R> ArgumentHandler<A, R>.authorizeBy(
 
 fun <A : Argument, R, T> ArgumentHandlerAsync<A, R>.authorizeBy(
     authorizer: T
-): ArgumentHandlerAsync<A, R> where T : AuthorizerAsync, T : AuthorizationDataDirectorAsync {
+): ArgumentHandlerAsync<A, R> where T : AuthorizerAsync, T : AuthorizationDataBuildDirectorAsync {
     return AuthorizationDecoratorAsync(this, authorizer, listOf(authorizer))
 }
 
 fun <A : Argument, R> ArgumentHandlerAsync<A, R>.authorizeBy(
     authorizer: AuthorizerAsync,
-    director: AuthorizationDataDirectorAsync
+    director: AuthorizationDataBuildDirectorAsync
 ): ArgumentHandlerAsync<A, R> {
     return AuthorizationDecoratorAsync(this, authorizer, listOf(director))
 }
 
 fun <A : Argument, R> ArgumentHandlerAsync<A, R>.authorizeBy(
     authorizer: AuthorizerAsync,
-    director: AuthorizationDataDirectorAsync,
-    vararg otherDirectors: AuthorizationDataDirectorAsync
+    director: AuthorizationDataBuildDirectorAsync,
+    vararg otherDirectors: AuthorizationDataBuildDirectorAsync
 ): ArgumentHandlerAsync<A, R> {
     return AuthorizationDecoratorAsync(this, authorizer, listOf(director) + otherDirectors)
 }

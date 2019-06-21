@@ -1,7 +1,7 @@
 package sample.todo.hexagon.useCase.createTodo
 
 import net.ntworld.hexagon.foundation.*
-import net.ntworld.hexagon.foundation.validation.assert
+import net.ntworld.kotlin.validator.assert
 import sample.todo.CreateTodoArgumentBuilder
 
 internal class CreateTodoArgumentFactory : ArgumentFactory<CreateTodoArgumentBuilder, CreateTodoArgument> {

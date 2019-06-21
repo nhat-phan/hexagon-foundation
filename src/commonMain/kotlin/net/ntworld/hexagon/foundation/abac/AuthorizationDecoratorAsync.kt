@@ -11,7 +11,7 @@ import net.ntworld.hexagon.foundation.exception.AccessDenyException
 class AuthorizationDecoratorAsync<in A : Argument, out R>(
     handler: ArgumentHandlerAsync<A, R>,
     private val authorizer: AuthorizerAsync,
-    private val directors: List<AuthorizationDataDirectorAsync>
+    private val directors: List<AuthorizationDataBuildDirectorAsync>
 ) : HandlerDecoratorAsyncBase<A, R>(handler) {
 
     override fun handleAsync(argument: A) = GlobalScope.async {

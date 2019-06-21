@@ -1,10 +1,10 @@
 package net.ntworld.hexagon.foundation.internal
 
 import net.ntworld.hexagon.foundation.ArgumentBuilder
-import net.ntworld.hexagon.foundation.validation.Validator
+import net.ntworld.kotlin.validator.validator
 
 internal object ArgumentValidators {
-    val default = Validator<ArgumentBuilder> {
+    val default = validator<ArgumentBuilder> {
         ArgumentBuilder::uniqueId always required
         ArgumentBuilder::contextEnvironmentType always required
         ArgumentBuilder::contextEnvironmentId always required
@@ -12,11 +12,11 @@ internal object ArgumentValidators {
         ArgumentBuilder::contextIpAddress always required
     }
 
-    val multiTenancy = Validator<ArgumentBuilder> {
+    val multiTenancy = validator<ArgumentBuilder> {
         ArgumentBuilder::currentTenantId always required
     }
 
-    val user = Validator<ArgumentBuilder> {
+    val user = validator<ArgumentBuilder> {
         ArgumentBuilder::currentUserId always required
     }
 }
